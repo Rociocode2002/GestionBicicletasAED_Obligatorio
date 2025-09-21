@@ -1,19 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package tads;
-
-/**
- *
- * @author rocio
- */
 
 public interface ILista<T> {
 
-    void Adicionar(T x);
+    void Adicionar(T x); //este método siempre agrega AL FINAL, a diferencia del insertar en el que elijo la pos 
 
-    void Insertar(T x, int pos) throws Exception;
+    void Insertar(T x, int pos) throws Exception;// si inserto en una posición que ya estaba, se "mueven" los siguientes
 
     T Obtener(int pos) throws Exception;
 
@@ -23,5 +14,3 @@ public interface ILista<T> {
 
     boolean Vacia();
 }
-
-

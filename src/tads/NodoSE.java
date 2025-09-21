@@ -1,4 +1,4 @@
-package EDA;
+package tads;
 
 public class NodoSE<T> {
 
