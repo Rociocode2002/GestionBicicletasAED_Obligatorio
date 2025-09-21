@@ -108,5 +108,9 @@ public class Sistema implements IObligatorio {
     public Retorno usuarioMayor() {
         return Retorno.noImplementada();
     }
+    
+    public static void main(String[] args) {
+ //puse un main aca para poder ejecutar el proyecto, ver si va en otro lado!
+    } 
 
 }

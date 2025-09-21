@@ -1,12 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package tads;
 
-/**
- *
- * @author rocio
+/* Clase ListaSE: Implementacion del TDA Lista usando
+ * nodos simplemente enlazados, con apuntador al primer nodo 
  */
 public class ListaSE<T> implements ILista<T> {
 
@@ -20,22 +15,79 @@ public class ListaSE<T> implements ILista<T> {
 
     @Override
     public void Adicionar(T x) {
-        
+        NodoSE<T> nodo_nuevo =new NodoSE<T>(x);// con esto creamos el nuevo nodo con el dato x, con siguiente = null
+        if (cabeza == null) 
+            cabeza = nodo_nuevo;
+        else {
+            NodoSE<T> actual = cabeza;
+            while (actual.getSiguiente()!= null){
+                actual = actual.getSiguiente();
+            }
+            actual.setSiguiente(nodo_nuevo);
+        }
+        longitud++;
     }
 
     @Override
     public void Insertar(T x, int pos) throws PosFueraDeRangoException {
-        
+        if (pos <0 || pos>= Longitud()) throw new PosFueraDeRangoException();
+        NodoSE<T> nodo_nuevo =new NodoSE<T>(x);
+        if (pos == 0) {
+            nodo_nuevo.setSiguiente(cabeza);
+            cabeza = nodo_nuevo;  
+            
+        }    
+        else {
+            NodoSE<T> actual = cabeza;
+            int pos_actual=0;
+            while (pos_actual < pos-1){
+                actual = actual.getSiguiente();
+                pos_actual++;
+            }
+            nodo_nuevo.setSiguiente(actual.getSiguiente());
+            actual.setSiguiente(nodo_nuevo);
+            
+        }  
+        longitud++;
     }
+    
 
     @Override
     public T Obtener(int pos){
         
-        return null; 
+        if (pos <0 || pos>= Longitud())
+            throw new PosFueraDeRangoException();
+        else {
+        NodoSE<T> actual = cabeza;
+        int pos_actual=0;
+        while (pos_actual < pos){
+            actual = actual.getSiguiente();
+            pos_actual++;
+        }
+        return actual.getDato();
+        }
     }
 
     @Override
     public void Eliminar(int pos) throws PosFueraDeRangoException, ListaVaciaException {
+        if (pos <0 || pos>= Longitud()) throw new PosFueraDeRangoException();
+        NodoSE<T> actual = cabeza;
+        if (pos == 0) {
+            
+            cabeza = actual.getSiguiente(); 
+        }    
+        else {
+            
+            int pos_actual=0;
+            while (pos_actual < pos-1){
+                actual = actual.getSiguiente();
+                pos_actual++;
+            }
+            NodoSE<T>temporal = actual.getSiguiente();
+            actual.setSiguiente(temporal.getSiguiente()); // la profe puso dos .getSiguiente juntos en vez de usar el temporal  
+        }  
+        longitud--;
+        
         
     }
 
@@ -50,4 +102,3 @@ public class ListaSE<T> implements ILista<T> {
     }
 
 }
-
