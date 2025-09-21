@@ -3,11 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/src/tads/ListaSE.java</file>
-            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/src/tads/ILista.java</file>
-            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/src/dominio/Bicicleta.java</file>
-            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/src/dominio/Estacion.java</file>
-            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/src/dominio/Usuario.java</file>
+            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Proyecto/GestionBicicletasAED_Obligatorio/src/dominio/Bicicleta.java</file>
+            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Proyecto/GestionBicicletasAED_Obligatorio/src/sistemaAutogestion/Sistema.java</file>
+            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Proyecto/GestionBicicletasAED_Obligatorio/src/sistemaAutogestion/IObligatorio.java</file>
+            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Proyecto/GestionBicicletasAED_Obligatorio/src/sistemaAutogestion/Retorno.java</file>
+            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Proyecto/GestionBicicletasAED_Obligatorio/src/tads/ILista.java</file>
+            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Proyecto/GestionBicicletasAED_Obligatorio/src/dominio/Estacion.java</file>
+            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Proyecto/GestionBicicletasAED_Obligatorio/src/dominio/Usuario.java</file>
+            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Proyecto/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_02RegistrarEstacion.java</file>
+            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Proyecto/GestionBicicletasAED_Obligatorio/src/tads/ListaSE.java</file>
         </group>
     </open-files>
 </project-private>

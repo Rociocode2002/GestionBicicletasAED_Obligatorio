@@ -10,6 +10,9 @@ package dominio;
  */
 public class Usuario {
 
+   private String Nombre;
+   private String Cedula;
+    
     public String getNombre() {
         return Nombre;
     }
@@ -26,7 +29,5 @@ public class Usuario {
         this.Cedula = Cedula;
     }
     
-   private String Nombre;
-   private String Cedula;
-    
+  
 }

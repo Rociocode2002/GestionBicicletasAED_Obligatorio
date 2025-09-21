@@ -9,6 +9,9 @@ package dominio;
  * @author rocio
  */
 public class Bicicleta {
+    
+    private String codigo;
+    private String Tipo;
 
     public String getCodigo() {
         return codigo;
@@ -26,7 +29,6 @@ public class Bicicleta {
         this.Tipo = Tipo;
     }
     
-    private String codigo;
-    private String Tipo;
+    
     
 }
