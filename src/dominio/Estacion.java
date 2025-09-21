@@ -13,6 +13,10 @@ public class Estacion {
     private String Barrio;
     private String Capacidad;
 
+    public Estacion(String nombre, String barrio, int capacidad) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public String getNombre() {
         return Nombre;
     }
