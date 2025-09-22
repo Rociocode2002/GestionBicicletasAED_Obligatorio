@@ -13,4 +13,6 @@ public interface ILista<T> {
     int Longitud();
 
     boolean Vacia();
+    
+    boolean existeElemento(T elemento);
 }
