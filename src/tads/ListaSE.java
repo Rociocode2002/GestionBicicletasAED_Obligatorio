@@ -100,5 +100,27 @@ public class ListaSE<T> implements ILista<T> {
     public boolean Vacia() {
         return (longitud == 0);
     }
+    
+    
+    
+    
+    @Override
+    public boolean existeElemento(T elemento){
+    
+        NodoSE aux = cabeza;
+        boolean existe = false;
+        
+        while(aux != null && !existe){
+            if(aux.getDato().equals(elemento)){
+                existe = true;
+            }
+            aux = aux.getSiguiente();
+        }
+        return existe;
+        
+    
+    
+    }
+    
 
 }

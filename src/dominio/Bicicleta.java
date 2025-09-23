@@ -12,9 +12,18 @@ public class Bicicleta {
     
     private String codigo;
     private String Tipo;
+    private String Estado;
 
     public String getCodigo() {
         return codigo;
+    }
+
+    public String getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(String Estado) {
+        this.Estado = Estado;
     }
 
     public void setCodigo(String codigo) {

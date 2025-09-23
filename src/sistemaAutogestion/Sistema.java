@@ -73,12 +73,30 @@ public class Sistema implements IObligatorio {
         return Retorno.noImplementada();
     }
 
-    @Override
+    @Override// Rocio
     public Retorno marcarEnMantenimiento(String codigo, String motivo) {
-        return Retorno.noImplementada();
+        if(codigo == null|| motivo == null ){
+        return Retorno.error1();
+        }
+        //return Retorno.error1();
+        
+        Bicicleta bicicleta;
+        bicicleta = new Bicicleta();
+        bicicleta.setCodigo(codigo);
+        boolean bicicletaExiste = bicicletas.existeElemento(bicicleta);
+
+        if(!bicicletaExiste){
+        
+        return Retorno.error2();
+        
+        }
+        
+         
+                return Retorno.error2();
+
     }
 
-    @Override
+    @Override // Rocio
     public Retorno repararBicicleta(String codigo) {
         return Retorno.noImplementada();
     }
