@@ -6,7 +6,7 @@ import dominio.Bicicleta;
 import dominio.Estacion;
 import dominio.Usuario;
 import tads.ILista;
-import tads.ListaDE;
+//import tads.ListaDE;
 import tads.ListaSE;
 
 
@@ -16,10 +16,8 @@ public class Sistema implements IObligatorio {
     private ILista<Estacion> estaciones;
     private ILista<Bicicleta> bicicletas;
     @Override
-    public Retorno crearSistemaDeGestion() {
-        
+    public Retorno crearSistemaDeGestion() {        
 //return Retorno.noImplementada();
-        
         try { //ver si usamos try catch o como??
             usuarios = new ListaSE<>();
             estaciones = new ListaSE<>(); //ver luego si corresponde DE??
@@ -34,45 +32,94 @@ public class Sistema implements IObligatorio {
     public Retorno registrarEstacion(String nombre, String barrio, int capacidad) {
         //return Retorno.noImplementada();
 
-    // 1. Validar parámetros
-    if (nombre == null || nombre.isEmpty() || barrio == null || barrio.isEmpty()) {
+    // Validamos si alguno de los parámetros es null o vacío
+ // ?? hay que agregar alguna validacion de que no sean vacios similar al isEmpty??
+    if (nombre == null || barrio == null) {
         return Retorno.error1(); // parámetro inválido
     }
 
-    // 2. Validar capacidad
+    // Validamos capacidad <= 0
     if (capacidad <= 0) {
         return Retorno.error2(); // capacidad inválida
     }
 
-    // 3. Verificar que no exista estación con el mismo nombre
-    for (int i = 0; i < estaciones.Longitud(); i++) {
-        try {
-            Estacion e = estaciones.Obtener(i);
-            if (e.getNombre().equalsIgnoreCase(nombre)) {// ---------revisar que metodo usar!!
-                return Retorno.error3(); // estación ya existe
-            }
-        } catch (Exception ex) {
-            return Retorno.error1(); // error inesperado
-        }
+    // Verificar que no exista estación con el mismo nombre
+    // Creamos estación temporal para verificar existencia
+    Estacion nueva = new Estacion(nombre, barrio, capacidad);
+
+    if (estaciones.existeElemento(nueva)) {
+        return Retorno.error3(); // estación ya existe
     }
 
-    // 4. Crear y agregar la estación 
-    Estacion nueva = new Estacion(nombre, barrio, capacidad);
+    // Agregamos la estación:    
     estaciones.Adicionar(nueva);
-
+    
     return Retorno.ok();
     }
 
     @Override // Analía
     public Retorno registrarUsuario(String cedula, String nombre) {
-        return Retorno.noImplementada();
+   //return Retorno.noImplementada();
+        
+    // Validamos Si alguno de los parámetros es null o vacío.
+    if (cedula == null || nombre == null ) {
+        return Retorno.error1(); 
     }
+
+    // Validamos formato de cédula: exactamente 8 dígitos
+    if (cedula.length() != 8) {
+        return Retorno.error2(); // formato cédula inválido
+    }
+
+    // Validamos que no exista usuario con la misma cédula
+    Usuario nuevo = new Usuario(cedula, nombre);
+    if (usuarios.existeElemento(nuevo)) {
+        return Retorno.error3(); // usuario ya existe
+    }
+
+    // Agregamos usuario a la lista
+    usuarios.Adicionar(nuevo);
+
+    return Retorno.ok();
+        
+    }
+
 
     @Override // Analía
     public Retorno registrarBicicleta(String codigo, String tipo) {
-        return Retorno.noImplementada();
+        //return Retorno.noImplementada();
+        
+    // Validamos Si alguno de los parámetros es null o vacío.
+    if (codigo == null || tipo == null ) {
+        return Retorno.error1();
     }
 
+    // Validamos formato de código: exactamente 6 caracteres
+    if (codigo.length() != 6) {
+        return Retorno.error2();
+    }
+
+    // Validamos tipo permitido
+ // Podemos usar el equals de String??
+    String tipoUpper = tipo.toUpperCase(); // para comparar sin importar mayúsculas/minúsculas
+    if (!tipoUpper.equals("URBANA") && !tipoUpper.equals("MOUNTAIN") && !tipoUpper.equals("ELECTRICA")) {
+        return Retorno.error3();
+    }
+
+    //  Verificar que no exista bici con el mismo código
+    Bicicleta nueva = new Bicicleta(codigo, tipoUpper);
+    if (bicicletas.existeElemento(nueva)) {
+        return Retorno.error4();
+    }
+
+    // Agregar bicicleta al depósito
+    bicicletas.Adicionar(nueva);
+
+    return Retorno.ok();
+    }
+
+    
+    
     @Override// Rocio
     public Retorno marcarEnMantenimiento(String codigo, String motivo) {
         if(codigo == null|| motivo == null ){
@@ -96,6 +143,7 @@ public class Sistema implements IObligatorio {
 
     }
 
+    
     @Override // Rocio
     public Retorno repararBicicleta(String codigo) {
         return Retorno.noImplementada();

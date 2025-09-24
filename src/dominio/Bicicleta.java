@@ -10,12 +10,20 @@ package dominio;
  */
 public class Bicicleta {
     
-    private String codigo;
+    private String Codigo;
     private String Tipo;
     private String Estado;
 
+    public Bicicleta(String codigo, String tipo) {
+        this.Codigo = codigo;
+        this.Tipo = tipo;
+    }
+
+    public Bicicleta() {
+    }
+
     public String getCodigo() {
-        return codigo;
+        return Codigo;
     }
 
     public String getEstado() {
@@ -27,7 +35,7 @@ public class Bicicleta {
     }
 
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        this.Codigo = codigo;
     }
 
     public String getTipo() {
@@ -38,6 +46,18 @@ public class Bicicleta {
         this.Tipo = Tipo;
     }
     
-    
+  //Sobreescribimos el equals para que luego existeElemento funcione de ListaSE funcione como queremos.
+   @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Bicicleta)) return false;
+        Bicicleta otra = (Bicicleta) o;
+        return this.Codigo.equalsIgnoreCase(otra.Codigo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Codigo.toLowerCase().hashCode();
+    }
     
 }
