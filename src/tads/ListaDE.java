@@ -44,4 +44,9 @@ public class ListaDE<T> implements ILista<T> {
         return (longitud == 0);
     }
 
+    @Override
+    public boolean existeElemento(T elemento) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

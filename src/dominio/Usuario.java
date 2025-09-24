@@ -12,6 +12,11 @@ public class Usuario {
 
    private String Nombre;
    private String Cedula;
+
+    public Usuario(String cedula, String nombre) {
+        this.Nombre = nombre;
+        this.Cedula = cedula;
+    }
     
     public String getNombre() {
         return Nombre;
@@ -28,6 +33,21 @@ public class Usuario {
     public void setCedula(String Cedula) {
         this.Cedula = Cedula;
     }
+   
+      //Sobreescribimos el equals para que luego existeElemento funcione de ListaSE funcione como queremos.
+   @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Usuario)) return false;
+        Usuario otra = (Usuario) o;
+        return this.Nombre.equalsIgnoreCase(otra.Nombre);
+    }
+
+    @Override
+    public int hashCode() {
+        return Nombre.toLowerCase().hashCode();
+    }
+    
     
   
 }

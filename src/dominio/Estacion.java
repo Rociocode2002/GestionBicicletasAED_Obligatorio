@@ -11,10 +11,13 @@ package dominio;
 public class Estacion {
     private String Nombre;
     private String Barrio;
-    private String Capacidad;
+    private int Capacidad;
 
+    
     public Estacion(String nombre, String barrio, int capacidad) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.Nombre = nombre;
+        this.Barrio = barrio;
+        this.Capacidad = capacidad;
     }
 
     public String getNombre() {
@@ -33,12 +36,27 @@ public class Estacion {
         this.Barrio = Barrio;
     }
 
-    public String getCapacidad() {
+    public int getCapacidad() {
         return Capacidad;
     }
 
-    public void setCapacidad(String Capacidad) {
+    public void setCapacidad(int Capacidad) {
         this.Capacidad = Capacidad;
     }
+    
+  //Sobreescribimos el equals para que luego existeElemento funcione de ListaSE funcione como queremos.
+   @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Estacion)) return false;
+        Estacion otra = (Estacion) o;
+        return this.Nombre.equalsIgnoreCase(otra.Nombre);
+    }
+
+    @Override
+    public int hashCode() {
+        return Nombre.toLowerCase().hashCode();
+    }
+
     
 }
