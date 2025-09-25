@@ -5,6 +5,8 @@ package sistemaAutogestion;
 import dominio.Bicicleta;
 import dominio.Estacion;
 import dominio.Usuario;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tads.ILista;
 import tads.ListaDE;
 import tads.ListaSE;
@@ -73,6 +75,7 @@ public class Sistema implements IObligatorio {
         return Retorno.noImplementada();
     }
 
+    /*
     @Override// Rocio
     public Retorno marcarEnMantenimiento(String codigo, String motivo) {
         if(codigo == null|| motivo == null ){
@@ -90,11 +93,71 @@ public class Sistema implements IObligatorio {
         return Retorno.error2();
         
         }
-        
-         
-                return Retorno.error2();
-
+            Bicicleta bicicletaEncontrada = null;
+    
+    // Buscar la bicicleta recorriendo todas las posiciones
+    for (int i = 0; i < bicicletas.Longitud(); i++) {
+          
+                Bicicleta bicicletaBuscar =  bicicletas.Obtener(i);
+                if (bicicleta.getCodigo().equals(codigo)) {
+                    bicicletaEncontrada = bicicletaBuscar;
+                    break; 
+                }   
+            }
+    
+     If( bicicletaEncontrada.setEstado() = ""){
+    
+    
+       return Retorno.error3();
+    
     }
+     */
+
+
+
+             
+
+    @Override
+public Retorno marcarEnMantenimiento(String codigo, String motivo) {
+    if(codigo == null || motivo == null || codigo.isEmpty() || motivo.isEmpty()){
+        return Retorno.error1();
+    }
+    
+    Bicicleta bicicletaEncontrada = null;
+    
+    // Buscar la bicicleta recorriendo todas las posiciones
+    for (int i = 0; i < bicicletas.Longitud(); i++) {
+        try {
+            Bicicleta bicicletaBuscar = (Bicicleta) bicicletas.Obtener(i);
+            if (bicicletaBuscar.getCodigo().equals(codigo)) {
+                bicicletaEncontrada = bicicletaBuscar;
+                break;   
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    if (bicicletaEncontrada == null) {
+        return Retorno.error2(); // Bici inexistente
+    }
+    
+ 
+    if ("Alquilada".equals(bicicletaEncontrada.getEstado())) {
+        return Retorno.error3(); // Bici actualmente alquilada
+    }
+    
+    // Verificar si ya está en mantenimiento
+    if ("Mantenimiento".equals(bicicletaEncontrada.getEstado())) {
+        return Retorno.error4(); // Bici ya en mantenimiento
+    }
+    
+    // Marcar en mantenimiento
+    bicicletaEncontrada.setEstado("Mantenimiento");
+  
+    
+    return Retorno.ok();
+}
 
     @Override // Rocio
     public Retorno repararBicicleta(String codigo) {
