@@ -120,7 +120,7 @@ public class Sistema implements IObligatorio {
 
     
     
-    @Override// Rocio
+    @Override//Rocioo
     public Retorno marcarEnMantenimiento(String codigo, String motivo) {
         if(codigo == null|| motivo == null ){
         return Retorno.error1();
