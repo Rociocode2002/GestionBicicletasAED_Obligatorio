@@ -15,4 +15,6 @@ public interface ILista<T> {
     boolean Vacia();
     
     boolean existeElemento(T elemento);
+    
+     String mostrar();
 }
