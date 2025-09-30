@@ -120,34 +120,83 @@ public class Sistema implements IObligatorio {
 
     
     
-    @Override//Rocioo
-    public Retorno marcarEnMantenimiento(String codigo, String motivo) {
-        if(codigo == null|| motivo == null ){
+    @Override
+public Retorno marcarEnMantenimiento(String codigo, String motivo) {
+    if(codigo == null || motivo == null || codigo.isEmpty() || motivo.isEmpty()){
         return Retorno.error1();
-        }
-        //return Retorno.error1();
-        
-        Bicicleta bicicleta;
-        bicicleta = new Bicicleta();
-        bicicleta.setCodigo(codigo);
-        boolean bicicletaExiste = bicicletas.existeElemento(bicicleta);
-
-        if(!bicicletaExiste){
-        
-        return Retorno.error2();
-        
-        }
-        
-         
-                return Retorno.error2();
-
     }
+    
+    Bicicleta bicicletaEncontrada = null;
+    int longitud = bicicletas.Longitud();
+    
+    for (int i = 0; i < longitud; i++) {
+        // Esta validación debería ser suficiente para evitar la excepción
+        if (i < longitud) { // i siempre será menor que longitud en un for normal
+            Bicicleta bicicletaBuscar = (Bicicleta) bicicletas.Obtener(i);
+            if (bicicletaBuscar.getCodigo().equals(codigo)) {
+                bicicletaEncontrada = bicicletaBuscar;
+                break; 
+            }
+        }
+    }
+    
+    // Resto del código igual...
+    if (bicicletaEncontrada == null) {
+        return Retorno.error2();
+    }
+    
+    if ("Alquilada".equals(bicicletaEncontrada.getEstado())) {
+        return Retorno.error3();
+    }
+    
+    if ("Mantenimiento".equals(bicicletaEncontrada.getEstado())) {
+        return Retorno.error4();
+    }
+    
+    bicicletaEncontrada.setEstado("Mantenimiento");
+    return Retorno.ok();
+}
+    
+    
+  
+ @Override
+public Retorno repararBicicleta(String codigo) {
+    if (codigo == null || codigo.isEmpty()) {
+        return Retorno.error1();
+    }
+    
+    Bicicleta bicicletaEncontrada = null;
+    int longitud = bicicletas.Longitud();
+    
+    // Buscar la bicicleta recorriendo todas las posiciones
+    for (int i = 0; i < longitud; i++) {
+        // Validar que el índice esté dentro del rango
+        if (i >= 0 && i < longitud) {
+            Bicicleta bicicletaBuscar = (Bicicleta) bicicletas.Obtener(i);
+            if (bicicletaBuscar.getCodigo().equals(codigo)) {
+                bicicletaEncontrada = bicicletaBuscar;
+                break; 
+            }
+        }
+    }
+    
+    if (bicicletaEncontrada == null) {
+        return Retorno.error2(); // Bici inexistente
+    }
+    
+    // Verificar si está en mantenimiento
+    if (!"Mantenimiento".equals(bicicletaEncontrada.getEstado())) {
+        return Retorno.error3(); // Bici no se encuentra en mantenimiento
+    }
+    
+    // Reparar la bicicleta - cambiar estado a "Disponible" y mantener en depósito
+    bicicletaEncontrada.setEstado("Disponible");
+    
+    return Retorno.ok();
+}
 
     
-    @Override // Rocio
-    public Retorno repararBicicleta(String codigo) {
-        return Retorno.noImplementada();
-    }
+    
 
     @Override
     public Retorno eliminarEstacion(String nombre) {
