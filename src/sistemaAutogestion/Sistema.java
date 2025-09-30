@@ -120,9 +120,9 @@ public class Sistema implements IObligatorio {
 
     
     
-    @Override
+    @Override// Rocio
 public Retorno marcarEnMantenimiento(String codigo, String motivo) {
-    if(codigo == null || motivo == null || codigo.isEmpty() || motivo.isEmpty()){
+    if(codigo == null || motivo == null ){
         return Retorno.error1();
     }
     
@@ -130,8 +130,8 @@ public Retorno marcarEnMantenimiento(String codigo, String motivo) {
     int longitud = bicicletas.Longitud();
     
     for (int i = 0; i < longitud; i++) {
-        // Esta validación debería ser suficiente para evitar la excepción
-        if (i < longitud) { // i siempre será menor que longitud en un for normal
+        
+        if (i < longitud) { 
             Bicicleta bicicletaBuscar = (Bicicleta) bicicletas.Obtener(i);
             if (bicicletaBuscar.getCodigo().equals(codigo)) {
                 bicicletaEncontrada = bicicletaBuscar;
@@ -140,7 +140,7 @@ public Retorno marcarEnMantenimiento(String codigo, String motivo) {
         }
     }
     
-    // Resto del código igual...
+
     if (bicicletaEncontrada == null) {
         return Retorno.error2();
     }
@@ -168,7 +168,7 @@ public Retorno repararBicicleta(String codigo) {
     Bicicleta bicicletaEncontrada = null;
     int longitud = bicicletas.Longitud();
     
-    // Buscar la bicicleta recorriendo todas las posiciones
+    
     for (int i = 0; i < longitud; i++) {
         // Validar que el índice esté dentro del rango
         if (i >= 0 && i < longitud) {
@@ -186,10 +186,9 @@ public Retorno repararBicicleta(String codigo) {
     
     // Verificar si está en mantenimiento
     if (!"Mantenimiento".equals(bicicletaEncontrada.getEstado())) {
-        return Retorno.error3(); // Bici no se encuentra en mantenimiento
+        return Retorno.error3(); 
     }
-    
-    // Reparar la bicicleta - cambiar estado a "Disponible" y mantener en depósito
+  
     bicicletaEncontrada.setEstado("Disponible");
     
     return Retorno.ok();
