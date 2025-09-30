@@ -159,7 +159,7 @@ public Retorno marcarEnMantenimiento(String codigo, String motivo) {
     
     
   
- @Override
+ @Override//Rocio
 public Retorno repararBicicleta(String codigo) {
     if (codigo == null || codigo.isEmpty()) {
         return Retorno.error1();
@@ -181,10 +181,9 @@ public Retorno repararBicicleta(String codigo) {
     }
     
     if (bicicletaEncontrada == null) {
-        return Retorno.error2(); // Bici inexistente
+        return Retorno.error2(); 
     }
     
-    // Verificar si está en mantenimiento
     if (!"Mantenimiento".equals(bicicletaEncontrada.getEstado())) {
         return Retorno.error3(); 
     }
@@ -227,9 +226,14 @@ public Retorno repararBicicleta(String codigo) {
         return Retorno.noImplementada();
     }
 
-    @Override
+    @Override//3.2 Rocio
     public Retorno listarUsuarios() {
-        return Retorno.noImplementada();
+        String listarUsuarios = usuarios.mostrar();
+
+        Retorno ret = Retorno.ok();
+     // Como retorno la lista y el OK al mismo tiempo?
+
+        return ret;
     }
 
     @Override

@@ -101,7 +101,23 @@ public class ListaSE<T> implements ILista<T> {
         return (longitud == 0);
     }
     
-    
+       @Override
+    public String mostrar() {
+      
+        NodoSE<T> mostrar = cabeza;
+        String res = "";
+        while (mostrar != null) {
+            res += mostrar.getDato() ;
+               if(mostrar.getSiguiente()!= null){
+                   res+= "#";
+               }
+            mostrar = mostrar.getSiguiente();
+        }
+        
+        return res;
+        
+
+    }
     
     
     @Override
