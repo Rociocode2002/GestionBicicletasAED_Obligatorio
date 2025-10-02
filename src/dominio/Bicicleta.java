@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package dominio;
+import java.util.Date;
+import java.util.logging.Logger;
 
 /**
  *
@@ -11,41 +13,74 @@ package dominio;
 public class Bicicleta {
     
     private String Codigo;
-    private String Tipo;
-    private String Estado;
-
-    public Bicicleta(String codigo, String tipo) {
-        this.Codigo = codigo;
-        this.Tipo = tipo;
-    }
-
-    public Bicicleta() {
-    }
+    private Tipo_Bicicleta tipo;
+    private Estado_Bicicleta estado ;
+    private Estacion estacionActual;
+    private String motivoMantenimiento;
+    private Date fechaIngresoDeposito;
 
     public String getCodigo() {
         return Codigo;
     }
 
-    public String getEstado() {
-        return Estado;
+    public void setCodigo(String Codigo) {
+        this.Codigo = Codigo;
     }
 
-    public void setEstado(String Estado) {
-        this.Estado = Estado;
+    public Tipo_Bicicleta getTipo() {
+        return tipo;
     }
 
-    public void setCodigo(String codigo) {
-        this.Codigo = codigo;
+    public void setTipo(Tipo_Bicicleta tipo) {
+        this.tipo = tipo;
     }
 
-    public String getTipo() {
-        return Tipo;
+    public Estado_Bicicleta getEstado() {
+        return estado;
     }
 
-    public void setTipo(String Tipo) {
-        this.Tipo = Tipo;
+    public void setEstado(Estado_Bicicleta estado) {
+        this.estado = estado;
     }
-    
+
+    public Estacion getEstacionActual() {
+        return estacionActual;
+    }
+
+    public void setEstacionActual(Estacion estacionActual) {
+        this.estacionActual = estacionActual;
+    }
+
+    public String getMotivoMantenimiento() {
+        return motivoMantenimiento;
+    }
+
+    public void setMotivoMantenimiento(String motivoMantenimiento) {
+        this.motivoMantenimiento = motivoMantenimiento;
+    }
+
+    public Date getFechaIngresoDeposito() {
+        return fechaIngresoDeposito;
+    }
+
+    public void setFechaIngresoDeposito(Date fechaIngresoDeposito) {
+        this.fechaIngresoDeposito = fechaIngresoDeposito;
+    }
+
+    public Bicicleta(String Codigo, Tipo_Bicicleta tipo) {
+        this.Codigo = Codigo;
+        this.tipo = tipo;
+       
+    }
+
+    @Override
+    public String toString() {
+        return "Bicicleta{" + "Codigo=" + Codigo + ", tipo=" + tipo + ", estado=" + estado + ", estacionActual=" + estacionActual + ", motivoMantenimiento=" + motivoMantenimiento + ", fechaIngresoDeposito=" + fechaIngresoDeposito + '}';
+    }
+   
+
+
+  
   //Sobreescribimos el equals para que luego existeElemento funcione de ListaSE funcione como queremos.
    @Override
     public boolean equals(Object o) {

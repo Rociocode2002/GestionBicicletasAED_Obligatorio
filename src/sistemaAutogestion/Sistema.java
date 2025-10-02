@@ -4,7 +4,9 @@ package sistemaAutogestion;
 
 import dominio.Bicicleta;
 import dominio.Estacion;
+import dominio.Estado_Bicicleta;
 import dominio.Usuario;
+import sistemaAutogestion.Retorno.Resultado;
 import tads.ILista;
 //import tads.ListaDE;
 import tads.ListaSE;
@@ -12,9 +14,9 @@ import tads.ListaSE;
 
 public class Sistema implements IObligatorio {
 
-    private ILista<Usuario> usuarios; //para el metodo crearSistemaDeGestion, necesitamos tener estas listas inicializadas
-    private ILista<Estacion> estaciones;
-    private ILista<Bicicleta> bicicletas;
+    private ListaSE<Usuario> usuarios; //para el metodo crearSistemaDeGestion, necesitamos tener estas listas inicializadas
+    private ListaSE<Estacion> estaciones;
+    private ListaSE<Bicicleta> bicicletas;
     @Override
     public Retorno crearSistemaDeGestion() {        
 //return Retorno.noImplementada();
@@ -122,7 +124,7 @@ public class Sistema implements IObligatorio {
     
     @Override// Rocio
 public Retorno marcarEnMantenimiento(String codigo, String motivo) {
-    if(codigo == null || motivo == null ){
+    if(codigo == null || motivo == null || codigo == "" || motivo == ""){
         return Retorno.error1();
     }
     
@@ -132,7 +134,8 @@ public Retorno marcarEnMantenimiento(String codigo, String motivo) {
     for (int i = 0; i < longitud; i++) {
         
         if (i < longitud) { 
-            Bicicleta bicicletaBuscar = (Bicicleta) bicicletas.Obtener(i);
+            Bicicleta bicicletaBuscar;
+            bicicletaBuscar = (Bicicleta) bicicletas.Obtener(i);
             if (bicicletaBuscar.getCodigo().equals(codigo)) {
                 bicicletaEncontrada = bicicletaBuscar;
                 break; 
@@ -145,15 +148,15 @@ public Retorno marcarEnMantenimiento(String codigo, String motivo) {
         return Retorno.error2();
     }
     
-    if ("Alquilada".equals(bicicletaEncontrada.getEstado())) {
+    if ("ALQUILADA".equals(bicicletaEncontrada.getEstado())) {
         return Retorno.error3();
     }
     
-    if ("Mantenimiento".equals(bicicletaEncontrada.getEstado())) {
+    if ("MANTENIMIENTO".equals(bicicletaEncontrada.getEstado())) {
         return Retorno.error4();
     }
     
-    bicicletaEncontrada.setEstado("Mantenimiento");
+    bicicletaEncontrada.setEstado(Estado_Bicicleta.MANTENIMIENTO);
     return Retorno.ok();
 }
     
@@ -161,7 +164,7 @@ public Retorno marcarEnMantenimiento(String codigo, String motivo) {
   
  @Override//Rocio
 public Retorno repararBicicleta(String codigo) {
-    if (codigo == null || codigo.isEmpty()) {
+    if (codigo == null || codigo == "" ) {
         return Retorno.error1();
     }
     
@@ -184,11 +187,11 @@ public Retorno repararBicicleta(String codigo) {
         return Retorno.error2(); 
     }
     
-    if (!"Mantenimiento".equals(bicicletaEncontrada.getEstado())) {
+    if (!"MANTENIMIENTO".equals(bicicletaEncontrada.getEstado())) {
         return Retorno.error3(); 
     }
   
-    bicicletaEncontrada.setEstado("Disponible");
+    bicicletaEncontrada.setEstado(Estado_Bicicleta.DISPONIBLE);
     
     return Retorno.ok();
 }
@@ -228,12 +231,26 @@ public Retorno repararBicicleta(String codigo) {
 
     @Override//3.2 Rocio
     public Retorno listarUsuarios() {
-        String listarUsuarios = usuarios.mostrar();
+     
+        ListaSE<Usuario> Usuarios = this.usuarios;
+        String resultado = "";
+        
+        for(int i= 0; i< Usuarios.longitud;i++){
+        
+          Usuario usuario = Usuarios.Obtener(i);
+        
+        if (i > 0) {
+            resultado += "|";
+        }
+        
+   
+        resultado += usuario.toString();
+    
+}
 
-        Retorno ret = Retorno.ok();
-     // Como retorno la lista y el OK al mismo tiempo?
-
-        return ret;
+   return new Retorno(Resultado.OK, resultado);
+     
+        
     }
 
     @Override
