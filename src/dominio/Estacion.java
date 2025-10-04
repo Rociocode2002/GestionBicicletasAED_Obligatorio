@@ -4,6 +4,8 @@
  */
 package dominio;
 
+import tads.ListaSE;
+
 /**
  *
  * @author rocio
@@ -17,12 +19,21 @@ public class Estacion implements Comparable <Estacion>{
     private String Nombre;
     private String Barrio;
     private int Capacidad;
+    private ListaSE<Bicicleta> bicicletas;
+    private int cntBicicletasAncladas ;
+    //falta cola alquiler y cola Devolucion
 
-    
-    public Estacion(String nombre, String barrio, int capacidad) {
-        this.Nombre = nombre;
-        this.Barrio = barrio;
-        this.Capacidad = capacidad;
+    @Override
+    public String toString() {
+        return "Estacion{" + "Nombre=" + Nombre + ", Barrio=" + Barrio + ", Capacidad=" + Capacidad + ", bicicletas=" + bicicletas + ", cntBicicletasAncladas=" + cntBicicletasAncladas + '}';
+    }
+
+    public Estacion(String Nombre, String Barrio, int Capacidad, ListaSE<Bicicleta> bicicletas, int cntBicicletasAncladas) {
+        this.Nombre = Nombre;
+        this.Barrio = Barrio;
+        this.Capacidad = Capacidad;
+        this.bicicletas = bicicletas;
+        this.cntBicicletasAncladas = cntBicicletasAncladas;
     }
 
     public String getNombre() {
@@ -48,6 +59,25 @@ public class Estacion implements Comparable <Estacion>{
     public void setCapacidad(int Capacidad) {
         this.Capacidad = Capacidad;
     }
+
+    public ListaSE<Bicicleta> getBicicletas() {
+        return bicicletas;
+    }
+
+    public void setBicicletas(ListaSE<Bicicleta> bicicletas) {
+        this.bicicletas = bicicletas;
+    }
+
+    public int getCntBicicletasAncladas() {
+        return cntBicicletasAncladas;
+    }
+
+    public void setCntBicicletasAncladas(int cntBicicletasAncladas) {
+        this.cntBicicletasAncladas = cntBicicletasAncladas;
+    }
+    
+
+    
     
   //Sobreescribimos el equals para que luego existeElemento funcione de ListaSE funcione como queremos.
    @Override

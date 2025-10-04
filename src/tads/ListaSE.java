@@ -105,8 +105,8 @@ public class ListaSE<T extends Comparable<T>> implements ILista<T> {
     }
 
     @Override
-    public void Eliminar(int pos) throws PosFueraDeRangoException, ListaVaciaException {
-        if (pos <0 || pos>= Longitud()) throw new PosFueraDeRangoException();
+    public void Eliminar(int pos)   {
+        if (pos <0 || pos>= Longitud());
         NodoSE<T> actual = cabeza;
         if (pos == 0) {
             

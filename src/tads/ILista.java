@@ -6,13 +6,15 @@ public interface ILista<T> {
 
     void Insertar(T x, int pos) throws Exception;// si inserto en una posición que ya estaba, se "mueven" los siguientes
 
-    T Obtener(int pos) throws Exception;
+    T Obtener(int pos);
 
-    void Eliminar(int pos) throws Exception;
+    void Eliminar(int pos);
 
     int Longitud();
 
     boolean Vacia();
     
     boolean existeElemento(T elemento);
+    
+     String mostrar();
 }

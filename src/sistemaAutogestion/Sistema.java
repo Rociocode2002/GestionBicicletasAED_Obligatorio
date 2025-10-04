@@ -3,7 +3,9 @@ package sistemaAutogestion;
 //Integrantes del equipo: Rocío González nro est. 264963 - Analía López nro est. 331850
 import dominio.Bicicleta;
 import dominio.Estacion;
+import dominio.Estado_Bicicleta;
 import dominio.Usuario;
+import sistemaAutogestion.Retorno.Resultado;
 import tads.ILista;
 //import tads.ListaDE;
 import tads.ListaSE;
@@ -116,32 +118,84 @@ public class Sistema implements IObligatorio {
         return Retorno.ok();
     }
 
-    @Override//Rocioo
-    public Retorno marcarEnMantenimiento(String codigo, String motivo) {
-        if (codigo == null || motivo == null) {
-            return Retorno.error1();
+    
+    
+    @Override// Rocio
+public Retorno marcarEnMantenimiento(String codigo, String motivo) {
+    if(codigo == null || motivo == null || codigo == "" || motivo == ""){
+        return Retorno.error1();
+    }
+    
+    Bicicleta bicicletaEncontrada = null;
+    int longitud = bicicletas.Longitud();
+    
+    for (int i = 0; i < longitud; i++) {
+        
+        if (i < longitud) { 
+            Bicicleta bicicletaBuscar;
+            bicicletaBuscar = (Bicicleta) bicicletas.Obtener(i);
+            if (bicicletaBuscar.getCodigo().equals(codigo)) {
+                bicicletaEncontrada = bicicletaBuscar;
+                break; 
+            }
         }
-        //return Retorno.error1();
+    }
+    
 
-        Bicicleta bicicleta;
-        bicicleta = new Bicicleta();
-        bicicleta.setCodigo(codigo);
-        boolean bicicletaExiste = bicicletas.existeElemento(bicicleta);
-
-        if (!bicicletaExiste) {
-
-            return Retorno.error2();
-
-        }
-
+    if (bicicletaEncontrada == null) {
         return Retorno.error2();
-
     }
-
-    @Override // Rocio
-    public Retorno repararBicicleta(String codigo) {
-        return Retorno.noImplementada();
+    
+    if ("ALQUILADA".equals(bicicletaEncontrada.getEstado())) {
+        return Retorno.error3();
     }
+    
+    if ("MANTENIMIENTO".equals(bicicletaEncontrada.getEstado())) {
+        return Retorno.error4();
+    }
+    
+    bicicletaEncontrada.setEstado(Estado_Bicicleta.MANTENIMIENTO);
+    return Retorno.ok();
+}
+    
+    
+  
+ @Override//Rocio
+public Retorno repararBicicleta(String codigo) {
+    if (codigo == null || codigo == "" ) {
+        return Retorno.error1();
+    }
+    
+    Bicicleta bicicletaEncontrada = null;
+    int longitud = bicicletas.Longitud();
+    
+    
+    for (int i = 0; i < longitud; i++) {
+        // Validar que el índice esté dentro del rango
+        if (i >= 0 && i < longitud) {
+            Bicicleta bicicletaBuscar = (Bicicleta) bicicletas.Obtener(i);
+            if (bicicletaBuscar.getCodigo().equals(codigo)) {
+                bicicletaEncontrada = bicicletaBuscar;
+                break; 
+            }
+        }
+    }
+    
+    if (bicicletaEncontrada == null) {
+        return Retorno.error2(); 
+    }
+    
+    if (!"MANTENIMIENTO".equals(bicicletaEncontrada.getEstado())) {
+        return Retorno.error3(); 
+    }
+  
+    bicicletaEncontrada.setEstado(Estado_Bicicleta.DISPONIBLE);
+    
+    return Retorno.ok();
+}
+
+    
+    
 
     @Override
     public Retorno eliminarEstacion(String nombre) {
@@ -173,9 +227,28 @@ public class Sistema implements IObligatorio {
         return Retorno.noImplementada();
     }
 
-    @Override
+    @Override//3.2 Rocio
     public Retorno listarUsuarios() {
-        return Retorno.noImplementada();
+     
+        ListaSE<Usuario> Usuarios = this.usuarios;
+        String resultado = "";
+        
+        for(int i= 0; i< Usuarios.longitud;i++){
+        
+          Usuario usuario = Usuarios.Obtener(i);
+        
+        if (i > 0) {
+            resultado += "|";
+        }
+        
+   
+        resultado += usuario.toString();
+    
+}
+
+   return new Retorno(Resultado.OK, resultado);
+     
+        
     }
 
     @Override

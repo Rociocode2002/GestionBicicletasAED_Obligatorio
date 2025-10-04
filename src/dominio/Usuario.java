@@ -17,6 +17,24 @@ public class Usuario implements Comparable <Usuario>{
 
    private String Nombre;
    private String Cedula;
+   private Bicicleta bicicletaAlquilada;
+   private int cntAlquileres;
+
+    public Bicicleta getBicicletaAlquilada() {
+        return bicicletaAlquilada;
+    }
+
+    public void setBicicletaAlquilada(Bicicleta bicicletaAlquilada) {
+        this.bicicletaAlquilada = bicicletaAlquilada;
+    }
+
+    public int getCntAlquileres() {
+        return cntAlquileres;
+    }
+
+    public void setCntAlquileres(int cntAlquileres) {
+        this.cntAlquileres = cntAlquileres;
+    }
 
     public Usuario(String cedula, String nombre) {
         this.Nombre = nombre;
@@ -53,6 +71,12 @@ public class Usuario implements Comparable <Usuario>{
         return Nombre.toLowerCase().hashCode();
     }
     
+    @Override
+    public String toString() {
+        return this.Nombre + "#" + this.Cedula;
+    }
+}
+    
     
   
-}
+
