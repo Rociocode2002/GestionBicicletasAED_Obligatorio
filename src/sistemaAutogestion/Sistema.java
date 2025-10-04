@@ -230,10 +230,10 @@ public Retorno repararBicicleta(String codigo) {
     @Override//3.2 Rocio
     public Retorno listarUsuarios() {
      
-        ListaSE<Usuario> Usuarios = this.usuarios;
+        ILista<Usuario> Usuarios = this.usuarios;
         String resultado = "";
         
-        for(int i= 0; i< Usuarios.longitud;i++){
+        for(int i= 0; i< Usuarios.Longitud();i++){
         
           Usuario usuario = Usuarios.Obtener(i);
         

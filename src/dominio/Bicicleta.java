@@ -12,6 +12,10 @@ import java.util.logging.Logger;
  */
 public class Bicicleta implements Comparable <Bicicleta>{
 
+    public Bicicleta(String codigo, String tipoUpper) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     @Override
     public int compareTo(Bicicleta o) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

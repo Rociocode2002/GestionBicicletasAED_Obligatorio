@@ -12,6 +12,10 @@ import tads.ListaSE;
  */
 public class Estacion implements Comparable <Estacion>{
 
+    public Estacion(String nombre, String barrio, int capacidad) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     @Override
     public int compareTo(Estacion o) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
