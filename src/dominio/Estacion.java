@@ -8,7 +8,12 @@ package dominio;
  *
  * @author rocio
  */
-public class Estacion {
+public class Estacion implements Comparable <Estacion>{
+
+    @Override
+    public int compareTo(Estacion o) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     private String Nombre;
     private String Barrio;
     private int Capacidad;

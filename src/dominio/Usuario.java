@@ -8,7 +8,12 @@ package dominio;
  *
  * @author rocio
  */
-public class Usuario {
+public class Usuario implements Comparable <Usuario>{
+
+    @Override
+    public int compareTo(Usuario o) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
    private String Nombre;
    private String Cedula;

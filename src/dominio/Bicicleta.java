@@ -8,7 +8,12 @@ package dominio;
  *
  * @author rocio
  */
-public class Bicicleta {
+public class Bicicleta implements Comparable <Bicicleta>{
+
+    @Override
+    public int compareTo(Bicicleta o) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     private String Codigo;
     private String Tipo;
