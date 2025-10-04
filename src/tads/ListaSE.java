@@ -3,7 +3,7 @@ package tads;
 /* Clase ListaSE: Implementacion del TDA Lista usando
  * nodos simplemente enlazados, con apuntador al primer nodo 
  */
-public class ListaSE<T> implements ILista<T> {
+public class ListaSE<T extends Comparable<T>> implements ILista<T> {
 
     protected NodoSE<T> cabeza;
     protected int longitud;
@@ -27,6 +27,42 @@ public class ListaSE<T> implements ILista<T> {
         }
         longitud++;
     }
+    
+    // de clase del 30/09
+    public void AdicionarOrdenado (T x){
+        NodoSE<T> nodo_nuevo =new NodoSE<T>(x);
+        if (cabeza == null || nodo_nuevo.getDato().compareTo(cabeza.getDato()) < 0) 
+            cabeza = nodo_nuevo;
+        else {
+            NodoSE<T> actual = cabeza;
+            while (actual.getSiguiente()!= null && nodo_nuevo.getDato().compareTo(actual.getSiguiente().getDato())<0){
+                actual = actual.getSiguiente();
+            }
+            nodo_nuevo.setSiguiente(actual.getSiguiente());
+            actual.setSiguiente(nodo_nuevo);
+        }
+        longitud++;
+    }
+    
+    // de clase del 30/09
+    @Override
+    public boolean existeElemento (T x) {
+        
+        if (cabeza == null) 
+            return false;
+        
+        else  {
+            NodoSE<T> actual = cabeza;
+            while (actual != null)
+                if (actual.getDato().equals(x))
+                    return true;
+                else 
+                    actual = actual.getSiguiente();
+            
+        }
+        return false;    
+    }
+    
 
     @Override
     public void Insertar(T x, int pos) throws PosFueraDeRangoException {
@@ -101,25 +137,9 @@ public class ListaSE<T> implements ILista<T> {
         return (longitud == 0);
     }
     
-       @Override
-    public String mostrar() {
-      
-        NodoSE<T> mostrar = cabeza;
-        String res = "";
-        while (mostrar != null) {
-            res += mostrar.getDato() ;
-               if(mostrar.getSiguiente()!= null){
-                   res+= "#";
-               }
-            mostrar = mostrar.getSiguiente();
-        }
-        
-        return res;
-        
 
-    }
     
-    
+    /*  teniamos este método hecho, pero lo hicimos en la clase del 30/09
     @Override
     public boolean existeElemento(T elemento){
     
@@ -133,10 +153,7 @@ public class ListaSE<T> implements ILista<T> {
             aux = aux.getSiguiente();
         }
         return existe;
-        
-    
-    
-    }
+    }*/
     
 
 }
