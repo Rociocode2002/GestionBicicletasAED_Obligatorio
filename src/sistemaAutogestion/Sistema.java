@@ -37,7 +37,7 @@ public class Sistema implements IObligatorio {
         /* Consultar a la profe:  Acá alcanza con esto o falta validar que estos parametros no sean vacios?? 
   Y está bien usar los métodos de la clase String .trim().isEmpty()??
     (lo mismo pasa para registrar usuario y bicicleta)*/
-        if (nombre == null || nombre == " " || barrio == null) {
+        if (nombre == null || nombre == "" || barrio == null || barrio == "") {
             return Retorno.error1(); // parámetro inválido
         }
 
@@ -65,7 +65,7 @@ public class Sistema implements IObligatorio {
         //return Retorno.noImplementada();
 
         // Validamos Si alguno de los parámetros es null o vacío.
-        if (cedula == null || nombre == null) {
+        if (cedula == null || nombre == null || cedula == "" || nombre == "" ) {
             return Retorno.error1();
         }
 
@@ -86,6 +86,8 @@ public class Sistema implements IObligatorio {
         return Retorno.ok();
 
     }
+    
+    
 
     @Override // Analía
     public Retorno registrarBicicleta(String codigo, String tipo) {

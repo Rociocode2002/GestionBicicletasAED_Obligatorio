@@ -99,7 +99,6 @@ public class Bicicleta implements Comparable <Bicicleta>{
     }
    
 
-
   
   //Sobreescribimos el equals para que luego existeElemento funcione de ListaSE funcione como queremos.
    @Override
@@ -114,5 +113,7 @@ public class Bicicleta implements Comparable <Bicicleta>{
     public int hashCode() {
         return Codigo.toLowerCase().hashCode();
     }
+    
+    
     
 }
