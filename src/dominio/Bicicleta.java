@@ -5,6 +5,8 @@
 package dominio;
 import java.util.Date;
 import java.util.logging.Logger;
+import tads.ListaDE;
+import tads.ListaSE;
 
 /**
  *
@@ -27,6 +29,7 @@ public class Bicicleta implements Comparable <Bicicleta>{
     private Estacion estacionActual;
     private String motivoMantenimiento;
     private Date fechaIngresoDeposito;
+    private ListaDE<Bicicleta> listaDeposito;
 
     public String getCodigo() {
         return Codigo;
@@ -34,6 +37,14 @@ public class Bicicleta implements Comparable <Bicicleta>{
 
     public void setCodigo(String Codigo) {
         this.Codigo = Codigo;
+    }
+
+    public ListaDE<Bicicleta> getListaDeposito() {
+        return listaDeposito;
+    }
+
+    public void setListaDeposito(ListaDE<Bicicleta> listaDeposito) {
+        this.listaDeposito = listaDeposito;
     }
 
     public Tipo_Bicicleta getTipo() {
@@ -84,10 +95,9 @@ public class Bicicleta implements Comparable <Bicicleta>{
 
     @Override
     public String toString() {
-        return "Bicicleta{" + "Codigo=" + Codigo + ", tipo=" + tipo + ", estado=" + estado + ", estacionActual=" + estacionActual + ", motivoMantenimiento=" + motivoMantenimiento + ", fechaIngresoDeposito=" + fechaIngresoDeposito + '}';
+        return  Codigo + "#" + tipo + "#" + estado ;
     }
    
-
 
   
   //Sobreescribimos el equals para que luego existeElemento funcione de ListaSE funcione como queremos.
@@ -103,5 +113,7 @@ public class Bicicleta implements Comparable <Bicicleta>{
     public int hashCode() {
         return Codigo.toLowerCase().hashCode();
     }
+    
+    
     
 }
