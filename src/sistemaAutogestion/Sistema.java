@@ -7,7 +7,7 @@ import dominio.Estado_Bicicleta;
 import dominio.Usuario;
 import sistemaAutogestion.Retorno.Resultado;
 import tads.ILista;
-//import tads.ListaDE;
+import tads.ListaDE;
 import tads.ListaSE;
 
 public class Sistema implements IObligatorio {
@@ -15,6 +15,7 @@ public class Sistema implements IObligatorio {
     private ILista<Usuario> usuarios; //para el metodo crearSistemaDeGestion, necesitamos tener estas listas inicializadas
     private ILista<Estacion> estaciones;
     private ILista<Bicicleta> bicicletas;
+    private ListaDE<Bicicleta> listaDeposito;
 
     @Override
     public Retorno crearSistemaDeGestion() {
@@ -23,6 +24,7 @@ public class Sistema implements IObligatorio {
             usuarios = new ListaSE<Usuario>(); //Es necesario inicializar con el tipo de dato??
             estaciones = new ListaSE<Estacion>(); //ver luego si corresponde DE??
             bicicletas = new ListaSE<Bicicleta>();
+            listaDeposito = new ListaDE <Bicicleta>();
             return Retorno.ok();
         
     }
@@ -155,6 +157,9 @@ public Retorno marcarEnMantenimiento(String codigo, String motivo) {
     }
     
     bicicletaEncontrada.setEstado(Estado_Bicicleta.MANTENIMIENTO);
+    
+        listaDeposito.Adicionar(bicicletaEncontrada); 
+    
     return Retorno.ok();
 }
     
@@ -190,6 +195,7 @@ public Retorno repararBicicleta(String codigo) {
     }
   
     bicicletaEncontrada.setEstado(Estado_Bicicleta.DISPONIBLE);
+     listaDeposito.Adicionar(bicicletaEncontrada); 
     
     return Retorno.ok();
 }
@@ -253,7 +259,25 @@ public Retorno repararBicicleta(String codigo) {
 
     @Override
     public Retorno listarBicisEnDeposito() {
-        return Retorno.noImplementada();
+        ListaDE<Bicicleta> BicicletasEnDeposito = this.listaDeposito;
+        String resultado = "";
+        
+        for(int i = 0; i<BicicletasEnDeposito.Longitud();i++){
+        
+          Bicicleta bicicleta = BicicletasEnDeposito.Obtener(i);
+          
+          
+        if (i > 0) {
+            resultado += "|";
+        }
+        
+        
+   
+        resultado += bicicleta.toString();
+        }
+             return new Retorno(Resultado.OK, resultado);
+         
+        
     }
 
     @Override
