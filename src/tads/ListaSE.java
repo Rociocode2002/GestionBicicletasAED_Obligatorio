@@ -154,6 +154,11 @@ public class ListaSE<T extends Comparable<T>> implements ILista<T> {
         }
         return existe;
     }*/
+
+    @Override
+    public String mostrar() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 
 }
