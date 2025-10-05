@@ -12,23 +12,8 @@ import tads.ListaSE;
  */
 public class Estacion implements Comparable <Estacion>{
 
-<<<<<<< HEAD
-    public Estacion(String Nombre, String Barrio, int Capacidad) {
-        this.Nombre = Nombre;
-        this.Barrio = Barrio;
-        this.Capacidad = Capacidad;
-    }
     
-    public Estacion(String Nombre, String Barrio, int Capacidad, ListaSE<Bicicleta> bicicletas, int cntBicicletasAncladas) {
-        this.Nombre = Nombre;
-        this.Barrio = Barrio;
-        this.Capacidad = Capacidad;
-        this.bicicletas = bicicletas;
-        this.cntBicicletasAncladas = cntBicicletasAncladas;
-    }
-=======
-    
->>>>>>> 0e644649b208d94e81de1b96b83120921f09117f
+
 
     @Override
     public int compareTo(Estacion o) {
@@ -46,9 +31,6 @@ public class Estacion implements Comparable <Estacion>{
         return "Estacion{" + "Nombre=" + Nombre + ", Barrio=" + Barrio + ", Capacidad=" + Capacidad + ", bicicletas=" + bicicletas + ", cntBicicletasAncladas=" + cntBicicletasAncladas + '}';
     }
 
-<<<<<<< HEAD
-    
-=======
    
       public Estacion(String Nombre, String Barrio, int Capacidad) {
         this.Nombre = Nombre;
@@ -56,7 +38,7 @@ public class Estacion implements Comparable <Estacion>{
         this.Capacidad = Capacidad;
      
     }
->>>>>>> 0e644649b208d94e81de1b96b83120921f09117f
+
 
     public String getNombre() {
         return Nombre;

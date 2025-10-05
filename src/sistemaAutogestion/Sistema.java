@@ -37,11 +37,7 @@ public class Sistema implements IObligatorio {
         /* Consultar a la profe:  Acá alcanza con esto o falta validar que estos parametros no sean vacios?? 
   Y está bien usar los métodos de la clase String .trim().isEmpty()??
     (lo mismo pasa para registrar usuario y bicicleta)*/
-<<<<<<< HEAD
-        if (nombre == null || nombre.trim().isEmpty() || barrio == null || barrio.trim().isEmpty()) {
-=======
         if (nombre == null || nombre == "" || barrio == null || barrio == "") {
->>>>>>> 0e644649b208d94e81de1b96b83120921f09117f
             return Retorno.error1(); // parámetro inválido
         }
 
@@ -115,7 +111,7 @@ public class Sistema implements IObligatorio {
         }
 
         //  Verificar que no exista bici con el mismo código
-        Bicicleta nueva = new Bicicleta(codigo, tipoUpper);
+        Bicicleta nueva = new Bicicleta();
         if (bicicletas.existeElemento(nueva)) {
             return Retorno.error4();
         }
