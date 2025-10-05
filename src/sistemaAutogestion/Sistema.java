@@ -12,7 +12,7 @@ import tads.ListaSE;
 
 public class Sistema implements IObligatorio {
 
-    private ILista<Usuario> usuarios; //para el metodo crearSistemaDeGestion, necesitamos tener estas listas inicializadas
+    private ILista<Usuario> usuarios; 
     private ILista<Estacion> estaciones;
     private ILista<Bicicleta> bicicletas;
 
@@ -35,7 +35,7 @@ public class Sistema implements IObligatorio {
         /* Consultar a la profe:  Acá alcanza con esto o falta validar que estos parametros no sean vacios?? 
   Y está bien usar los métodos de la clase String .trim().isEmpty()??
     (lo mismo pasa para registrar usuario y bicicleta)*/
-        if (nombre == null || nombre == " " || barrio == null) {
+        if (nombre == null || nombre.trim().isEmpty() || barrio == null || barrio.trim().isEmpty()) {
             return Retorno.error1(); // parámetro inválido
         }
 
@@ -222,10 +222,33 @@ public Retorno repararBicicleta(String codigo) {
         return Retorno.noImplementada();
     }
 
-    @Override
+    
+    @Override //Analía
     public Retorno obtenerUsuario(String cedula) {
-        return Retorno.noImplementada();
+        
+        // validamos que no se null o vacío:
+        if (cedula == null || cedula.trim().isEmpty()) {
+         return Retorno.error1(); 
+        }
+
+        // validamos que la cédula tenga 8 dígitos
+        if (cedula.length() != 8) {
+           return Retorno.error2(); 
+        }
+
+        // buscamos el usuario en la lista:
+        for (int i = 0; i < usuarios.Longitud(); i++) {
+            Usuario u = usuarios.Obtener(i); 
+            if (u.getCedula().equals(cedula)) {
+                String resultado = u.getNombre() + "#" + u.getCedula();
+                return Retorno.ok(resultado);
+            }
+        }
+
+     // si no se encontró:
+        return Retorno.error3(); 
     }
+
 
     @Override//3.2 Rocio
     public Retorno listarUsuarios() {
@@ -256,11 +279,73 @@ public Retorno repararBicicleta(String codigo) {
         return Retorno.noImplementada();
     }
 
+    
     @Override
     public Retorno informaciónMapa(String[][] mapa) {
-        return Retorno.noImplementada();
+    // Validación básica
+        if (mapa == null || mapa.length == 0 || mapa[0].length == 0) {
+           return Retorno.ok("0#ambas|no existe");
+        }
+
+        int filas = mapa.length;
+        int columnas = mapa[0].length;
+
+        int[] estacionesFila = new int[filas];
+        int[] estacionesColumna = new int[columnas];
+
+     // Contar estaciones en cada fila y columna
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+             if (mapa[i][j] != null && !mapa[i][j].trim().isEmpty() && !mapa[i][j].equals("0")) {
+                    estacionesFila[i]++;
+                    estacionesColumna[j]++;
+                }
+            }
+        }
+
+        // Máximos
+        int maxFila = 0;
+        for (int valor : estacionesFila)
+            if (valor > maxFila) maxFila = valor;
+
+        int maxColumna = 0;
+        for (int valor : estacionesColumna)
+            if (valor > maxColumna) maxColumna = valor;
+
+        // Determinar tipo de máximo
+        String tipoMax;
+        if (maxFila == 0 && maxColumna == 0) {
+            tipoMax = "ambas"; // mapa vacío
+        } else if (maxFila > maxColumna) {
+            tipoMax = "fila";
+        } else if (maxColumna > maxFila) {
+         tipoMax = "columna";
+        } else {
+            tipoMax = "ambas";
+        }
+
+        // Verificar si existen 3 columnas consecutivas con conteo ascendente
+        boolean existeAscendente = false;
+        int j = 0;
+
+        while (j < columnas - 2 && !existeAscendente) {
+            if (estacionesColumna[j] < estacionesColumna[j + 1] &&
+                estacionesColumna[j + 1] < estacionesColumna[j + 2]) {
+                existeAscendente = true;
+            }
+            j++;
+        }
+
+
+        // Formar salida
+        String resultado = (Math.max(maxFila, maxColumna)) + "#" + tipoMax + "|" +
+        (existeAscendente ? "existe" : "no existe");
+
+        return Retorno.ok(resultado);
     }
 
+
+    
     @Override
     public Retorno listarBicicletasDeEstacion(String nombreEstacion) {
         return Retorno.noImplementada();
