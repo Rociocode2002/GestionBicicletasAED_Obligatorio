@@ -12,9 +12,7 @@ import tads.ListaSE;
  */
 public class Estacion implements Comparable <Estacion>{
 
-    public Estacion(String nombre, String barrio, int capacidad) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
     @Override
     public int compareTo(Estacion o) {
@@ -32,12 +30,12 @@ public class Estacion implements Comparable <Estacion>{
         return "Estacion{" + "Nombre=" + Nombre + ", Barrio=" + Barrio + ", Capacidad=" + Capacidad + ", bicicletas=" + bicicletas + ", cntBicicletasAncladas=" + cntBicicletasAncladas + '}';
     }
 
-    public Estacion(String Nombre, String Barrio, int Capacidad, ListaSE<Bicicleta> bicicletas, int cntBicicletasAncladas) {
+   
+      public Estacion(String Nombre, String Barrio, int Capacidad) {
         this.Nombre = Nombre;
         this.Barrio = Barrio;
         this.Capacidad = Capacidad;
-        this.bicicletas = bicicletas;
-        this.cntBicicletasAncladas = cntBicicletasAncladas;
+     
     }
 
     public String getNombre() {
