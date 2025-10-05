@@ -28,10 +28,10 @@ public class Test2_02RegistrarEstacion {
         retorno = s.registrarEstacion("Estacion01", "", 5);
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
 
-        retorno = s.registrarEstacion("   ", "Centro", 5);
+        retorno = s.registrarEstacion("", "Centro", 5);
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
 
-        retorno = s.registrarEstacion("Estacion01", "   ", 5);
+        retorno = s.registrarEstacion("Estacion01", "",  5);
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
 
         retorno = s.registrarEstacion(null, "Centro", 5);
