@@ -5,22 +5,8 @@ import java.util.logging.Logger;
 import tads.ListaDE;
 import tads.ListaSE;
 
-/**
- *
- * @author rocio
- */
 public class Bicicleta implements Comparable <Bicicleta>{
-
-
-    public Bicicleta() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public int compareTo(Bicicleta o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
+ 
     private String Codigo;
     private Tipo_Bicicleta tipo;
     private Estado_Bicicleta estado ;
@@ -38,7 +24,6 @@ public class Bicicleta implements Comparable <Bicicleta>{
 
 
     public Bicicleta() {
-       
     }
 
     @Override

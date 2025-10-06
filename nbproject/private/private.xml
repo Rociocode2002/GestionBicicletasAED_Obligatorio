@@ -3,11 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Codigo_Oblig/GestionBicicletasAED_Obligatorio/src/tads/ListaSE.java</file>
             <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Codigo_Oblig/GestionBicicletasAED_Obligatorio/src/sistemaAutogestion/Sistema.java</file>
-            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Codigo_Oblig/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_01CrearSistemaDeGestion.java</file>
-            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Codigo_Oblig/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_02RegistrarEstacion.java</file>
-            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Codigo_Oblig/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_05PonerBicicletaMantenimiento.java</file>
+            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Codigo_Oblig/GestionBicicletasAED_Obligatorio/src/dominio/Bicicleta.java</file>
         </group>
     </open-files>
 </project-private>
