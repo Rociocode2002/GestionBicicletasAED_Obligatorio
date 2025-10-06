@@ -1,9 +1,11 @@
 package sistemaAutogestion;
 
 //Integrantes del equipo: Rocío González nro est. 264963 - Analía López nro est. 331850
+
 import dominio.Bicicleta;
 import dominio.Estacion;
 import dominio.Estado_Bicicleta;
+import dominio.Tipo_Bicicleta;
 import dominio.Usuario;
 import sistemaAutogestion.Retorno.Resultado;
 import tads.ILista;
@@ -21,8 +23,8 @@ public class Sistema implements IObligatorio {
     public Retorno crearSistemaDeGestion() {
 
          
-            usuarios = new ListaSE<Usuario>(); //Es necesario inicializar con el tipo de dato??
-            estaciones = new ListaSE<Estacion>(); //ver luego si corresponde DE??
+            usuarios = new ListaSE<Usuario>(); 
+            estaciones = new ListaSE<Estacion>(); 
             bicicletas = new ListaSE<Bicicleta>();
             listaDeposito = new ListaDE <Bicicleta>();
             return Retorno.ok();
@@ -89,12 +91,11 @@ public class Sistema implements IObligatorio {
     
     
 
-    @Override // Analía
+    @Override 
     public Retorno registrarBicicleta(String codigo, String tipo) {
-        //return Retorno.noImplementada();
-
+        
         // Validamos Si alguno de los parámetros es null o vacío.
-        if (codigo == null || tipo == null) {
+        if (codigo == null || codigo =="" || tipo == null || tipo =="") {
             return Retorno.error1();
         }
 
@@ -103,15 +104,17 @@ public class Sistema implements IObligatorio {
             return Retorno.error2();
         }
 
-        // Validamos tipo permitido
-        // Podemos usar el equals de String??
-        String tipoUpper = tipo.toUpperCase(); // para comparar sin importar mayúsculas/minúsculas
-        if (!tipoUpper.equals("URBANA") && !tipoUpper.equals("MOUNTAIN") && !tipoUpper.equals("ELECTRICA")) {
+        // Validamos tipo permitido:
+ // ??? Es correcto usar .valueOf para Convertir el String a Tipo_Bicicleta???
+       Tipo_Bicicleta tipoBici;
+        try {
+            tipoBici = Tipo_Bicicleta.valueOf(tipo.toUpperCase());
+        } catch (IllegalArgumentException e) {
             return Retorno.error3();
         }
 
         //  Verificar que no exista bici con el mismo código
-        Bicicleta nueva = new Bicicleta();
+        Bicicleta nueva = new Bicicleta(codigo, tipoBici);
         if (bicicletas.existeElemento(nueva)) {
             return Retorno.error4();
         }

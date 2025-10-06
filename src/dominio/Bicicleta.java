@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package dominio;
 import java.util.Date;
 import java.util.logging.Logger;
@@ -14,14 +11,7 @@ import tads.ListaSE;
  */
 public class Bicicleta implements Comparable <Bicicleta>{
 
-    public Bicicleta(String codigo, String tipoUpper) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    @Override
-    public int compareTo(Bicicleta o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     
     private String Codigo;
     private Tipo_Bicicleta tipo;
@@ -31,6 +21,23 @@ public class Bicicleta implements Comparable <Bicicleta>{
     private Date fechaIngresoDeposito;
     private ListaDE<Bicicleta> listaDeposito;
 
+
+  
+    public Bicicleta(String codigo, Tipo_Bicicleta tipo) {
+     this.Codigo = codigo;
+     this.tipo = tipo; 
+    }
+
+
+    public Bicicleta() {
+       
+    }
+
+    @Override
+    public int compareTo(Bicicleta o) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
     public String getCodigo() {
         return Codigo;
     }
@@ -87,11 +94,7 @@ public class Bicicleta implements Comparable <Bicicleta>{
         this.fechaIngresoDeposito = fechaIngresoDeposito;
     }
 
-    public Bicicleta(String Codigo, Tipo_Bicicleta tipo) {
-        this.Codigo = Codigo;
-        this.tipo = tipo;
-       
-    }
+  
 
     @Override
     public String toString() {
