@@ -8,13 +8,9 @@ package dominio;
  *
  * @author rocio
  */
-public enum  Tipo_Bicicleta {
+    public enum  Tipo_Bicicleta {
     
-     URBANA,
-    MOUNTAIN, 
-    ELECTRICA
-    
-    
-    
-    
-}
+        URBANA,
+        MOUNTAIN, 
+        ELECTRICA   
+    }
