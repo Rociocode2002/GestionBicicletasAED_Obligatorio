@@ -30,17 +30,18 @@ public class Test3_02ListarUsuarios {
     }
 
     @Test
-    public void listarUsuariosIngresoOrdenado() {
+    public void listarUsuariosIngresoOrdenado() { // NO FUNCIONA
         s.registrarUsuario("11111111", "Usuario01");
         s.registrarUsuario("31221111", "Usuario02");
         s.registrarUsuario("11331111", "Usuario03");
         retorno = s.listarUsuarios();
+        System.out.print(retorno.getValorString());
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         assertEquals("Usuario01#11111111|Usuario02#31221111|Usuario03#11331111", retorno.getValorString());
     }
 
     @Test
-    public void listarUsuariosIngresoDesordenado() {
+    public void listarUsuariosIngresoDesordenado() { // NO FUNCIONA
         s.registrarUsuario("11111111", "Usuario01");
         s.registrarUsuario("11331111", "Usuario03");
         s.registrarUsuario("31221111", "Usuario02");

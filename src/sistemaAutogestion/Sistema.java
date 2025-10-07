@@ -17,7 +17,7 @@ public class Sistema implements IObligatorio {
     private ILista<Usuario> usuarios; 
     private ILista<Estacion> estaciones;
     private ILista<Bicicleta> bicicletas;
-    private ListaDE<Bicicleta> listaDeposito;
+    private ListaSE<Bicicleta> listaDeposito;
 
     @Override
     public Retorno crearSistemaDeGestion() {
@@ -26,7 +26,7 @@ public class Sistema implements IObligatorio {
             usuarios = new ListaSE<Usuario>(); 
             estaciones = new ListaSE<Estacion>(); 
             bicicletas = new ListaSE<Bicicleta>();
-            listaDeposito = new ListaDE <Bicicleta>();
+            listaDeposito = new ListaSE<Bicicleta>();
             return Retorno.ok();
         
     }
@@ -83,7 +83,7 @@ public class Sistema implements IObligatorio {
         }
 
         // Agregamos usuario a la lista
-        usuarios.Adicionar(nuevo);
+        usuarios.AdicionarOrdenado(nuevo);
 
         return Retorno.ok();
 
@@ -120,8 +120,10 @@ public class Sistema implements IObligatorio {
         }
 
         // Agregar bicicleta al depósito
-        bicicletas.Adicionar(nueva);
+       // .Adicionar(nueva);
+       nueva.setEstado(Estado_Bicicleta.DISPONIBLE);
         listaDeposito.Adicionar(nueva);
+        
 
         return Retorno.ok();
     }
@@ -135,7 +137,7 @@ public Retorno marcarEnMantenimiento(String codigo, String motivo) {
     }
     
     Bicicleta bicicletaEncontrada = null;
-    int longitud = bicicletas.Longitud();
+    int longitud = listaDeposito.Longitud();
     
     for (int i = 0; i < longitud; i++) {
         
@@ -178,7 +180,7 @@ public Retorno repararBicicleta(String codigo) {
     }
     
     Bicicleta bicicletaEncontrada = null;
-    int longitud = bicicletas.Longitud();
+    int longitud = listaDeposito.Longitud();
     
     
     for (int i = 0; i < longitud; i++) {
@@ -278,9 +280,10 @@ public Retorno repararBicicleta(String codigo) {
         
    
         resultado += usuario.toString();
+        
     
 }
-
+  System.out.print(resultado);
    return new Retorno(Resultado.OK, resultado);
      
         
@@ -288,12 +291,12 @@ public Retorno repararBicicleta(String codigo) {
 
     @Override
     public Retorno listarBicisEnDeposito() {
-        ListaDE<Bicicleta> BicicletasEnDeposito = this.listaDeposito;
+       
         String resultado = "";
         
-        for(int i = 0; i<BicicletasEnDeposito.Longitud();i++){
+        for(int i = 0; i<listaDeposito.Longitud();i++){
         
-          Bicicleta bicicleta = BicicletasEnDeposito.Obtener(i);
+          Bicicleta bicicleta = listaDeposito.Obtener(i);
           
           
         if (i > 0) {
@@ -304,6 +307,7 @@ public Retorno repararBicicleta(String codigo) {
    
         resultado += bicicleta.toString();
         }
+          System.out.print(resultado);
              return new Retorno(Resultado.OK, resultado);
          
         
