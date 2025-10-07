@@ -15,25 +15,29 @@ public class Test2_06RepararBicicleta {
     }
 
     @Test
-    public void obtenerUsuarioOk() {
-        s.registrarUsuario("12345678", "Usuario01");
-        retorno = s.obtenerUsuario("12345678");
+    public void repararBicicletaOk() {
+        s.registrarBicicleta("2516521", "MOUNTAIN");
+        s.marcarEnMantenimiento("2516521", "rota");
+         retorno =  s.repararBicicleta("2516521");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
-        assertEquals("Usuario01#12345678", retorno.getValorString());
+        
     }
 
     @Test
-    public void obtenerUsuarioError01() {
+    public void repararBicicletaError01() {
+         s.registrarBicicleta("2516521", "MOUNTAIN");
+        s.marcarEnMantenimiento("2516521", "rota");
+         retorno =  s.repararBicicleta("");
+        assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
+    }
+
+    @Test
+    public void repararBicicletaError02() {
         //Completar
     }
 
     @Test
-    public void obtenerUsuarioError02() {
-        //Completar
-    }
-
-    @Test
-    public void obtenerUsuarioError03() {
+    public void repararBicicletaError03() {
         //Completar
     }
 

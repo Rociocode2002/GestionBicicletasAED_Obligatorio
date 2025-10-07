@@ -35,6 +35,7 @@ public class Test3_02ListarUsuarios {
         s.registrarUsuario("31221111", "Usuario02");
         s.registrarUsuario("11331111", "Usuario03");
         retorno = s.listarUsuarios();
+        System.out.print(retorno.getValorString());
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         assertEquals("Usuario01#11111111|Usuario02#31221111|Usuario03#11331111", retorno.getValorString());
     }

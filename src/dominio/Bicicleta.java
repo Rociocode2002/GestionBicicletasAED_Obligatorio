@@ -13,7 +13,7 @@ public class Bicicleta implements Comparable <Bicicleta>{
     private Estacion estacionActual;
     private String motivoMantenimiento;
     private Date fechaIngresoDeposito;
-    private ListaDE<Bicicleta> listaDeposito;
+    private ListaSE<Bicicleta> listaDeposito;
 
 
   
@@ -39,11 +39,11 @@ public class Bicicleta implements Comparable <Bicicleta>{
         this.Codigo = Codigo;
     }
 
-    public ListaDE<Bicicleta> getListaDeposito() {
+    public ListaSE<Bicicleta> getListaDeposito() {
         return listaDeposito;
     }
 
-    public void setListaDeposito(ListaDE<Bicicleta> listaDeposito) {
+    public void setListaDeposito(ListaSE<Bicicleta> listaDeposito) {
         this.listaDeposito = listaDeposito;
     }
 
