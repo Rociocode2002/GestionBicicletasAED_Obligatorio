@@ -20,6 +20,8 @@ public class Bicicleta implements Comparable <Bicicleta>{
     public Bicicleta(String codigo, Tipo_Bicicleta tipo) {
      this.Codigo = codigo;
      this.tipo = tipo; 
+     this.estado = Estado_Bicicleta.DISPONIBLE;
+     
     }
 
 
