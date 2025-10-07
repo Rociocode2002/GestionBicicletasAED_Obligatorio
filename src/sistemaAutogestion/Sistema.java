@@ -121,6 +121,7 @@ public class Sistema implements IObligatorio {
 
         // Agregar bicicleta al depósito
        // .Adicionar(nueva);
+       nueva.setEstado(Estado_Bicicleta.DISPONIBLE);
         listaDeposito.Adicionar(nueva);
         
 
@@ -306,6 +307,7 @@ public Retorno repararBicicleta(String codigo) {
    
         resultado += bicicleta.toString();
         }
+          System.out.print(resultado);
              return new Retorno(Resultado.OK, resultado);
          
         
