@@ -121,6 +121,7 @@ public class Sistema implements IObligatorio {
 
         // Agregar bicicleta al depósito
         bicicletas.Adicionar(nueva);
+        listaDeposito.Adicionar(nueva);
 
         return Retorno.ok();
     }
