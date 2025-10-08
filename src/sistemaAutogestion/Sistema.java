@@ -131,47 +131,51 @@ public class Sistema implements IObligatorio {
 
     
     
-    @Override// Rocio
+@Override// Rocio
 public Retorno marcarEnMantenimiento(String codigo, String motivo) {
-    if(codigo == null || motivo == null || codigo == "" || motivo == ""){
-        return Retorno.error1();
-    }
-    
-    Bicicleta bicicletaEncontrada = null;
-    int longitud = listaDeposito.Longitud();
-    
-    for (int i = 0; i < longitud; i++) {
-        
-        if (i < longitud) { 
-            Bicicleta bicicletaBuscar;
-            bicicletaBuscar = (Bicicleta) listaDeposito.Obtener(i);
-            if (bicicletaBuscar.getCodigo().equals(codigo)) {
-                bicicletaEncontrada = bicicletaBuscar;
-                break; 
-            }
+if(codigo == null || motivo == null || codigo == "" || motivo == ""){
+    return Retorno.error1();
+}
+
+Bicicleta bicicletaEncontrada = null;
+int longitud = listaDeposito.Longitud();
+
+for (int i = 0; i < longitud; i++) {
+
+    if (i < longitud) { 
+        Bicicleta bicicletaBuscar;
+        bicicletaBuscar = (Bicicleta) listaDeposito.Obtener(i);
+        if (bicicletaBuscar.getCodigo().equals(codigo)) {
+            bicicletaEncontrada = bicicletaBuscar;
+            break; 
         }
     }
-    
-
-    if (bicicletaEncontrada == null) {
-        return Retorno.error2();
-    }
-    
-    if ("ALQUILADA".equals(bicicletaEncontrada.getEstado())) {
-        return Retorno.error3();
-    }
-    
-    if ("MANTENIMIENTO".equals(bicicletaEncontrada.getEstado())) {
-        return Retorno.error4();
-    }
-    
-    bicicletaEncontrada.setEstado(Estado_Bicicleta.MANTENIMIENTO);
-    
-        listaDeposito.Adicionar(bicicletaEncontrada); 
-    
-    return Retorno.ok();
 }
-    
+
+
+if (bicicletaEncontrada == null) {
+    return Retorno.error2();
+}
+
+/* if ("ALQUILADA".equals(bicicletaEncontrada.getEstado())) {
+    return Retorno.error3();
+} Para la primer entrega no hay bicis alquiladas*/
+ if (bicicletaEncontrada.getEstado() == Estado_Bicicleta.MANTENIMIENTO)
+{
+    return Retorno.error4();
+}
+
+
+bicicletaEncontrada.setEstado(Estado_Bicicleta.MANTENIMIENTO);
+
+
+
+
+listaDeposito.Adicionar(bicicletaEncontrada); 
+
+return Retorno.ok();
+}
+
     
   
  @Override//Rocio
@@ -187,7 +191,7 @@ public Retorno repararBicicleta(String codigo) {
     for (int i = 0; i < longitud; i++) {
         // Validar que el índice esté dentro del rango
         if (i >= 0 && i < longitud) {
-            Bicicleta bicicletaBuscar = (Bicicleta) bicicletas.Obtener(i);
+            Bicicleta bicicletaBuscar = (Bicicleta) listaDeposito.Obtener(i);
             if (bicicletaBuscar.getCodigo().equals(codigo)) {
                 bicicletaEncontrada = bicicletaBuscar;
                 break; 
@@ -199,11 +203,12 @@ public Retorno repararBicicleta(String codigo) {
         return Retorno.error2(); 
     }
     
-    if (!"MANTENIMIENTO".equals(bicicletaEncontrada.getEstado())) {
+    if (bicicletaEncontrada.getEstado() != Estado_Bicicleta.MANTENIMIENTO) {
         return Retorno.error3(); 
     }
-  
-    bicicletaEncontrada.setEstado(Estado_Bicicleta.DISPONIBLE);
+ 
+
+     bicicletaEncontrada.setEstado(Estado_Bicicleta.DISPONIBLE);
      listaDeposito.Adicionar(bicicletaEncontrada); 
     
     return Retorno.ok();
@@ -308,7 +313,7 @@ public Retorno repararBicicleta(String codigo) {
    
         resultado += bicicleta.toString();
         }
-          System.out.print(resultado);
+        
              return new Retorno(Resultado.OK, resultado);
          
         

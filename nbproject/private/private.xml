@@ -3,7 +3,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/GestionBicicletasAED_Obligatorio/src/tads/ListaSE.java</file>
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/GestionBicicletasAED_Obligatorio/src/sistemaAutogestion/Sistema.java</file>
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/GestionBicicletasAED_Obligatorio/src/tads/ILista.java</file>
@@ -19,18 +18,13 @@
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_01CrearSistemaDeGestion.java</file>
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test3_02ListarUsuarios.java</file>
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_05PonerBicicletaMantenimiento.java</file>
-            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_06RepararBicicleta.java</file>
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test3_03ListarBicisEnDeposito.java</file>
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_03RegistrarUsuario.java</file>
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_04RegistrarBicicleta.java</file>
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test3_01ObtenerUsuario.java</file>
-=======
-            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Codigo_Oblig/GestionBicicletasAED_Obligatorio/src/sistemaAutogestion/Sistema.java</file>
-            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Codigo_Oblig/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_03RegistrarUsuario.java</file>
-            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Codigo_Oblig/GestionBicicletasAED_Obligatorio/src/dominio/Usuario.java</file>
-            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Codigo_Oblig/GestionBicicletasAED_Obligatorio/src/tads/ILista.java</file>
-            <file>file:/C:/Users/alope/Documents/ORT/Algoritmos/Obligatorio/Codigo_Oblig/GestionBicicletasAED_Obligatorio/src/tads/ListaSE.java</file>
->>>>>>> d5179cb94516d2ad30665526bd381f633503afdc
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/profe-Test2_05MarcarEnMantenimiento.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_06RepararBicicleta.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/Obl-AED-ago25/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test3_04InformacionMapa.java</file>
         </group>
     </open-files>
 </project-private>

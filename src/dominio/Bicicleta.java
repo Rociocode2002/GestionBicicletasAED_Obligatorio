@@ -91,11 +91,6 @@ public class Bicicleta implements Comparable <Bicicleta>{
 
   
 
-    @Override
-    public String toString() {
-        return  Codigo + "#" + tipo + "#" + estado ;
-    }
-   
 
   
   //Sobreescribimos el equals para que luego existeElemento funcione de ListaSE funcione como queremos.
@@ -112,6 +107,25 @@ public class Bicicleta implements Comparable <Bicicleta>{
         return Codigo.toLowerCase().hashCode();
     }
     
-    
-    
+    @Override
+    public String toString() {
+        String estadoFormateado = "";
+        switch (estado) {
+            case DISPONIBLE:
+                estadoFormateado = "Disponible";
+                break;
+            case MANTENIMIENTO:
+                estadoFormateado = "Mantenimiento";
+                break;
+            case ALQUILADA:
+                estadoFormateado = "Alquilada";
+                break;
+            default:
+                estadoFormateado = estado.name();
+        }
+        
+        return Codigo + "#" + tipo + "#" + estadoFormateado;
+    }
 }
+    
+

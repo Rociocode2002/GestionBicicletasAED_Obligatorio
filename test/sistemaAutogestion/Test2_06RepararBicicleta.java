@@ -1,9 +1,19 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package sistemaAutogestion;
 
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
+/**
+ *
+ * @author rocio
+ */
+
+   
 public class Test2_06RepararBicicleta {
 
     private Retorno retorno;
@@ -42,10 +52,12 @@ public class Test2_06RepararBicicleta {
 
     @Test
     public void repararBicicletaError03() {  //NO FUNCIONA
-        retorno =  s.registrarBicicleta("2516521", "MOUNTAIN");
-       retorno = s.marcarEnMantenimiento("2516521", "rota");
-         retorno =  s.repararBicicleta("2516521");
+        retorno =  s.registrarBicicleta("251652", "MOUNTAIN");
+         retorno =  s.repararBicicleta("251652");
         assertEquals(Retorno.Resultado.ERROR_3, retorno.getResultado());
     }
 
 }
+
+    
+
