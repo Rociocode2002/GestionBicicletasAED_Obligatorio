@@ -1,13 +1,21 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package sistemaAutogestion;
 
-import static org.junit.Assert.assertEquals;
+/**
+ *
+ * @author yanete
+ */
+
 import org.junit.Before;
 import org.junit.Test;
-
+import static org.junit.Assert.*;
 
 public class Test2_03RegistrarUsuario {
-     private Retorno ret;
+
+    private Retorno ret;
     private final IObligatorio s = new Sistema();
 
     @Before
@@ -15,46 +23,8 @@ public class Test2_03RegistrarUsuario {
         s.crearSistemaDeGestion();
     }
 
-    /*@Test
-    public void registrarUsuarioOk() {
-        retorno = s.registrarUsuario("12345454", "Jose");
-        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
-    }
+    // ===================== OK =====================
 
-    @Test
-    public void registrarUsuarioError01() {
-        retorno  = s.registrarUsuario("56565656", "");
-        assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
-        retorno = s.registrarUsuario(null, "Jose");
-        assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
-        retorno = s.registrarUsuario( "98923945" ,null );
-        assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
-        retorno = s.registrarUsuario("", "maria");
-        assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
-     
-    }
-
-    @Test
-    public void registrarUsuarioError02() {
-       retorno  = s.registrarUsuario("5656565", "Maria");
-        assertEquals(Retorno.Resultado.ERROR_2, retorno.getResultado());
-        retorno  = s.registrarUsuario("565656522", "Jose");
-        assertEquals(Retorno.Resultado.ERROR_2, retorno.getResultado());
-
-    }
-
-    @Test
-    public void registrarUsuarioError03() {
-        
-        s.registrarUsuario("12345454", "Jose");
-        
-          retorno = s.registrarUsuario("12345454", "Jose");
-        assertEquals(Retorno.Resultado.ERROR_3, retorno.getResultado());
-        
-        
-
-    }*/
-    
     @Test
     public void ok_CiConCerosALaIzquierda() {
         ret = s.registrarUsuario("01234567", "Ana");
@@ -157,5 +127,5 @@ public class Test2_03RegistrarUsuario {
         ret = s.registrarUsuario("12345678", "OtroNombre");
         assertEquals(Retorno.Resultado.ERROR_3, ret.getResultado());
     }
-    
 }
+

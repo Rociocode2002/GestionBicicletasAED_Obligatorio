@@ -59,7 +59,7 @@ public class Test2_04RegistrarBicicleta {
     @Test
     public void registrarBicicletaError04() {
         s.registrarBicicleta("123123", "URBANA");
-        retorno = s.registrarBicicleta("123123", "ELECTRICA");
+        retorno = s.registrarBicicleta("123123", "URBANA");
         assertEquals(Retorno.Resultado.ERROR_4, retorno.getResultado());
 
     }
