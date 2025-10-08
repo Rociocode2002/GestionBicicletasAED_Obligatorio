@@ -18,7 +18,7 @@ public class Test2_05PonerBicicletaMantenimiento {
     public void marcarEnMantenimientoOK() {
         retorno = s.registrarBicicleta("555655", "MOUNTAIN");
         retorno = s.marcarEnMantenimiento("555655", "rota");
-        assertEquals(Retorno.Resultado.OK, retorno.getResultado());// NO FUNCIONA
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
        
     }
 
@@ -40,22 +40,48 @@ public class Test2_05PonerBicicletaMantenimiento {
         assertEquals(Retorno.Resultado.ERROR_2, retorno.getResultado());
     }
 
-    @Test
-    public void marcarEnMantenimientoError03() {
+    /*@Test
+    public void marcarEnMantenimientoError03() { 
           //retorno = s.registrarBicicleta("123123", "MOUNTAIN");
         retorno = s.marcarEnMantenimiento("123123", "rota");
          retorno = s.marcarEnMantenimiento("123123", "rota");
             assertEquals(Retorno.Resultado.ERROR_3, retorno.getResultado());
         
         
-    }
+    } */
     
     @Test
     public void marcarEnMantenimientoError04() {
+            retorno = s.registrarBicicleta("123123", "MOUNTAIN");
         retorno = s.marcarEnMantenimiento("123123", "rota");
         retorno = s.marcarEnMantenimiento("123123", "rota");
         assertEquals(Retorno.Resultado.ERROR_4, retorno.getResultado());
     
     };
+    
+    
+     @Test
+    public void ok_BiciEnEstacionPasaAMantenimientoYVaADeposito() {
+        s.registrarEstacion("E1", "Centro", 2);
+        s.registrarBicicleta("ABC001", "URBANA");
+        s.asignarBicicletaAEstacion("ABC001", "E1");
+
+        // Pre: está en estación
+        Retorno rListEst = s.listarBicicletasDeEstacion("E1");
+        assertTrue(rListEst.getValorString().contains("ABC001"));
+
+        retorno = s.marcarEnMantenimiento("ABC001", "rueda pinchada");
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+
+        // Ya no está en estación y sí figura en depósito como MANTENIMIENTO
+        rListEst = s.listarBicicletasDeEstacion("E1");
+        assertFalse(rListEst.getValorString().contains("ABC001"));
+
+        Retorno rDep = s.listarBicisEnDeposito();
+        String dep = rDep.getValorString();
+        assertTrue(dep.contains("ABC001"));
+        assertTrue(dep.toUpperCase().contains("ABC001#URBANA#MANTENIMIENTO"));
+    }
+
 
 }

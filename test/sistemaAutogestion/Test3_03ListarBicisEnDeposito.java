@@ -5,6 +5,8 @@
 package sistemaAutogestion;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,33 +32,47 @@ public class Test3_03ListarBicisEnDeposito {
 
     @Test
     public void listarBicisDepositoSoloUnaBici() {
-        s.registrarBicicleta("35753", "MOUNTAIN");
+        s.registrarBicicleta("357537", "MOUNTAIN");
+        retorno = s.listarBicisEnDeposito();
+       
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+        assertEquals("357537#MOUNTAIN#Disponible", retorno.getValorString());
+    }
+    
+       @Test
+    public void variasBicis_OrdenIngreso() {
+        s.registrarBicicleta("ABC001", "URBANA");
+        s.registrarBicicleta("ABC002", "MOUNTAIN");
+        s.registrarBicicleta("ABC003", "ELECTRICA");
+
         retorno = s.listarBicisEnDeposito();
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
-        //assertEquals("35753#MOUNTAIN#", retorno.getValorString());
+        assertEquals(
+            "ABC001#URBANA#Disponible|ABC002#MOUNTAIN#Disponible|ABC003#ELECTRICA#Disponible",
+            retorno.getValorString()
+        );
     }
-
-    @Test
-    public void listarBicisDepositoIngresoOrdenado() { // NO FUNCIONA
-        s.registrarUsuario("11111111", "Usuario01");
-        s.registrarUsuario("31221111", "Usuario02");
-        s.registrarUsuario("11331111", "Usuario03");
-        retorno = s.listarUsuarios();
-        System.out.print(retorno.getValorString());
+   @Test
+    public void estadoMantenimiento_ApareceComoMantenimiento() {
+        s.registrarBicicleta("ABC001", "URBANA");
+        s.marcarEnMantenimiento("ABC001", "rueda");
+        retorno = s.listarBicisEnDeposito();
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
-        assertEquals("Usuario01#11111111|Usuario02#31221111|Usuario03#11331111", retorno.getValorString());
+        assertTrue(retorno.getValorString().contains("ABC001#URBANA#Mantenimiento"));
     }
-
-    @Test
-    public void listarBicisDepositoDesordenado() { // NO FUNCIONA
-        s.registrarUsuario("11111111", "Usuario01");
-        s.registrarUsuario("11331111", "Usuario03");
-        s.registrarUsuario("31221111", "Usuario02");
-        retorno = s.listarUsuarios();
-        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
-        assertEquals("Usuario01#11111111|Usuario02#31221111|Usuario03#11331111", retorno.getValorString());
-    }
-
-}
     
+     @Test
+    public void recursividad_NoAgregaSeparadorFinal() {
+        s.registrarBicicleta("A00001", "URBANA");
+        s.registrarBicicleta("A00002", "URBANA");
+        String sdep = s.listarBicisEnDeposito().getValorString();
+        assertFalse("No debe terminar con '|'", sdep.endsWith("|"));
+        assertTrue("Debe tener separador entre elementos", sdep.contains("|"));
+    }
+   
+}
+
+
+    
+
 

@@ -30,20 +30,31 @@ public class ListaSE<T extends Comparable<T>> implements ILista<T> {
     
     // de clase del 30/09
     @Override
-    public void AdicionarOrdenado (T x){
-        NodoSE<T> nodo_nuevo =new NodoSE<T>(x);
-        if (cabeza == null || nodo_nuevo.getDato().compareTo(cabeza.getDato()) < 0) 
-            cabeza = nodo_nuevo;
-        else {
-            NodoSE<T> actual = cabeza;
-            while (actual.getSiguiente()!= null && nodo_nuevo.getDato().compareTo(actual.getSiguiente().getDato())<0){
-                actual = actual.getSiguiente();
-            }
-            nodo_nuevo.setSiguiente(actual.getSiguiente());
-            actual.setSiguiente(nodo_nuevo);
+ 
+public void AdicionarOrdenado(T x) {
+    NodoSE<T> nodo_nuevo = new NodoSE<T>(x);
+    
+   
+    if (cabeza == null || nodo_nuevo.getDato().compareTo(cabeza.getDato()) <= 0) {
+        nodo_nuevo.setSiguiente(cabeza);
+        cabeza = nodo_nuevo;
+    } 
+  
+    else {
+        NodoSE<T> actual = cabeza;
+        
+       
+        while (actual.getSiguiente() != null && 
+               nodo_nuevo.getDato().compareTo(actual.getSiguiente().getDato()) > 0) {
+            actual = actual.getSiguiente();
         }
-        longitud++;
+        
+      
+        nodo_nuevo.setSiguiente(actual.getSiguiente());
+        actual.setSiguiente(nodo_nuevo);
     }
+    longitud++;
+}
     
     // de clase del 30/09
     @Override
