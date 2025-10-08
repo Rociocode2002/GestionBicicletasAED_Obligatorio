@@ -39,7 +39,7 @@ public class Sistema implements IObligatorio {
         /* Consultar a la profe:  Acá alcanza con esto o falta validar que estos parametros no sean vacios?? 
   Y está bien usar los métodos de la clase String .trim().isEmpty()??
     (lo mismo pasa para registrar usuario y bicicleta)*/
-        if (nombre == null || nombre == "" || barrio == null || barrio == "") {
+        if (nombre == null || nombre.trim().isEmpty()|| barrio == null || barrio.trim().isEmpty()) {
             return Retorno.error1(); // parámetro inválido
         }
 
@@ -67,13 +67,13 @@ public class Sistema implements IObligatorio {
         //return Retorno.noImplementada();
 
         // Validamos Si alguno de los parámetros es null o vacío.
-        if (cedula == null || nombre == null || cedula == "" || nombre == "" ) {
+        if (cedula == null || nombre == null || cedula.trim().isEmpty()|| nombre.trim().isEmpty() ) {
             return Retorno.error1();
         }
 
-        // Validamos formato de cédula: exactamente 8 dígitos
-        if (cedula.length() != 8) {
-            return Retorno.error2(); // formato cédula inválido
+        // Validamos formato de cédula: exactamente 8 dígitos numéricos
+        if (!cedula.trim().matches("\\d{8}")) {
+          return Retorno.error2(); // formato cédula inválido
         }
 
         // Validamos que no exista usuario con la misma cédula
@@ -95,7 +95,7 @@ public class Sistema implements IObligatorio {
     public Retorno registrarBicicleta(String codigo, String tipo) {
         
         // Validamos Si alguno de los parámetros es null o vacío.
-        if (codigo == null || codigo =="" || tipo == null || tipo =="") {
+        if (codigo == null || codigo.trim().isEmpty() || tipo == null || tipo.trim().isEmpty()) {
             return Retorno.error1();
         }
 
@@ -105,7 +105,7 @@ public class Sistema implements IObligatorio {
         }
 
         // Validamos tipo permitido:
- // ??? Es correcto usar .valueOf para Convertir el String a Tipo_Bicicleta???
+ 
        Tipo_Bicicleta tipoBici;
         try {
             tipoBici = Tipo_Bicicleta.valueOf(tipo.toUpperCase());
@@ -115,13 +115,14 @@ public class Sistema implements IObligatorio {
 
         //  Verificar que no exista bici con el mismo código
         Bicicleta nueva = new Bicicleta(codigo, tipoBici);
-        if (bicicletas.existeElemento(nueva)) {
+        if (listaDeposito.existeElemento(nueva)) {
             return Retorno.error4();
         }
 
         // Agregar bicicleta al depósito
-       // .Adicionar(nueva);
-       nueva.setEstado(Estado_Bicicleta.DISPONIBLE);
+       // .Adicionar(nueva); --- ver despues si adicionamos bicicleta!!!
+       //nueva.setEstado(Estado_Bicicleta.DISPONIBLE);
+       
         listaDeposito.Adicionar(nueva);
         
 
@@ -143,7 +144,7 @@ public Retorno marcarEnMantenimiento(String codigo, String motivo) {
         
         if (i < longitud) { 
             Bicicleta bicicletaBuscar;
-            bicicletaBuscar = (Bicicleta) bicicletas.Obtener(i);
+            bicicletaBuscar = (Bicicleta) listaDeposito.Obtener(i);
             if (bicicletaBuscar.getCodigo().equals(codigo)) {
                 bicicletaEncontrada = bicicletaBuscar;
                 break; 
