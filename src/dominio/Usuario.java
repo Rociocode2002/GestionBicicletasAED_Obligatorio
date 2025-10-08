@@ -12,7 +12,7 @@ public class Usuario implements Comparable <Usuario>{
 
     @Override
     public int compareTo(Usuario o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.Nombre.compareToIgnoreCase(o.Nombre); 
     }
 
    private String Nombre;
@@ -63,7 +63,7 @@ public class Usuario implements Comparable <Usuario>{
         if (this == o) return true;
         if (!(o instanceof Usuario)) return false;
         Usuario otra = (Usuario) o;
-        return this.Nombre.equalsIgnoreCase(otra.Nombre);
+        return this.Cedula.equalsIgnoreCase(otra.Cedula);
     }
 
     @Override

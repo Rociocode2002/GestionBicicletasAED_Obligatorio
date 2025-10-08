@@ -16,8 +16,8 @@ public class Test2_05PonerBicicletaMantenimiento {
 
     @Test
     public void marcarEnMantenimientoOK() {
-        retorno = s.registrarBicicleta("55565", "MOUNTAIN");
-        retorno = s.marcarEnMantenimiento("55565", "rota");
+        retorno = s.registrarBicicleta("555655", "MOUNTAIN");
+        retorno = s.marcarEnMantenimiento("555655", "rota");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());// NO FUNCIONA
        
     }
@@ -52,7 +52,9 @@ public class Test2_05PonerBicicletaMantenimiento {
     
     @Test
     public void marcarEnMantenimientoError04() {
-    
+        retorno = s.marcarEnMantenimiento("123123", "rota");
+        retorno = s.marcarEnMantenimiento("123123", "rota");
+        assertEquals(Retorno.Resultado.ERROR_4, retorno.getResultado());
     
     };
 
