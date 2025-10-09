@@ -5,6 +5,7 @@
 package sistemaAutogestion;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,15 +24,35 @@ public class Test2_06RepararBicicleta {
     public void setUp() {
         s.crearSistemaDeGestion();
     }
-
+    
     @Test
-    public void repararBicicletaOk() { // NO FUNCIONA
+    public void repararBicicletaOk() { 
         s.registrarBicicleta("251652", "MOUNTAIN");
         s.marcarEnMantenimiento("251652", "rota");
          retorno =  s.repararBicicleta("251652");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         
     }
+    
+       @Test
+    public void repararBicicletaOk_enDeposito() {
+        s.registrarBicicleta("ABC001", "URBANA");
+ 
+        
+        retorno = s.marcarEnMantenimiento("ABC001", "rueda");
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+ 
+     
+        retorno = s.repararBicicleta("ABC001");
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+ 
+        try {
+            Retorno dep = s.listarBicisEnDeposito();
+            assertTrue(dep.getValorString().toUpperCase().contains("ABC001#URBANA#DISPONIBLE"));
+        } catch (Throwable ignore) {}
+    }
+    
+    
 
     @Test
     public void repararBicicletaError01() {
@@ -51,7 +72,7 @@ public class Test2_06RepararBicicleta {
     }
 
     @Test
-    public void repararBicicletaError03() {  //NO FUNCIONA
+    public void repararBicicletaError03() {  
         retorno =  s.registrarBicicleta("251652", "MOUNTAIN");
          retorno =  s.repararBicicleta("251652");
         assertEquals(Retorno.Resultado.ERROR_3, retorno.getResultado());

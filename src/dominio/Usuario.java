@@ -10,16 +10,18 @@ package dominio;
  */
 public class Usuario implements Comparable <Usuario>{
 
-    @Override
-    public int compareTo(Usuario o) {
-        return this.Nombre.compareToIgnoreCase(o.Nombre); 
-    }
+    
 
    private String Nombre;
    private String Cedula;
    private Bicicleta bicicletaAlquilada;
    private int cntAlquileres;
 
+   @Override
+    public int compareTo(Usuario o) {
+        return this.Nombre.compareToIgnoreCase(o.Nombre); 
+    }
+    
     public Bicicleta getBicicletaAlquilada() {
         return bicicletaAlquilada;
     }

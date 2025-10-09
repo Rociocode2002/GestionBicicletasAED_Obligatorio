@@ -18,7 +18,8 @@ public class Sistema implements IObligatorio {
     private ILista<Estacion> estaciones;
     private ILista<Bicicleta> bicicletas;
     private ListaSE<Bicicleta> listaDeposito;
-
+    
+    //2.1. Crear Sistema de Gestión:
     @Override
     public Retorno crearSistemaDeGestion() {
 
@@ -30,22 +31,21 @@ public class Sistema implements IObligatorio {
             return Retorno.ok();
         
     }
-
+    
+    //2.2. Registrar Estación:
     @Override
     public Retorno registrarEstacion(String nombre, String barrio, int capacidad) {
         //return Retorno.noImplementada();
 
         // Validamos si alguno de los parámetros es null o vacío
-        /* Consultar a la profe:  Acá alcanza con esto o falta validar que estos parametros no sean vacios?? 
-  Y está bien usar los métodos de la clase String .trim().isEmpty()??
-    (lo mismo pasa para registrar usuario y bicicleta)*/
+        
         if (nombre == null || nombre.trim().isEmpty()|| barrio == null || barrio.trim().isEmpty()) {
-            return Retorno.error1(); // parámetro inválido
+            return Retorno.error1(); 
         }
 
         // Validamos capacidad <= 0
         if (capacidad <= 0) {
-            return Retorno.error2(); // capacidad inválida
+            return Retorno.error2();
         }
 
         // Verificar que no exista estación con el mismo nombre
@@ -53,7 +53,7 @@ public class Sistema implements IObligatorio {
         Estacion nueva = new Estacion(nombre, barrio, capacidad);
 
         if (estaciones.existeElemento(nueva)) {
-            return Retorno.error3(); // estación ya existe
+            return Retorno.error3(); 
         }
 
         // Agregamos la estación:    
@@ -61,11 +61,11 @@ public class Sistema implements IObligatorio {
 
         return Retorno.ok();
     }
-
-    @Override // Analía
+    
+    //2.3. Registrar Usuario:
+    @Override 
     public Retorno registrarUsuario(String cedula, String nombre) {
-        //return Retorno.noImplementada();
-
+        
         // Validamos Si alguno de los parámetros es null o vacío.
         if (cedula == null || nombre == null || cedula.trim().isEmpty()|| nombre.trim().isEmpty() ) {
             return Retorno.error1();
@@ -90,7 +90,7 @@ public class Sistema implements IObligatorio {
     }
     
     
-
+    //2.4. Registrar Bicicleta
     @Override 
     public Retorno registrarBicicleta(String codigo, String tipo) {
         
@@ -100,7 +100,7 @@ public class Sistema implements IObligatorio {
         }
 
         // Validamos formato de código: exactamente 6 caracteres
-        if (codigo.length() != 6) {
+        if (codigo.trim().length() != 6 || !codigo.trim().matches("[A-Za-z0-9]+")) {
             return Retorno.error2();
         }
 
@@ -119,76 +119,68 @@ public class Sistema implements IObligatorio {
             return Retorno.error4();
         }
 
-        // Agregar bicicleta al depósito
-       // .Adicionar(nueva); --- ver despues si adicionamos bicicleta!!!
-       //nueva.setEstado(Estado_Bicicleta.DISPONIBLE);
-       
+        // Agregar bicicleta al depósito       
         listaDeposito.Adicionar(nueva);
-        
 
         return Retorno.ok();
     }
 
     
-    
-@Override// Rocio
-public Retorno marcarEnMantenimiento(String codigo, String motivo) {
-if(codigo == null || motivo == null || codigo == "" || motivo == ""){
-    return Retorno.error1();
-}
-
-Bicicleta bicicletaEncontrada = null;
-int longitud = listaDeposito.Longitud();
-
-for (int i = 0; i < longitud; i++) {
-
-    if (i < longitud) { 
-        Bicicleta bicicletaBuscar;
-        bicicletaBuscar = (Bicicleta) listaDeposito.Obtener(i);
-        if (bicicletaBuscar.getCodigo().equals(codigo)) {
-            bicicletaEncontrada = bicicletaBuscar;
-            break; 
+    //2.5. Poner bicicleta en mantenimiento:
+@Override
+        public Retorno marcarEnMantenimiento(String codigo, String motivo) {
+        if(codigo == null || motivo == null || codigo.trim().isEmpty()|| motivo.trim().isEmpty()){
+            return Retorno.error1();
         }
-    }
-}
 
-
-if (bicicletaEncontrada == null) {
-    return Retorno.error2();
-}
-
-/* if ("ALQUILADA".equals(bicicletaEncontrada.getEstado())) {
-    return Retorno.error3();
-} Para la primer entrega no hay bicis alquiladas*/
- if (bicicletaEncontrada.getEstado() == Estado_Bicicleta.MANTENIMIENTO)
-{
-    return Retorno.error4();
-}
-
-
-bicicletaEncontrada.setEstado(Estado_Bicicleta.MANTENIMIENTO);
-
-
-
-
-listaDeposito.Adicionar(bicicletaEncontrada); 
-
-return Retorno.ok();
-}
-
-    
-  
- @Override//Rocio
-public Retorno repararBicicleta(String codigo) {
-    if (codigo == null || codigo == "" ) {
-        return Retorno.error1();
-    }
-    
     Bicicleta bicicletaEncontrada = null;
-    int longitud = listaDeposito.Longitud();
-    
-    
+        int longitud = listaDeposito.Longitud();
+
     for (int i = 0; i < longitud; i++) {
+
+        if (i < longitud) { 
+         Bicicleta bicicletaBuscar;
+            bicicletaBuscar = (Bicicleta) listaDeposito.Obtener(i);
+            if (bicicletaBuscar.getCodigo().equals(codigo)) {
+                bicicletaEncontrada = bicicletaBuscar;
+                break; 
+        }
+     }
+    }
+
+
+    if (bicicletaEncontrada == null) {
+    return Retorno.error2();
+    }
+
+    /* if ("ALQUILADA".equals(bicicletaEncontrada.getEstado())) {
+    return Retorno.error3();
+    } Para la primer entrega no hay bicis alquiladas*/
+    if (bicicletaEncontrada.getEstado() == Estado_Bicicleta.MANTENIMIENTO)
+    {
+     return Retorno.error4();
+    }
+
+
+    bicicletaEncontrada.setEstado(Estado_Bicicleta.MANTENIMIENTO);
+    listaDeposito.Adicionar(bicicletaEncontrada); 
+
+        return Retorno.ok();
+    }
+
+    
+  //2.6. Reparar bicicleta
+    @Override
+    public Retorno repararBicicleta(String codigo) {
+     if (codigo == null || codigo.trim().isEmpty()) {
+        return Retorno.error1();
+        }
+    
+        Bicicleta bicicletaEncontrada = null;
+        int longitud = listaDeposito.Longitud();
+    
+    
+        for (int i = 0; i < longitud; i++) {
         // Validar que el índice esté dentro del rango
         if (i >= 0 && i < longitud) {
             Bicicleta bicicletaBuscar = (Bicicleta) listaDeposito.Obtener(i);
@@ -197,22 +189,22 @@ public Retorno repararBicicleta(String codigo) {
                 break; 
             }
         }
-    }
+        }
     
-    if (bicicletaEncontrada == null) {
+        if (bicicletaEncontrada == null) {
         return Retorno.error2(); 
-    }
+        }
     
-    if (bicicletaEncontrada.getEstado() != Estado_Bicicleta.MANTENIMIENTO) {
-        return Retorno.error3(); 
-    }
+        if (bicicletaEncontrada.getEstado() != Estado_Bicicleta.MANTENIMIENTO) {
+          return Retorno.error3(); 
+        }
  
 
-     bicicletaEncontrada.setEstado(Estado_Bicicleta.DISPONIBLE);
-     listaDeposito.Adicionar(bicicletaEncontrada); 
+        bicicletaEncontrada.setEstado(Estado_Bicicleta.DISPONIBLE);
+        listaDeposito.Adicionar(bicicletaEncontrada); 
     
-    return Retorno.ok();
-}
+        return Retorno.ok();
+    }
 
     
     
@@ -242,8 +234,8 @@ public Retorno repararBicicleta(String codigo) {
         return Retorno.noImplementada();
     }
 
-    
-    @Override //Analía
+    //3.1. Obtener Usuario:
+    @Override 
     public Retorno obtenerUsuario(String cedula) {
         
         // validamos que no se null o vacío:
@@ -252,7 +244,7 @@ public Retorno repararBicicleta(String codigo) {
         }
 
         // validamos que la cédula tenga 8 dígitos
-        if (cedula.length() != 8) {
+        if (!cedula.trim().matches("\\d{8}")) {
            return Retorno.error2(); 
         }
 
@@ -269,8 +261,8 @@ public Retorno repararBicicleta(String codigo) {
         return Retorno.error3(); 
     }
 
-
-    @Override//3.2 Rocio
+    //3.2. Listar usuarios:
+    @Override
     public Retorno listarUsuarios() {
      
         ILista<Usuario> Usuarios = this.usuarios;
@@ -295,6 +287,7 @@ public Retorno repararBicicleta(String codigo) {
         
     }
 
+    //3.3. Listar bicis en depósito:
     @Override
     public Retorno listarBicisEnDeposito() {
        
@@ -318,8 +311,9 @@ public Retorno repararBicicleta(String codigo) {
          
         
     }
-
     
+
+    //3.4. Mapa de estaciones:
     @Override
     public Retorno informaciónMapa(String[][] mapa) {
     // Validación básica
@@ -336,7 +330,7 @@ public Retorno repararBicicleta(String codigo) {
      // Contar estaciones en cada fila y columna
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
-             if (mapa[i][j] != null && !mapa[i][j].trim().isEmpty() && !mapa[i][j].equals("0")) {
+             if (mapa[i][j] != null && !mapa[i][j].trim().isEmpty() && !mapa[i][j].trim().equals("o")) {
                     estacionesFila[i]++;
                     estacionesColumna[j]++;
                 }
