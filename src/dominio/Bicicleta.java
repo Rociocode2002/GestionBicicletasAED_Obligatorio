@@ -30,7 +30,7 @@ public class Bicicleta implements Comparable <Bicicleta>{
 
     @Override
     public int compareTo(Bicicleta o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.Codigo.compareToIgnoreCase(o.Codigo); 
     }
     
     public String getCodigo() {

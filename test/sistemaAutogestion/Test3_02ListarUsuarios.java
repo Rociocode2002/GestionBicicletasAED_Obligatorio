@@ -13,6 +13,8 @@ public class Test3_02ListarUsuarios {
     public void setUp() {
         s.crearSistemaDeGestion();
     }
+    
+   
 
     @Test
     public void listarUsuariosVacio() {
@@ -50,7 +52,7 @@ public class Test3_02ListarUsuarios {
     }
     
     @Test
-public void listarUsuariosVerificarFormato() {
+    public void listarUsuariosVerificarFormato() {
     
     s.registrarUsuario("12345678", "Juan");
     s.registrarUsuario("87654321", "Maria");
@@ -61,9 +63,10 @@ public void listarUsuariosVerificarFormato() {
     assertTrue(resultado.contains("Juan#12345678"));
     assertTrue(resultado.contains("Maria#87654321"));
     assertTrue(resultado.contains("|")); 
-}
-@Test
-public void listarUsuariosNombresConMayusculas() {
+    }
+    
+    @Test
+    public void listarUsuariosNombresConMayusculas() {
     // Test con mayúsculas y minúsculas
     s.registrarUsuario("11111111", "ana");
     s.registrarUsuario("22222222", "Beatriz");
@@ -72,5 +75,5 @@ public void listarUsuariosNombresConMayusculas() {
     assertEquals(Retorno.Resultado.OK, retorno.getResultado());
   
     assertEquals("ana#11111111|Beatriz#22222222|CARLOS#33333333", retorno.getValorString());
-}
+    }
 }

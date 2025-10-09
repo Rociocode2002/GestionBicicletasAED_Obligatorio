@@ -22,7 +22,9 @@ public class Test3_03ListarBicisEnDeposito {
     public void setUp() {
         s.crearSistemaDeGestion();
     }
-
+    
+  
+    
     @Test
     public void listarBicisDepositoVacio() {
         retorno = s.listarUsuarios();
@@ -52,6 +54,7 @@ public class Test3_03ListarBicisEnDeposito {
             retorno.getValorString()
         );
     }
+    
    @Test
     public void estadoMantenimiento_ApareceComoMantenimiento() {
         s.registrarBicicleta("ABC001", "URBANA");
@@ -69,6 +72,7 @@ public class Test3_03ListarBicisEnDeposito {
         assertFalse("No debe terminar con '|'", sdep.endsWith("|"));
         assertTrue("Debe tener separador entre elementos", sdep.contains("|"));
     }
+  
    
 }
 

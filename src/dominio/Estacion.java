@@ -15,10 +15,7 @@ public class Estacion implements Comparable <Estacion>{
     
 
 
-    @Override
-    public int compareTo(Estacion o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
     private String Nombre;
     private String Barrio;
     private int Capacidad;
@@ -26,6 +23,11 @@ public class Estacion implements Comparable <Estacion>{
     private int cntBicicletasAncladas ;
     //falta cola alquiler y cola Devolucion
 
+    @Override
+    public int compareTo(Estacion o) {
+        return this.Nombre.compareToIgnoreCase(o.Nombre); 
+    }
+    
     @Override
     public String toString() {
         return "Estacion{" + "Nombre=" + Nombre + ", Barrio=" + Barrio + ", Capacidad=" + Capacidad + ", bicicletas=" + bicicletas + ", cntBicicletasAncladas=" + cntBicicletasAncladas + '}';
