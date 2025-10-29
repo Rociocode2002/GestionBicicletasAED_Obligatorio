@@ -3,9 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package dominio;
-
+import tads.Cola;
 import tads.ListaSE;
-
+import dominio.Usuario;
 /**
  *
  * @author rocio
@@ -21,7 +21,21 @@ public class Estacion implements Comparable <Estacion>{
     private int Capacidad;
     private ListaSE<Bicicleta> bicicletas;
     private int cntBicicletasAncladas ;
-    //falta cola alquiler y cola Devolucion
+    private Cola<Usuario> ColaEspera;
+    private Cola<Alquiler> ColaAlquiler;
+    private Cola<Usuario> ColaDevolucion;
+    
+    
+    
+
+    
+    
+    
+    
+
+    public Estacion() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
     @Override
     public int compareTo(Estacion o) {

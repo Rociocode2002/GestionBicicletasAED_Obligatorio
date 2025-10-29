@@ -2,6 +2,7 @@ package sistemaAutogestion;
 
 //Integrantes del equipo: Rocío González nro est. 264963 - Analía López nro est. 331850
 
+import dominio.Alquiler;
 import dominio.Bicicleta;
 import dominio.Estacion;
 import dominio.Estado_Bicicleta;
@@ -11,6 +12,9 @@ import sistemaAutogestion.Retorno.Resultado;
 import tads.ILista;
 import tads.ListaDE;
 import tads.ListaSE;
+import tads.ICola;
+import tads.IPila;
+import tads.Cola;
 
 public class Sistema implements IObligatorio {
 
@@ -18,6 +22,11 @@ public class Sistema implements IObligatorio {
     private ILista<Estacion> estaciones;
     private ILista<Bicicleta> bicicletas;
     private ListaSE<Bicicleta> listaDeposito;
+    private ICola<Usuario> ColaEspera;
+    private ICola<Alquiler> ColaAlquiler;
+    private ICola<Usuario> ColaDevolucion;
+    
+  
     
     //2.1. Crear Sistema de Gestión:
     @Override
@@ -28,6 +37,9 @@ public class Sistema implements IObligatorio {
             estaciones = new ListaSE<Estacion>(); 
             bicicletas = new ListaSE<Bicicleta>();
             listaDeposito = new ListaSE<Bicicleta>();
+            ColaEspera = new Cola<Usuario>();
+            ColaAlquiler = new Cola<Alquiler>();
+            ColaDevolucion = new Cola<Usuario>();
             return Retorno.ok();
         
     }
@@ -208,14 +220,70 @@ public class Sistema implements IObligatorio {
 
     
     
-
+//2.8
     @Override
     public Retorno eliminarEstacion(String nombre) {
-        return Retorno.noImplementada();
+       if(nombre== null || nombre.trim().isEmpty()){
+       
+       return Retorno.error1();
+       
+       
+       }
+       
+       Bicicleta bicicletaEncontrada = new Bicicleta();
+       boolean biciExiste = bicicletas.existeElemento(bicicletaEncontrada);
+       
+       Estacion EstacionEncontrada = new Estacion();
+       
+       if(!biciExiste){
+           return Retorno.error2();
+       
+       }
+       // bicicletas ancladas o colas pendientes?
+       
+       if(ColaEspera.esVacia() ||EstacionEncontrada.getCntBicicletasAncladas() == 0 ){
+       
+           
+             return Retorno.error3();
+       
+       }
+       
+      return Retorno.noImplementada();
+       
+       
     }
-
+//2.9
     @Override
     public Retorno asignarBicicletaAEstacion(String codigo, String nombreEstacion) {
+         if(codigo == null || codigo.trim().isEmpty() ||nombreEstacion == null || nombreEstacion.trim().isEmpty() ){
+       
+       return Retorno.error1();}
+
+      Bicicleta bicicletaEncontrada = new Bicicleta();
+       boolean biciExiste = bicicletas.existeElemento(bicicletaEncontrada);
+       
+       if(!biciExiste || bicicletaEncontrada.getEstado() != Estado_Bicicleta.DISPONIBLE ){
+           return Retorno.error2();
+       
+       }
+       
+       Estacion estacionEncontrada = new Estacion ();
+       boolean estacionExiste = estaciones.existeElemento(estacionEncontrada);
+       
+       if(!estacionExiste){
+       
+            return Retorno.error3();
+       
+       
+       }
+       
+       
+        
+        
+        
+        
+        
+        
         return Retorno.noImplementada();
     }
 
