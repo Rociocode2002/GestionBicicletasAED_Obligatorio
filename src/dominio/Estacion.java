@@ -22,10 +22,24 @@ public class Estacion implements Comparable <Estacion>{
     private ListaSE<Bicicleta> bicicletas;
     private int cntBicicletasAncladas ;
     private Cola<Usuario> ColaEspera;
+
+    public Cola<Usuario> getColaEspera() {
+        return ColaEspera;
+    }
+
+    public Cola<Alquiler> getColaAlquiler() {
+        return ColaAlquiler;
+    }
+
+    public Cola<Usuario> getColaDevolucion() {
+        return ColaDevolucion;
+    }
     private Cola<Alquiler> ColaAlquiler;
     private Cola<Usuario> ColaDevolucion;
     
-    
+    public boolean tieneAnclajeLibre() {
+        return bicicletas.Longitud() < Capacidad;
+    }
     
 
     
