@@ -15,6 +15,8 @@ public class Alquiler {
     private String nombreEstacionOrigen;
     private Date fechaAlquiler;
 
+   
+
     public String getCodigoBicicleta() {
         return codigoBicicleta;
     }

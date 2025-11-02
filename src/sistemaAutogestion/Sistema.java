@@ -8,6 +8,7 @@ import dominio.Estacion;
 import dominio.Estado_Bicicleta;
 import dominio.Tipo_Bicicleta;
 import dominio.Usuario;
+import java.util.Date;
 import sistemaAutogestion.Retorno.Resultado;
 import tads.ILista;
 import tads.ListaDE;
@@ -22,6 +23,7 @@ public class Sistema implements IObligatorio {
     private ILista<Estacion> estaciones;
     private ILista<Bicicleta> bicicletas;
     private ListaSE<Bicicleta> listaDeposito;
+    private ILista<Alquiler> alquileres;
     private ICola<Usuario> ColaEspera;
     private ICola<Alquiler> ColaAlquiler;
     private ICola<Usuario> ColaDevolucion;
@@ -139,7 +141,7 @@ public class Sistema implements IObligatorio {
 
     
     //2.5. Poner bicicleta en mantenimiento:
-@Override
+    @Override
         public Retorno marcarEnMantenimiento(String codigo, String motivo) {
         if(codigo == null || motivo == null || codigo.trim().isEmpty()|| motivo.trim().isEmpty()){
             return Retorno.error1();
@@ -220,7 +222,7 @@ public class Sistema implements IObligatorio {
 
     
     
-//2.8
+    //2.8
     @Override
     public Retorno eliminarEstacion(String nombre) {
        if(nombre== null || nombre.trim().isEmpty()){
@@ -249,10 +251,9 @@ public class Sistema implements IObligatorio {
        }
        
       return Retorno.noImplementada();
-       
-       
     }
-//2.9
+    
+    //2.9
     @Override
     public Retorno asignarBicicletaAEstacion(String codigo, String nombreEstacion) {
          if(codigo == null || codigo.trim().isEmpty() ||nombreEstacion == null || nombreEstacion.trim().isEmpty() ){
@@ -276,31 +277,241 @@ public class Sistema implements IObligatorio {
        
        
        }
-       
-       
-        
-        
-        
-        
-        
+   
         
         return Retorno.noImplementada();
     }
 
+    // !!!! ver si sirve usar metodos auxiliares para buscar usuario por ci y bici por codigo??
+    //2.9. Alquilar bicicleta:
     @Override
     public Retorno alquilarBicicleta(String cedula, String nombreEstacion) {
-        return Retorno.noImplementada();
+
+        // --- Validaciones básicas ---
+        if (cedula == null || cedula.isEmpty() || nombreEstacion == null || nombreEstacion.isEmpty()) {
+            return Retorno.error1(); // ERROR_1: parámetros inválidos
+        }
+
+        // --- Buscar usuario ---
+        Usuario usuarioEncontrado = null;
+        for (int i = 0; i < usuarios.Longitud() && usuarioEncontrado == null; i++) {
+            Usuario u = usuarios.Obtener(i);
+            if (u.getCedula().equalsIgnoreCase(cedula)) {
+                usuarioEncontrado = u;
+            }
+        }
+
+        if (usuarioEncontrado == null) {
+            return Retorno.error2(); // ERROR_2: usuario inexistente
+        }
+
+        // --- Buscar estación ---
+        Estacion estacionEncontrada = null;
+        for (int i = 0; i < estaciones.Longitud() && estacionEncontrada == null; i++) {
+            Estacion e = estaciones.Obtener(i);
+            if (e.getNombre().equalsIgnoreCase(nombreEstacion)) {
+                estacionEncontrada = e;
+            }
+        }
+
+        if (estacionEncontrada == null) {
+            return Retorno.error3(); // ERROR_3: estación inexistente
+        }
+
+        // --- Buscar bicicleta disponible ---
+        Bicicleta biciDisponible = null;
+        ListaSE<Bicicleta> bicicletas = estacionEncontrada.getBicicletas();
+
+        for (int i = 0; i < bicicletas.Longitud() && biciDisponible == null; i++) {
+            Bicicleta b = bicicletas.Obtener(i);
+            if (b.getEstado() == Estado_Bicicleta.DISPONIBLE) {
+                biciDisponible = b;
+            }
+        }
+
+        //  Si hay bicicleta disponible, registrar alquiler ---
+        if (biciDisponible != null) {
+            biciDisponible.setEstado(Estado_Bicicleta.ALQUILADA);
+            usuarioEncontrado.setBicicletaAlquilada(biciDisponible);
+
+            Alquiler nuevo = new Alquiler();
+            nuevo.setCedulaUsuario(usuarioEncontrado.getCedula());
+            nuevo.setCodigoBicicleta(biciDisponible.getCodigo());
+            nuevo.setNombreEstacionOrigen(estacionEncontrada.getNombre());
+            nuevo.setFechaAlquiler(new Date()); // ?? consultar a la profe si está bien usar este metodo date???
+
+            alquileres.Adicionar(nuevo);
+            return Retorno.ok();
+        }
+
+        // --- Si no hay bicicletas disponibles ---
+        estacionEncontrada.getColaEspera().encolar(usuarioEncontrado);
+        return Retorno.ok("Usuario en espera");
     }
 
+
+
+
+
+    //2.10. Devolver bicicleta:
     @Override
     public Retorno devolverBicicleta(String cedula, String nombreEstacionDestino) {
-        return Retorno.noImplementada();
+
+        // --- Validaciones básicas ---
+        if (cedula == null || cedula.isEmpty() || nombreEstacionDestino == null || nombreEstacionDestino.isEmpty()) {
+            return Retorno.error1(); // ERROR_1: parámetros inválidos
+        }
+
+        // --- Buscar usuario ---
+        Usuario usuarioEncontrado = null;
+        for (int i = 0; i < usuarios.Longitud() && usuarioEncontrado == null; i++) {
+            Usuario u = usuarios.Obtener(i);
+            if (u.getCedula().equalsIgnoreCase(cedula)) {
+                usuarioEncontrado = u;
+            }
+        }
+
+        // --- Verificar existencia y que tenga bici alquilada ---
+        if (usuarioEncontrado == null || usuarioEncontrado.getBicicletaAlquilada() == null) {
+            return Retorno.error2(); // ERROR_2: usuario inexistente o no tiene bici alquilada
+        }
+
+        // --- Buscar estación destino ---
+        Estacion estacionDestino = null;
+        for (int i = 0; i < estaciones.Longitud() && estacionDestino == null; i++) {
+            Estacion e = estaciones.Obtener(i);
+            if (e.getNombre().equalsIgnoreCase(nombreEstacionDestino)) {
+                estacionDestino = e;
+            }
+        }
+
+        if (estacionDestino == null) {
+            return Retorno.error3(); // ERROR_3: estación inexistente
+        }
+
+        // --- Obtener la bici que el usuario está devolviendo ---
+        Bicicleta biciDevuelta = usuarioEncontrado.getBicicletaAlquilada();
+
+        // --- Si hay lugar libre, anclar directamente ---
+        if (estacionDestino.tieneAnclajeLibre()) {
+
+            // Marcar bici como disponible
+            biciDevuelta.setEstado(Estado_Bicicleta.DISPONIBLE);
+            biciDevuelta.setEstacionActual(estacionDestino);
+
+            // Agregar bicicleta a la estación
+            estacionDestino.getBicicletas().Adicionar(biciDevuelta);
+
+            // Liberar al usuario (ya no tiene bici alquilada)
+            usuarioEncontrado.setBicicletaAlquilada(null);
+
+            // --- Si hay alguien esperando para alquilar en esta estación ---
+            if (!estacionDestino.getColaEspera().esVacia()) {
+                Usuario siguienteUsuario = estacionDestino.getColaEspera().desencolar();
+
+                // Asignar bicicleta automáticamente
+                biciDevuelta.setEstado(Estado_Bicicleta.ALQUILADA);
+                siguienteUsuario.setBicicletaAlquilada(biciDevuelta);
+
+                // Registrar el nuevo alquiler
+                Alquiler nuevo = new Alquiler();
+                nuevo.setCedulaUsuario(siguienteUsuario.getCedula());
+                nuevo.setCodigoBicicleta(biciDevuelta.getCodigo());
+                nuevo.setNombreEstacionOrigen(estacionDestino.getNombre());
+                nuevo.setFechaAlquiler(new Date());
+                alquileres.Adicionar(nuevo);
+            }
+
+            return Retorno.ok("Bicicleta devuelta correctamente");
+        }
+
+        // --- Si no hay lugar libre, usuario queda esperando por anclaje ---
+        estacionDestino.getColaEspera().encolar(usuarioEncontrado);
+        return Retorno.ok("Usuario en espera por anclaje");
     }
 
+    //2.11 Deshacer últimos retiros:
     @Override
     public Retorno deshacerUltimosRetiros(int n) {
-        return Retorno.noImplementada();
+        // --- Validaciones ---
+        if (n <= 0) {
+            return Retorno.error1(); // ERROR_1: valor inválido
+        }
+
+        if (alquileres.Vacia()) {
+            return Retorno.ok("No hay retiros para deshacer");
+        }
+
+        String resultado = "";
+        int cantidadDeshechos = 0;
+
+        // Determinar cuántos retiros se pueden realmente deshacer
+        int total = alquileres.Longitud();
+        int aDeshacer = Math.min(n, total);
+
+        // Procesar desde el último hacia atrás
+        for (int i = total - 1; i >= total - aDeshacer; i--) {
+            Alquiler alquiler = alquileres.Obtener(i);
+
+            // Buscar usuario
+            Usuario usuarioEncontrado = null;
+            for (int j = 0; j < usuarios.Longitud() && usuarioEncontrado == null; j++) {
+                Usuario u = usuarios.Obtener(j);
+                if (u.getCedula().equalsIgnoreCase(alquiler.getCedulaUsuario())) {
+                    usuarioEncontrado = u;
+                }
+            }
+
+            // Buscar estación origen
+            Estacion estacionOrigen = null;
+            for (int k = 0; k < estaciones.Longitud() && estacionOrigen == null; k++) {
+                Estacion e = estaciones.Obtener(k);
+                if (e.getNombre().equalsIgnoreCase(alquiler.getNombreEstacionOrigen())) {
+                    estacionOrigen = e;
+                }
+            }
+
+            // Buscar bicicleta
+            Bicicleta biciDevuelta = null;
+            for (int m = 0; m < bicicletas.Longitud() && biciDevuelta == null; m++) {
+                Bicicleta b = bicicletas.Obtener(m);
+                if (b.getCodigo().equalsIgnoreCase(alquiler.getCodigoBicicleta())) {
+                    biciDevuelta = b;
+                }
+            }
+
+            // Si todos los objetos están OK, revertimos el alquiler
+            if (usuarioEncontrado != null && estacionOrigen != null && biciDevuelta != null) {
+                // Intentar devolver la bici a la estación de origen
+                if (estacionOrigen.tieneAnclajeLibre()) {
+                    biciDevuelta.setEstado(Estado_Bicicleta.DISPONIBLE);
+                    biciDevuelta.setEstacionActual(estacionOrigen);
+                    estacionOrigen.getBicicletas().Adicionar(biciDevuelta);
+                } else {
+                    estacionOrigen.getColaEspera().encolar(usuarioEncontrado);
+                }
+
+                // Liberar la bici del usuario
+                usuarioEncontrado.setBicicletaAlquilada(null);
+
+                // Quitar el alquiler de la lista
+                alquileres.Eliminar(i);
+
+                // Agregar al string de resultado
+                if (cantidadDeshechos > 0) {
+                    resultado = "|" + resultado;
+                }
+                resultado = alquiler.getCodigoBicicleta() + "#" +
+                            alquiler.getCedulaUsuario() + "#" +
+                            alquiler.getNombreEstacionOrigen() + resultado;
+
+                cantidadDeshechos++;
+            }
+        }
+
+        return Retorno.ok(resultado);
     }
+
 
     //3.1. Obtener Usuario:
     @Override 
