@@ -153,4 +153,34 @@ public void AdicionarOrdenado(T x) {
     public String mostrar() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    // este metodo que borra los elementos tomando como parametro el objeto
+   // primero verifica si el elemento está en la cabeza y en ese caso la mueve
+    // al siguiente nodo, pero si está en otra posición recorre 
+    //  la lista hasta encontrar el nodo anterior al que contiene
+     //el dato buscado y luego reconecta los enlaces saltando 
+     //  el nodo a eliminar, manteniendo así la integridad de la lista.
+       @Override
+      public void borrarElemento (T dato){
+    if (cabeza != null) {
+
+            if (cabeza.getDato().equals(dato)) {
+                cabeza = cabeza.getSiguiente();
+            } else {
+                NodoSE actual = cabeza;
+                 while (actual.getSiguiente() != null && !actual.getSiguiente().getDato().equals(dato)) {
+                actual = actual.getSiguiente();
+                }
+                if (actual.getSiguiente() != null) {
+                    NodoSE <T> aBorrar = actual.getSiguiente();
+                    actual.setSiguiente(aBorrar.getSiguiente());
+                    aBorrar.setSiguiente(null);
+
+                }
+            }
+        }
+   }
+    
+    
+    
 }

@@ -19,4 +19,5 @@ public interface ILista<T> {
     boolean existeElemento(T elemento);
     
      String mostrar();
+      void borrarElemento (T dato);
 }

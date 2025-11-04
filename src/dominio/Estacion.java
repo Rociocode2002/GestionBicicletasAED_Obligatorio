@@ -19,8 +19,11 @@ public class Estacion implements Comparable <Estacion>{
     private String Nombre;
     private String Barrio;
     private int Capacidad;
-    private ListaSE<Bicicleta> bicicletas;
+    private ListaSE<Bicicleta> bicicletasAncladas;
     private int cntBicicletasAncladas ;
+    
+
+   
     private Cola<Usuario> ColaEspera;
 
     public Cola<Usuario> getColaEspera() {
@@ -38,7 +41,7 @@ public class Estacion implements Comparable <Estacion>{
     private Cola<Usuario> ColaDevolucion;
     
     public boolean tieneAnclajeLibre() {
-        return bicicletas.Longitud() < Capacidad;
+        return bicicletasAncladas.Longitud() < Capacidad;
     }
     
 
@@ -58,7 +61,7 @@ public class Estacion implements Comparable <Estacion>{
     
     @Override
     public String toString() {
-        return "Estacion{" + "Nombre=" + Nombre + ", Barrio=" + Barrio + ", Capacidad=" + Capacidad + ", bicicletas=" + bicicletas + ", cntBicicletasAncladas=" + cntBicicletasAncladas + '}';
+        return "Estacion{" + "Nombre=" + Nombre + ", Barrio=" + Barrio + ", Capacidad=" + Capacidad + ", bicicletas=" + bicicletasAncladas + ", cntBicicletasAncladas=" + cntBicicletasAncladas + '}';
     }
 
    
@@ -95,11 +98,11 @@ public class Estacion implements Comparable <Estacion>{
     }
 
     public ListaSE<Bicicleta> getBicicletas() {
-        return bicicletas;
+        return bicicletasAncladas;
     }
 
     public void setBicicletas(ListaSE<Bicicleta> bicicletas) {
-        this.bicicletas = bicicletas;
+        this.bicicletasAncladas = bicicletas;
     }
 
     public int getCntBicicletasAncladas() {
