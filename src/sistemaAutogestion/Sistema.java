@@ -27,6 +27,7 @@ public class Sistema implements IObligatorio {
     private ICola<Usuario> ColaEspera;
     private ICola<Alquiler> ColaAlquiler;
     private ICola<Usuario> ColaDevolucion;
+    private ListaSE<Bicicleta> bicicletasAncladas;
     
   
     
@@ -42,6 +43,7 @@ public class Sistema implements IObligatorio {
             ColaEspera = new Cola<Usuario>();
             ColaAlquiler = new Cola<Alquiler>();
             ColaDevolucion = new Cola<Usuario>();
+            bicicletasAncladas = new ListaSE<Bicicleta>();
             return Retorno.ok();
         
     }
@@ -222,7 +224,7 @@ public class Sistema implements IObligatorio {
 
     
     
-    //2.8
+    //2.7
     @Override
     public Retorno eliminarEstacion(String nombre) {
        if(nombre== null || nombre.trim().isEmpty()){
@@ -232,28 +234,34 @@ public class Sistema implements IObligatorio {
        
        }
        
-       Bicicleta bicicletaEncontrada = new Bicicleta();
-       boolean biciExiste = bicicletas.existeElemento(bicicletaEncontrada);
+       
+       
        
        Estacion EstacionEncontrada = new Estacion();
+       EstacionEncontrada.setNombre(nombre);
+     boolean  existeEstacion = estaciones.existeElemento(EstacionEncontrada);
        
-       if(!biciExiste){
+       
+       if(!existeEstacion){
            return Retorno.error2();
        
        }
-       // bicicletas ancladas o colas pendientes?
        
-       if(ColaEspera.esVacia() ||EstacionEncontrada.getCntBicicletasAncladas() == 0 ){
+       
+       if(ColaEspera.esVacia() ||EstacionEncontrada.getCntBicicletasAncladas() > 0 ){
        
            
              return Retorno.error3();
        
        }
+       estaciones.borrarElemento(EstacionEncontrada);
+       return Retorno.ok();
        
-      return Retorno.noImplementada();
+      
+      
     }
     
-    //2.9
+    //2.8
     @Override
     public Retorno asignarBicicletaAEstacion(String codigo, String nombreEstacion) {
          if(codigo == null || codigo.trim().isEmpty() ||nombreEstacion == null || nombreEstacion.trim().isEmpty() ){
@@ -269,6 +277,8 @@ public class Sistema implements IObligatorio {
        }
        
        Estacion estacionEncontrada = new Estacion ();
+       estacionEncontrada.setNombre(nombreEstacion);
+       
        boolean estacionExiste = estaciones.existeElemento(estacionEncontrada);
        
        if(!estacionExiste){
@@ -277,9 +287,16 @@ public class Sistema implements IObligatorio {
        
        
        }
+       // la lista de "Anclajes" es la lista de alquileres?
+       if(!estacionEncontrada.tieneAnclajeLibre()){
+       
+       return Retorno.error4();
+       
+       }
    
-        
-        return Retorno.noImplementada();
+        bicicletasAncladas.Adicionar(bicicletaEncontrada);// esta bien esto?
+        return Retorno.ok();
+      
     }
 
     // !!!! ver si sirve usar metodos auxiliares para buscar usuario por ci y bici por codigo??
@@ -658,27 +675,39 @@ public class Sistema implements IObligatorio {
     }
 
 
-    
+    //3.5
     @Override
     public Retorno listarBicicletasDeEstacion(String nombreEstacion) {
+        
+        Estacion estacion = new Estacion ();
+        
+      Estacion  estacionAux = estaciones.Obtener(0);
+      // obtenemos la estacion que se esta buscando y luego retornamos las bicicletas
+      
+    ListaSE<Bicicleta> bicicletasAListar =  estacionAux.getBicicletas();
+  //  for(int i = 0; i<)
+        
+        
+        
+        
         return Retorno.noImplementada();
     }
-
+//3.6
     @Override
     public Retorno estacionesConDisponibilidad(int n) {
         return Retorno.noImplementada();
     }
-
+//3.7
     @Override
     public Retorno ocupacionPromedioXBarrio() {
         return Retorno.noImplementada();
     }
-
+//3.8
     @Override
     public Retorno rankingTiposPorUso() {
         return Retorno.noImplementada();
     }
-
+//3.9
     @Override
     public Retorno usuariosEnEspera(String nombreEstacion) {
         return Retorno.noImplementada();
@@ -689,8 +718,6 @@ public class Sistema implements IObligatorio {
         return Retorno.noImplementada();
     }
 
-    public static void main(String[] args) {
-        //puse un main aca para poder ejecutar el proyecto, ver si va en otro lado!
-    }
+    
 
 }
