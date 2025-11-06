@@ -104,7 +104,7 @@ public void AdicionarOrdenado(T x) {
     public T Obtener(int pos){
         
         if (pos <0 || pos>= Longitud())
-            throw new PosFueraDeRangoException();
+            return null;
         else {
         NodoSE<T> actual = cabeza;
         int pos_actual=0;
