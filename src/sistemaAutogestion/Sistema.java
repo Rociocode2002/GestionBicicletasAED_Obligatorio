@@ -585,28 +585,30 @@ public class Sistema implements IObligatorio {
 
     //3.3. Listar bicis en depósito:
     @Override
-    public Retorno listarBicisEnDeposito() {
-       
-        String resultado = "";
-        
-        for(int i = 0; i<listaDeposito.Longitud();i++){
-        
-          Bicicleta bicicleta = listaDeposito.Obtener(i);
-          
-          
-        if (i > 0) {
-            resultado += "|";
-        }
-        
-        
-   
-        resultado += bicicleta.toString();
-        }
-        
-             return new Retorno(Resultado.OK, resultado);
-         
-        
+public Retorno listarBicisEnDeposito() {
+    String resultado = listarBicisRecursivo(0, "");
+    return new Retorno(Resultado.OK, resultado);
+}
+
+private String listarBicisRecursivo(int indice, String acumulador) {
+    // Caso base: cuando llegamos al final de la lista
+    if (indice >= listaDeposito.Longitud()) {
+        return acumulador;
     }
+    
+    
+    Bicicleta bicicleta = listaDeposito.Obtener(indice);
+    
+    
+    if (indice > 0) {
+        acumulador += "|";
+    }
+    
+    acumulador += bicicleta.toString();
+    
+   
+    return listarBicisRecursivo(indice + 1, acumulador);
+}
     
 
     //3.4. Mapa de estaciones:
@@ -679,18 +681,30 @@ public class Sistema implements IObligatorio {
     @Override
     public Retorno listarBicicletasDeEstacion(String nombreEstacion) {
         
-        Estacion estacion = new Estacion ();
+        Estacion estacionEncontrada = null;
         
-      Estacion  estacionAux = estaciones.Obtener(0);
-      // obtenemos la estacion que se esta buscando y luego retornamos las bicicletas
+     
       
-    ListaSE<Bicicleta> bicicletasAListar =  estacionAux.getBicicletas();
-  //  for(int i = 0; i<)
+      for(int i = 0; i < estaciones.Longitud(); i++) {
+            Estacion estacionActual = estaciones.Obtener(i);
+            if(estacionActual.getNombre().equals(nombreEstacion)) {
+                estacionEncontrada = estacionActual;
+                
+            }
+        }
+        ListaSE<Bicicleta> bicicletasAlistar = estacionEncontrada.getBicicletas();
+      
+      String resultado = "";
+        for(int i = 0; i < bicicletasAlistar.Longitud(); i++) {
+            Bicicleta bicicleta = bicicletasAlistar.Obtener(i);
+            resultado += bicicleta.getCodigo();
+            
+            if(i < bicicletas.Longitud() - 1) {
+                resultado += "|";
+            }
+        }
         
-        
-        
-        
-        return Retorno.noImplementada();
+        return Retorno.ok(resultado);
     }
 //3.6
     @Override
