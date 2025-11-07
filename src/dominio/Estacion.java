@@ -45,13 +45,8 @@ public class Estacion implements Comparable <Estacion>{
     }
     
 
-    
-    
-    
-    
-
     public Estacion() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
     @Override
@@ -69,6 +64,7 @@ public class Estacion implements Comparable <Estacion>{
         this.Nombre = Nombre;
         this.Barrio = Barrio;
         this.Capacidad = Capacidad;
+        this.bicicletasAncladas = new ListaSE<Bicicleta>();
      
     }
 

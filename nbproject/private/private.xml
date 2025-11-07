@@ -4,13 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/src/sistemaAutogestion/Sistema.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_08AsignarBicicletaEstacion.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_02RegistrarEstacion.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_04RegistrarBicicleta.java</file>
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/src/dominio/Estacion.java</file>
-            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/src/tads/Cola.java</file>
-            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/src/tads/ICola.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/src/tads/NodoSE.java</file>
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/src/tads/ListaSE.java</file>
-            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/src/tads/Pila.java</file>
-            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/src/tads/IPila.java</file>
-            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test3_03ListarBicisEnDeposito.java</file>
         </group>
     </open-files>
 </project-private>
