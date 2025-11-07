@@ -707,9 +707,36 @@ private String listarBicisRecursivo(int indice, String acumulador) {
         return Retorno.ok(resultado);
     }
 //3.6
+   
     @Override
+    //indicar cantidad de estaciones que cuentan con una disponibilidad mayor a n
     public Retorno estacionesConDisponibilidad(int n) {
-        return Retorno.noImplementada();
+       
+        int contador = 0;
+        
+        if(n <= 0){
+     
+             return Retorno.error1();
+    
+    
+    }
+        
+        //recorrer estaciones
+        
+        for(int i= 0; i< estaciones.Longitud(); i++){
+        Estacion estacion = estaciones.Obtener(i);
+        
+        int bicicletasDisponibles = estacion.getBicicletas().Longitud();
+        if(bicicletasDisponibles> n){
+        
+        contador++;
+        
+        }
+        
+        }
+        
+        return Retorno.ok(contador);
+        
     }
 //3.7
     @Override
@@ -724,7 +751,42 @@ private String listarBicisRecursivo(int indice, String acumulador) {
 //3.9
     @Override
     public Retorno usuariosEnEspera(String nombreEstacion) {
-        return Retorno.noImplementada();
+           // Buscar la estación por nombre
+            Estacion estacionEncontrada = null;
+        
+        for(int i = 0; i < estaciones.Longitud(); i++) {
+            Estacion estacionActual = estaciones.Obtener(i);
+            if(estacionActual.getNombre().equals(nombreEstacion)) {
+                estacionEncontrada = estacionActual;
+                
+            }
+        }
+        
+         Cola<Usuario> usuariosEnEspera = estacionEncontrada.getColaEspera();
+         
+        String resultado =  "";
+        Cola<Usuario> colaAuxiliar = new Cola<>();
+        boolean primerElemento = true;
+         
+          while(!usuariosEnEspera.esVacia()) {
+            Usuario usuario = usuariosEnEspera.desencolar();
+            
+            if(!primerElemento) {
+                resultado += "|";
+            } else {
+                primerElemento = false;
+            }
+            resultado += usuario.getCedula(); // Obtener la CI del usuario
+            colaAuxiliar.encolar(usuario); //
+        }
+          while(!colaAuxiliar.esVacia()) {
+            usuariosEnEspera.encolar(colaAuxiliar.desencolar());
+        }
+        
+         return Retorno.ok(resultado);
+         
+         
+           
     }
 
     @Override
