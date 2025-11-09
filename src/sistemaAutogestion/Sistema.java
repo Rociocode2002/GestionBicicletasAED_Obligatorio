@@ -225,7 +225,7 @@ public class Sistema implements IObligatorio {
 
     
     
-    //2.7
+    //2.7 Eliminar Estación:
     @Override
     public Retorno eliminarEstacion(String nombre) {
        if(nombre== null || nombre.trim().isEmpty()){
@@ -268,7 +268,9 @@ public class Sistema implements IObligatorio {
     return Retorno.ok();
     }
     
-    //2.8
+    
+    
+    //2.8 Asignar bicicleta a estación:
    @Override
 
 public Retorno asignarBicicletaAEstacion(String codigo, String nombreEstacion) {
@@ -381,41 +383,23 @@ public Retorno asignarBicicletaAEstacion(String codigo, String nombreEstacion) {
     @Override
     public Retorno alquilarBicicleta(String cedula, String nombreEstacion) {
 
-        // --- Validaciones básicas ---
         if (cedula == null || cedula.isEmpty() || nombreEstacion == null || nombreEstacion.isEmpty()) {
-            return Retorno.error1(); // ERROR_1: parámetros inválidos
+            return Retorno.error1(); // Parámetros inválidos
         }
 
-        // --- Buscar usuario ---
-        Usuario usuarioEncontrado = null;
-        for (int i = 0; i < usuarios.Longitud() && usuarioEncontrado == null; i++) {
-            Usuario u = usuarios.Obtener(i);
-            if (u.getCedula().equalsIgnoreCase(cedula)) {
-                usuarioEncontrado = u;
-            }
+        Usuario usuario = buscarUsuarioPorCedula(cedula);
+        if (usuario == null) {
+            return Retorno.error2(); // Usuario inexistente
         }
 
-        if (usuarioEncontrado == null) {
-            return Retorno.error2(); // ERROR_2: usuario inexistente
+        Estacion estacion = buscarEstacionPorNombre(nombreEstacion);
+        if (estacion == null) {
+            return Retorno.error3(); // Estación inexistente
         }
 
-        // --- Buscar estación ---
-        Estacion estacionEncontrada = null;
-        for (int i = 0; i < estaciones.Longitud() && estacionEncontrada == null; i++) {
-            Estacion e = estaciones.Obtener(i);
-            if (e.getNombre().equalsIgnoreCase(nombreEstacion)) {
-                estacionEncontrada = e;
-            }
-        }
-
-        if (estacionEncontrada == null) {
-            return Retorno.error3(); // ERROR_3: estación inexistente
-        }
-
-        // --- Buscar bicicleta disponible ---
+        // Buscar bicicleta disponible
         Bicicleta biciDisponible = null;
-        ListaSE<Bicicleta> bicicletas = estacionEncontrada.getBicicletas();
-
+        ListaSE<Bicicleta> bicicletas = estacion.getBicicletas();
         for (int i = 0; i < bicicletas.Longitud() && biciDisponible == null; i++) {
             Bicicleta b = bicicletas.Obtener(i);
             if (b.getEstado() == Estado_Bicicleta.DISPONIBLE) {
@@ -423,188 +407,106 @@ public Retorno asignarBicicletaAEstacion(String codigo, String nombreEstacion) {
             }
         }
 
-        //  Si hay bicicleta disponible, registrar alquiler ---
-        if (biciDisponible != null) {
-            biciDisponible.setEstado(Estado_Bicicleta.ALQUILADA);
-            usuarioEncontrado.setBicicletaAlquilada(biciDisponible);
-
-            Alquiler nuevo = new Alquiler();
-            nuevo.setCedulaUsuario(usuarioEncontrado.getCedula());
-            nuevo.setCodigoBicicleta(biciDisponible.getCodigo());
-            nuevo.setNombreEstacionOrigen(estacionEncontrada.getNombre());
-            nuevo.setFechaAlquiler(new Date()); // ?? consultar a la profe si está bien usar este metodo date???
-
-            alquileres.Adicionar(nuevo);
-            return Retorno.ok();
+        if (biciDisponible == null) {
+            estacion.getColaEspera().encolar(usuario);
+            return Retorno.ok("Usuario en espera");
         }
 
-        // --- Si no hay bicicletas disponibles ---
-        estacionEncontrada.getColaEspera().encolar(usuarioEncontrado);
-        return Retorno.ok("Usuario en espera");
+        // Registrar alquiler
+        biciDisponible.setEstado(Estado_Bicicleta.ALQUILADA);
+        usuario.setBicicletaAlquilada(biciDisponible);
+        registrarAlquiler(usuario, biciDisponible, estacion);
+
+        return Retorno.ok();
     }
 
-
-
-
-
+    
     //2.10. Devolver bicicleta:
     @Override
     public Retorno devolverBicicleta(String cedula, String nombreEstacionDestino) {
 
-        // --- Validaciones básicas ---
         if (cedula == null || cedula.isEmpty() || nombreEstacionDestino == null || nombreEstacionDestino.isEmpty()) {
-            return Retorno.error1(); // ERROR_1: parámetros inválidos
+            return Retorno.error1();
         }
 
-        // --- Buscar usuario ---
-        Usuario usuarioEncontrado = null;
-        for (int i = 0; i < usuarios.Longitud() && usuarioEncontrado == null; i++) {
-            Usuario u = usuarios.Obtener(i);
-            if (u.getCedula().equalsIgnoreCase(cedula)) {
-                usuarioEncontrado = u;
-            }
+        Usuario usuario = buscarUsuarioPorCedula(cedula);
+        if (usuario == null || usuario.getBicicletaAlquilada() == null) {
+            return Retorno.error2(); // Usuario inexistente o sin bici
         }
 
-        // --- Verificar existencia y que tenga bici alquilada ---
-        if (usuarioEncontrado == null || usuarioEncontrado.getBicicletaAlquilada() == null) {
-            return Retorno.error2(); // ERROR_2: usuario inexistente o no tiene bici alquilada
-        }
-
-        // --- Buscar estación destino ---
-        Estacion estacionDestino = null;
-        for (int i = 0; i < estaciones.Longitud() && estacionDestino == null; i++) {
-            Estacion e = estaciones.Obtener(i);
-            if (e.getNombre().equalsIgnoreCase(nombreEstacionDestino)) {
-                estacionDestino = e;
-            }
-        }
-
+        Estacion estacionDestino = buscarEstacionPorNombre(nombreEstacionDestino);
         if (estacionDestino == null) {
-            return Retorno.error3(); // ERROR_3: estación inexistente
+            return Retorno.error3(); // Estación inexistente
         }
 
-        // --- Obtener la bici que el usuario está devolviendo ---
-        Bicicleta biciDevuelta = usuarioEncontrado.getBicicletaAlquilada();
+        Bicicleta biciDevuelta = usuario.getBicicletaAlquilada();
 
-        // --- Si hay lugar libre, anclar directamente ---
+        // Si hay lugar, anclar directamente
         if (estacionDestino.tieneAnclajeLibre()) {
-
-            // Marcar bici como disponible
             biciDevuelta.setEstado(Estado_Bicicleta.DISPONIBLE);
             biciDevuelta.setEstacionActual(estacionDestino);
-
-            // Agregar bicicleta a la estación
             estacionDestino.getBicicletas().Adicionar(biciDevuelta);
+            usuario.setBicicletaAlquilada(null);
 
-            // Liberar al usuario (ya no tiene bici alquilada)
-            usuarioEncontrado.setBicicletaAlquilada(null);
-
-            // --- Si hay alguien esperando para alquilar en esta estación ---
+            // Si hay usuario en espera, asignar bici automáticamente
             if (!estacionDestino.getColaEspera().esVacia()) {
-                Usuario siguienteUsuario = estacionDestino.getColaEspera().desencolar();
-
-                // Asignar bicicleta automáticamente
+                Usuario siguiente = estacionDestino.getColaEspera().desencolar();
                 biciDevuelta.setEstado(Estado_Bicicleta.ALQUILADA);
-                siguienteUsuario.setBicicletaAlquilada(biciDevuelta);
-
-                // Registrar el nuevo alquiler
-                Alquiler nuevo = new Alquiler();
-                nuevo.setCedulaUsuario(siguienteUsuario.getCedula());
-                nuevo.setCodigoBicicleta(biciDevuelta.getCodigo());
-                nuevo.setNombreEstacionOrigen(estacionDestino.getNombre());
-                nuevo.setFechaAlquiler(new Date());
-                alquileres.Adicionar(nuevo);
+                siguiente.setBicicletaAlquilada(biciDevuelta);
+                registrarAlquiler(siguiente, biciDevuelta, estacionDestino);
             }
 
             return Retorno.ok("Bicicleta devuelta correctamente");
         }
 
-        // --- Si no hay lugar libre, usuario queda esperando por anclaje ---
-        estacionDestino.getColaEspera().encolar(usuarioEncontrado);
+        // No hay lugar libre
+        estacionDestino.getColaEspera().encolar(usuario);
         return Retorno.ok("Usuario en espera por anclaje");
     }
+
 
     //2.11 Deshacer últimos retiros:
     @Override
     public Retorno deshacerUltimosRetiros(int n) {
-        // --- Validaciones ---
         if (n <= 0) {
-            return Retorno.error1(); // ERROR_1: valor inválido
+            return Retorno.error1();
         }
 
         if (alquileres.Vacia()) {
             return Retorno.ok("No hay retiros para deshacer");
         }
 
-        String resultado = "";
-        int cantidadDeshechos = 0;
-
-        // Determinar cuántos retiros se pueden realmente deshacer
+        StringBuilder sb = new StringBuilder();
         int total = alquileres.Longitud();
         int aDeshacer = Math.min(n, total);
 
-        // Procesar desde el último hacia atrás
         for (int i = total - 1; i >= total - aDeshacer; i--) {
             Alquiler alquiler = alquileres.Obtener(i);
 
-            // Buscar usuario
-            Usuario usuarioEncontrado = null;
-            for (int j = 0; j < usuarios.Longitud() && usuarioEncontrado == null; j++) {
-                Usuario u = usuarios.Obtener(j);
-                if (u.getCedula().equalsIgnoreCase(alquiler.getCedulaUsuario())) {
-                    usuarioEncontrado = u;
-                }
-            }
+            Usuario usuario = buscarUsuarioPorCedula(alquiler.getCedulaUsuario());
+            Estacion estacion = buscarEstacionPorNombre(alquiler.getNombreEstacionOrigen());
+            Bicicleta bici = buscarBicicletaPorCodigo(alquiler.getCodigoBicicleta());
 
-            // Buscar estación origen
-            Estacion estacionOrigen = null;
-            for (int k = 0; k < estaciones.Longitud() && estacionOrigen == null; k++) {
-                Estacion e = estaciones.Obtener(k);
-                if (e.getNombre().equalsIgnoreCase(alquiler.getNombreEstacionOrigen())) {
-                    estacionOrigen = e;
-                }
-            }
-
-            // Buscar bicicleta
-            Bicicleta biciDevuelta = null;
-            for (int m = 0; m < bicicletas.Longitud() && biciDevuelta == null; m++) {
-                Bicicleta b = bicicletas.Obtener(m);
-                if (b.getCodigo().equalsIgnoreCase(alquiler.getCodigoBicicleta())) {
-                    biciDevuelta = b;
-                }
-            }
-
-            // Si todos los objetos están OK, revertimos el alquiler
-            if (usuarioEncontrado != null && estacionOrigen != null && biciDevuelta != null) {
-                // Intentar devolver la bici a la estación de origen
-                if (estacionOrigen.tieneAnclajeLibre()) {
-                    biciDevuelta.setEstado(Estado_Bicicleta.DISPONIBLE);
-                    biciDevuelta.setEstacionActual(estacionOrigen);
-                    estacionOrigen.getBicicletas().Adicionar(biciDevuelta);
+            if (usuario != null && estacion != null && bici != null) {
+                if (estacion.tieneAnclajeLibre()) {
+                    bici.setEstado(Estado_Bicicleta.DISPONIBLE);
+                    bici.setEstacionActual(estacion);
+                    estacion.getBicicletas().Adicionar(bici);
                 } else {
-                    estacionOrigen.getColaEspera().encolar(usuarioEncontrado);
+                    estacion.getColaEspera().encolar(usuario);
                 }
 
-                // Liberar la bici del usuario
-                usuarioEncontrado.setBicicletaAlquilada(null);
-
-                // Quitar el alquiler de la lista
+                usuario.setBicicletaAlquilada(null);
                 alquileres.Eliminar(i);
 
-                // Agregar al string de resultado
-                if (cantidadDeshechos > 0) {
-                    resultado = "|" + resultado;
-                }
-                resultado = alquiler.getCodigoBicicleta() + "#" +
-                            alquiler.getCedulaUsuario() + "#" +
-                            alquiler.getNombreEstacionOrigen() + resultado;
-
-                cantidadDeshechos++;
+                if (sb.length() > 0) sb.insert(0, "|");
+                sb.insert(0, alquiler.getCodigoBicicleta() + "#" + alquiler.getCedulaUsuario() + "#" + alquiler.getNombreEstacionOrigen());
             }
         }
 
-        return Retorno.ok(resultado);
+        return Retorno.ok(sb.toString());
     }
+
 
 
     //3.1. Obtener Usuario:
@@ -754,7 +656,7 @@ private String listarBicisRecursivo(int indice, String acumulador) {
     }
 
 
-    //3.5
+    //3.5 Listar bicis de estación:
     @Override
     public Retorno listarBicicletasDeEstacion(String nombreEstacion) {
         
@@ -783,7 +685,9 @@ private String listarBicisRecursivo(int indice, String acumulador) {
         
         return Retorno.ok(resultado);
     }
-//3.6
+    
+    
+    //3.6 Estaciones con disponibilidad mayor:
    
     @Override
     //indicar cantidad de estaciones que cuentan con una disponibilidad mayor a n
@@ -815,21 +719,126 @@ private String listarBicisRecursivo(int indice, String acumulador) {
         return Retorno.ok(contador);
         
     }
-//3.7
+    
+    //3.7 Ocupación promedio por barrio
     @Override
     public Retorno ocupacionPromedioXBarrio() {
-        return Retorno.noImplementada();
+
+        // Si no hay estaciones cargadas -- ver si hay que validar esto??
+        /*if (estaciones == null || estaciones.Vacia()) {
+            return new Retorno(Retorno.Resultado.ERROR_1, 0, "No hay estaciones registradas", false);
+        }*/
+
+        // Lista auxiliar con barrios sin repetir
+        ListaSE<String> barrios = new ListaSE<>();
+
+        // Recorremos todas las estaciones para recopilar los barrios únicos
+        for (int i = 0; i < estaciones.Longitud(); i++) {
+            Estacion e = estaciones.Obtener(i);
+            String barrio = e.getBarrio();
+            if (!barrios.existeElemento(barrio)) {
+                barrios.AdicionarOrdenado(barrio);
+            }
+        }
+
+        StringBuilder sb = new StringBuilder(); // esto es una clase de Java para concatenar strings
+
+        // Para cada barrio calculamos ocupación promedio
+        for (int i = 0; i < barrios.Longitud(); i++) {
+            String barrio = barrios.Obtener(i);
+            int capacidadTotal = 0;
+            int bicicletasAncladasTotales = 0;
+
+            // Sumar capacidades y bicis ancladas de las estaciones del barrio
+            for (int j = 0; j < estaciones.Longitud(); j++) {
+                Estacion est = estaciones.Obtener(j);
+                if (est.getBarrio().equalsIgnoreCase(barrio)) {
+                    capacidadTotal += est.getCapacidad();
+                    // getBicicletas() devuelve ListaSE<Bicicleta>
+                    if (est.getBicicletas() != null) {
+                        bicicletasAncladasTotales += est.getBicicletas().Longitud();
+                    }
+                }
+            }
+
+            int porcentaje = 0;
+            if (capacidadTotal > 0) {
+                porcentaje = Math.round((bicicletasAncladasTotales * 100f) / capacidadTotal);
+            }
+
+            sb.append(barrio).append("#").append(porcentaje);
+            if (i < barrios.Longitud() - 1) {
+                sb.append("|");
+            }
+        }
+
+        // Devolvemos el String que se pide
+        return Retorno.ok(sb.toString());
     }
-//3.8
+    
+    //3.8 Ranking por tipo de uso:
     @Override
     public Retorno rankingTiposPorUso() {
-        return Retorno.noImplementada();
+        int totalUrbana = 0;
+        int totalMountain = 0;
+        int totalElectrica = 0;
+
+        // Contar alquileres por tipo
+        for (int i = 0; i < alquileres.Longitud(); i++) {
+            Alquiler a = alquileres.Obtener(i);
+            Bicicleta bici = buscarBicicletaPorCodigo(a.getCodigoBicicleta());
+            if (bici != null) {
+                switch (bici.getTipo()) {
+                    case URBANA:
+                        totalUrbana++;
+                        break;
+                    case MOUNTAIN:
+                        totalMountain++;
+                        break;
+                    case ELECTRICA:
+                        totalElectrica++;
+                        break;
+                }
+            }
+        }
+
+        // Arreglo paralelo tipo / cantidad
+        String[] tipos = {"URBANA", "MOUNTAIN", "ELECTRICA"};
+        int[] cantidades = {totalUrbana, totalMountain, totalElectrica};
+
+        // Ordenamiento con BubleSort descendente (por cantidad, y luego alfabético)
+        for (int i = 0; i < 2; i++) {
+            for (int j = i + 1; j < 3; j++) {
+                if (cantidades[j] > cantidades[i] ||
+                   (cantidades[j] == cantidades[i] && tipos[j].compareToIgnoreCase(tipos[i]) < 0)) {
+                    // Intercambiar
+                    int tempCant = cantidades[i];
+                    cantidades[i] = cantidades[j];
+                    cantidades[j] = tempCant;
+
+                    String tempTipo = tipos[i];
+                    tipos[i] = tipos[j];
+                    tipos[j] = tempTipo;
+                }
+            }
+        }
+
+        // Construir resultado
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            sb.append(tipos[i]).append("#").append(cantidades[i]);
+            if (i < 2) sb.append("|");
+        }
+
+        return Retorno.ok(sb.toString());
     }
-//3.9
+
+    
+    //3.9 Usuarios en espera por alquiler:
     @Override
     public Retorno usuariosEnEspera(String nombreEstacion) {
-           // Buscar la estación por nombre
-            Estacion estacionEncontrada = null;
+        // Buscar la estación por nombre
+        Estacion estacionEncontrada = null;
         
         for(int i = 0; i < estaciones.Longitud(); i++) {
             Estacion estacionActual = estaciones.Obtener(i);
@@ -839,39 +848,126 @@ private String listarBicisRecursivo(int indice, String acumulador) {
             }
         }
         
-         Cola<Usuario> usuariosEnEspera = estacionEncontrada.getColaEspera();
+        Cola<Usuario> usuariosEnEspera = estacionEncontrada.getColaEspera();
          
         String resultado =  "";
         Cola<Usuario> colaAuxiliar = new Cola<>();
         boolean primerElemento = true;
          
-          while(!usuariosEnEspera.esVacia()) {
-            Usuario usuario = usuariosEnEspera.desencolar();
-            
-            if(!primerElemento) {
-                resultado += "|";
-            } else {
-                primerElemento = false;
+        while(!usuariosEnEspera.esVacia()) {
+          Usuario usuario = usuariosEnEspera.desencolar();
+          if(!primerElemento) {
+              resultado += "|";
+            } 
+            else {
+              primerElemento = false;
             }
             resultado += usuario.getCedula(); // Obtener la CI del usuario
             colaAuxiliar.encolar(usuario); //
         }
-          while(!colaAuxiliar.esVacia()) {
-            usuariosEnEspera.encolar(colaAuxiliar.desencolar());
+        while(!colaAuxiliar.esVacia()) {
+           usuariosEnEspera.encolar(colaAuxiliar.desencolar());
         }
         
-         return Retorno.ok(resultado);
-         
-         
-           
+        return Retorno.ok(resultado);
+     
     }
 
-   //3.10
-   @Override
+   //3.10 Usuario con mayor cantidad de alquileres:
+    @Override
     public Retorno usuarioMayor() {
-        return Retorno.noImplementada();
+        // Dos listas paralelas: una para cédulas y otra para los contadores
+        ListaSE<String> cedulas = new ListaSE<>();
+        ListaSE<Integer> conteos = new ListaSE<>();
+
+        // --- Contar los alquileres por usuario ---
+        for (int i = 0; i < alquileres.Longitud(); i++) {
+            Alquiler a = alquileres.Obtener(i);
+            String ci = a.getCedulaUsuario();
+
+            boolean encontrado = false;
+            for (int j = 0; j < cedulas.Longitud() && !encontrado; j++) {
+                if (cedulas.Obtener(j).equalsIgnoreCase(ci)) {
+                    // Actualizar contador
+                    int nuevoValor = conteos.Obtener(j) + 1;
+                    conteos.Eliminar(j);          // Eliminar viejo
+                    conteos.Insertar(nuevoValor, j); // Insertar nuevo en misma posición
+                    encontrado = true;
+                }
+            }
+
+            // Si no estaba, agregarlo
+            if (!encontrado) {
+                cedulas.Adicionar(ci);
+                conteos.Adicionar(1);
+            }
+        }
+
+        // --- Buscar el usuario con mayor cantidad ---
+        String cedulaMayor = cedulas.Obtener(0);
+        int max = conteos.Obtener(0);
+
+        for (int i = 1; i < cedulas.Longitud(); i++) {
+            String ci = cedulas.Obtener(i);
+            int cantidad = conteos.Obtener(i);
+
+            if (cantidad > max) {
+                max = cantidad;
+                cedulaMayor = ci;
+            } else if (cantidad == max && ci.compareToIgnoreCase(cedulaMayor) < 0) {
+                // Desempate: cédula más pequeña alfabéticamente
+                cedulaMayor = ci;
+            }
+        }
+
+        return Retorno.ok(cedulaMayor);
     }
 
+
+    //metodos auxiliares usados en la resolución:
+    private Bicicleta buscarBicicletaPorCodigo(String codigo) {
+        for (int i = 0; i < estaciones.Longitud(); i++) {
+            Estacion est = estaciones.Obtener(i);
+            ListaSE<Bicicleta> bicis = est.getBicicletas();
+            for (int j = 0; j < bicis.Longitud(); j++) {
+                Bicicleta b = bicis.Obtener(j);
+                if (b.getCodigo().equalsIgnoreCase(codigo)) {
+                    return b;
+                }
+            }
+        }
+        return null;
+    }
     
+        private Usuario buscarUsuarioPorCedula(String cedula) {
+        if (cedula == null || cedula.trim().isEmpty()) return null;
+        for (int i = 0; i < usuarios.Longitud(); i++) {
+            Usuario u = usuarios.Obtener(i);
+            if (u.getCedula().equalsIgnoreCase(cedula)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    private Estacion buscarEstacionPorNombre(String nombre) {
+        if (nombre == null || nombre.trim().isEmpty()) return null;
+        for (int i = 0; i < estaciones.Longitud(); i++) {
+            Estacion e = estaciones.Obtener(i);
+            if (e.getNombre().equalsIgnoreCase(nombre)) {
+                return e;
+            }
+        }
+        return null;
+    }
+
+    private void registrarAlquiler(Usuario usuario, Bicicleta bici, Estacion estacion) {
+        Alquiler nuevo = new Alquiler();
+        nuevo.setCedulaUsuario(usuario.getCedula());
+        nuevo.setCodigoBicicleta(bici.getCodigo());
+        nuevo.setNombreEstacionOrigen(estacion.getNombre());
+        nuevo.setFechaAlquiler(new Date());
+        alquileres.Adicionar(nuevo);
+    }
 
 }
