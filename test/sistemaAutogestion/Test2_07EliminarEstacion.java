@@ -38,7 +38,7 @@ public class Test2_07EliminarEstacion {
     
     
 }
-    @Test // No funciona todavia
+    @Test 
 public void EliminarEstacionOk_Multiple() {
     // Registrar varias estaciones
     retorno = s.registrarEstacion("EstacionA", "Centro", 5);
@@ -67,7 +67,7 @@ public void EliminarEstacionOk_Multiple() {
     assertEquals(Retorno.Resultado.OK, retorno.getResultado());
 }
 
-@Test// no funciona todavia 
+@Test
 public void EliminarEstacion_CasoBorde() {
     // Test con nombre exacto
     retorno = s.registrarEstacion("EstacionExacta", "Centro", 5);
@@ -139,8 +139,8 @@ public void EliminarEstacionError3_ConBicicletasAncladas() { // todavia no funci
     assertEquals(Retorno.Resultado.OK, retorno.getResultado());
     
     
-     s.registrarBicicleta("BICI001", "EstacionConBicis");
-     s.registrarBicicleta("BICI002", "EstacionConBicis");
+     s.registrarBicicleta("BICI01", "MOUNTAIN");
+     s.registrarBicicleta("BICI02", "MOUNTAIN");
     
     // Intentar eliminar estación con bicicletas
     retorno = s.eliminarEstacion("EstacionConBicis");
@@ -154,7 +154,7 @@ public void EliminarEstacionError3_ConUsuariosYBicicletas() { // todavia no func
     assertEquals(Retorno.Resultado.OK, retorno.getResultado());
     
  
-    s.registrarBicicleta("BICI003", "EstacionCompleta");
+    s.registrarBicicleta("BIC003", "MOUNTAIN");
      s.registrarUsuario("87654321", "Usuario2");
      s.alquilarBicicleta("87654321", "EstacionCompleta");
     
