@@ -161,26 +161,35 @@ public void AdicionarOrdenado(T x) {
      //el dato buscado y luego reconecta los enlaces saltando 
      //  el nodo a eliminar, manteniendo así la integridad de la lista.
        @Override
-      public void borrarElemento (T dato){
-    if (cabeza != null) {
+public void borrarElemento(T dato) {
+    if (cabeza == null) {
+        return; 
+    }
 
-            if (cabeza.getDato().equals(dato)) {
-                cabeza = cabeza.getSiguiente();
-            } else {
-                NodoSE actual = cabeza;
-                 while (actual.getSiguiente() != null && !actual.getSiguiente().getDato().equals(dato)) {
-                actual = actual.getSiguiente();
-                }
-                if (actual.getSiguiente() != null) {
-                    NodoSE <T> aBorrar = actual.getSiguiente();
-                    actual.setSiguiente(aBorrar.getSiguiente());
-                    aBorrar.setSiguiente(null);
+  
+    if (cabeza.getDato().equals(dato)) {
+        cabeza = cabeza.getSiguiente();
+        longitud--;
+        return;
+    }
 
-                }
-            }
-        }
-   }
     
+    NodoSE<T> actual = cabeza;
+    while (actual.getSiguiente() != null && !actual.getSiguiente().getDato().equals(dato)) {
+        actual = actual.getSiguiente();
+    }
+    
+   
+    if (actual.getSiguiente() != null) {
+        NodoSE<T> aBorrar = actual.getSiguiente();
+        actual.setSiguiente(aBorrar.getSiguiente());
+        aBorrar.setSiguiente(null);
+        longitud--;
+    }
+   
+}
+    
+      
     
     
 }

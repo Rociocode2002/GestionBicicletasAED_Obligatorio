@@ -74,6 +74,7 @@ public class Sistema implements IObligatorio {
 
         // Agregamos la estación:    
         estaciones.Adicionar(nueva);
+        
 
         return Retorno.ok();
     }
@@ -137,6 +138,7 @@ public class Sistema implements IObligatorio {
 
         // Agregar bicicleta al depósito       
         listaDeposito.Adicionar(nueva);
+        bicicletas.Adicionar(nueva);// lista global de bicicletas
         
 
         return Retorno.ok();
@@ -181,6 +183,7 @@ public class Sistema implements IObligatorio {
 
     bicicletaEncontrada.setEstado(Estado_Bicicleta.MANTENIMIENTO);
     listaDeposito.Adicionar(bicicletaEncontrada); 
+    bicicletas.Adicionar(bicicletaEncontrada);// lista generica de bicicletas
 
         return Retorno.ok();
     }
@@ -272,72 +275,41 @@ public class Sistema implements IObligatorio {
     
     //2.8 Asignar bicicleta a estación:
    @Override
-
 public Retorno asignarBicicletaAEstacion(String codigo, String nombreEstacion) {
+   
     if (codigo == null || codigo.trim().isEmpty() || nombreEstacion == null || nombreEstacion.trim().isEmpty()) {
         return Retorno.error1();
     }
 
-    Bicicleta bicicletaEncontrada = null;
-    String ubicacionActual = null;
-    Estacion estacionOrigen = null;
-
-  
-    boolean encontradaEnDeposito = false;
-    if (listaDeposito != null) {
-        for (int i = 0; i < listaDeposito.Longitud() && !encontradaEnDeposito; i++) {
-            Bicicleta bicicletaActual = listaDeposito.Obtener(i);
-            if (bicicletaActual != null && bicicletaActual.getCodigo().equals(codigo)) {
-                bicicletaEncontrada = bicicletaActual;
-                ubicacionActual = "deposito";
-                encontradaEnDeposito = true;
+    
+    Bicicleta bicicleta = null;
+    for (int i = 0; i < bicicletas.Longitud() && bicicleta == null; i++) {
+        Bicicleta bici = bicicletas.Obtener(i);
+        if (bici.getCodigo().equals(codigo) && bici.getEstado() == Estado_Bicicleta.DISPONIBLE) {
+            bicicleta = bici;
+        }
+    }
+    
+    for (int i = 0; i < estaciones.Longitud() && bicicleta == null; i++) {
+        Estacion estacion = estaciones.Obtener(i);
+        for (int j = 0; j < estacion.getBicicletas().Longitud() && bicicleta == null; j++) {
+            Bicicleta bici = estacion.getBicicletas().Obtener(j);
+            if (bici.getCodigo().equals(codigo) && bici.getEstado() == Estado_Bicicleta.DISPONIBLE) {
+                bicicleta = bici;
             }
         }
     }
-
-    // 2. Buscar en todas las estaciones - VERIFICAR LONGITUD Y NULL
-    boolean encontradaEnEstacion = false;
-    if (!encontradaEnDeposito && estaciones != null) {
-        for (int i = 0; i < estaciones.Longitud() && !encontradaEnEstacion; i++) {
-            Estacion estacionActual = estaciones.Obtener(i);
-            if (estacionActual != null) {
-                ListaSE<Bicicleta> bicisEnEstacion = estacionActual.getBicicletas();
-                
-                if (bicisEnEstacion != null) {
-                    for (int j = 0; j < bicisEnEstacion.Longitud() && !encontradaEnEstacion; j++) {
-                        Bicicleta bicicletaEnEstacion = bicisEnEstacion.Obtener(j);
-                        if (bicicletaEnEstacion != null && bicicletaEnEstacion.getCodigo().equals(codigo)) {
-                            bicicletaEncontrada = bicicletaEnEstacion;
-                            ubicacionActual = estacionActual.getNombre();
-                            estacionOrigen = estacionActual;
-                            encontradaEnEstacion = true;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-
-    if (bicicletaEncontrada == null) {
-        return Retorno.error2();
-    }
     
-    
-    if (bicicletaEncontrada.getEstado() != Estado_Bicicleta.DISPONIBLE) {
+    if (bicicleta == null) {
         return Retorno.error2();
     }
 
-    
+    // Buscar estación destino
     Estacion estacionDestino = null;
-    boolean destinoEncontrado = false;
-    if (estaciones != null) {
-        for (int i = 0; i < estaciones.Longitud() && !destinoEncontrado; i++) {
-            Estacion estacionActual = estaciones.Obtener(i);
-            if (estacionActual != null && estacionActual.getNombre().equals(nombreEstacion)) {
-                estacionDestino = estacionActual;
-                destinoEncontrado = true;
-            }
+    for (int i = 0; i < estaciones.Longitud() && estacionDestino == null; i++) {
+        Estacion estacion = estaciones.Obtener(i);
+        if (estacion.getNombre().equals(nombreEstacion)) {
+            estacionDestino = estacion;
         }
     }
     
@@ -345,34 +317,32 @@ public Retorno asignarBicicletaAEstacion(String codigo, String nombreEstacion) {
         return Retorno.error3();
     }
 
+    
+    boolean yaEstaEnDestino = false;
+    for (int i = 0; i < estacionDestino.getBicicletas().Longitud() && !yaEstaEnDestino; i++) {
+        if (estacionDestino.getBicicletas().Obtener(i).getCodigo().equals(codigo)) {
+            yaEstaEnDestino = true;
+        }
+    }
+    if (yaEstaEnDestino) {
+        return Retorno.ok();
+    }
+
   
-    ListaSE<Bicicleta> bicisDestino = estacionDestino.getBicicletas();
-    if (bicisDestino == null || bicisDestino.Longitud() >= estacionDestino.getCapacidad()) {
+    if (estacionDestino.getBicicletas().Longitud() >= estacionDestino.getCapacidad()) {
         return Retorno.error4();
     }
 
    
-    if ("deposito".equals(ubicacionActual)) {
-        if (listaDeposito != null) {
-            listaDeposito.borrarElemento(bicicletaEncontrada);
-        }
-    } else {
-        if (estacionOrigen != null) {
-            ListaSE<Bicicleta> bicisOrigen = estacionOrigen.getBicicletas();
-            if (bicisOrigen != null) {
-                bicisOrigen.borrarElemento(bicicletaEncontrada);
-            }
-        }
+    bicicletas.borrarElemento(bicicleta);
+    for (int i = 0; i < estaciones.Longitud(); i++) {
+        estaciones.Obtener(i).getBicicletas().borrarElemento(bicicleta);
     }
-
-
-    if (bicisDestino != null) {
-        bicisDestino.AdicionarOrdenado(bicicletaEncontrada);
-    }
+    estacionDestino.getBicicletas().AdicionarOrdenado(bicicleta);
+    
 
     return Retorno.ok();
 }
-
 
 
 
