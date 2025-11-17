@@ -648,11 +648,11 @@ private String listarBicisRecursivo(int indice, String acumulador) {
             Bicicleta bicicleta = bicicletasAlistar.Obtener(i);
             resultado += bicicleta.getCodigo();
             
-            if(i < bicicletas.Longitud() - 1) {
+            if(i < bicicletasAlistar.Longitud() - 1) {
                 resultado += "|";
             }
         }
-        
+      
         return Retorno.ok(resultado);
     }
     
@@ -665,7 +665,7 @@ private String listarBicisRecursivo(int indice, String acumulador) {
        
         int contador = 0;
         
-        if(n <= 0){
+        if(n <= 1){
      
              return Retorno.error1();
     
