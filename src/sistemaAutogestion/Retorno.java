@@ -2,6 +2,10 @@ package sistemaAutogestion;
 
 public class Retorno {
 
+    Object getValorInteger() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public enum Resultado {
         OK, ERROR_1, ERROR_2, ERROR_3, ERROR_4, ERROR_5, NO_IMPLEMENTADA
     };

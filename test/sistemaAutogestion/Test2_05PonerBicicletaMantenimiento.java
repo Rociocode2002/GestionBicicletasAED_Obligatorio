@@ -55,10 +55,7 @@ public class Test2_05PonerBicicletaMantenimiento {
         retorno = s.marcarEnMantenimiento("123123222", "rota");
         assertEquals(Retorno.Resultado.ERROR_2, retorno.getResultado());
     }
-    
-    /*Segun lo hablado en clase, 
-    El error 3 no lo podemos testear porque aun no tenemos implementado un metodo para 
-    Alquilar bicicletas
+ 
     @Test
     public void marcarEnMantenimientoError03() { 
           //retorno = s.registrarBicicleta("123123", "MOUNTAIN");
@@ -67,7 +64,7 @@ public class Test2_05PonerBicicletaMantenimiento {
             assertEquals(Retorno.Resultado.ERROR_3, retorno.getResultado());
         
         
-    } */
+    } 
 
     
     @Test
