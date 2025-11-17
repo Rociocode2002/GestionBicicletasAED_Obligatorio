@@ -96,6 +96,7 @@ public class Test3_06EstacionesConDisponibilidadMayor {
         Retorno retorno = s.estacionesConDisponibilidad(2);
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         assertEquals(0, retorno.getValorEntero());
+        
     }
 
     
