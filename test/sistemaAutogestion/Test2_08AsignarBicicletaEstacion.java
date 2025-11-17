@@ -102,7 +102,7 @@ public void AsignarBicicletaAEstacionError1_DatosInvalidos() {
     assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
     
     
-    retorno = s.asignarBicicletaAEstacion("", "Estacion01");
+    retorno = s.asignarBicicletaAEstacion("  ", "Estacion01");
     assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
     
    
