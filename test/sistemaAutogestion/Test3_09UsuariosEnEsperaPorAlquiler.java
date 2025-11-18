@@ -5,19 +5,19 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
- 
+
 public class Test3_09UsuariosEnEsperaPorAlquiler {
     
-    
-    
-      private Retorno retorno;
+    private Retorno retorno;
+
     private final IObligatorio s = new Sistema();
 
     @Before
     public void setUp() {
         s.crearSistemaDeGestion();
     }
-    @Test
+
+   @Test
        public void error1_NombreNullOVacio() {
            Retorno r;
 
@@ -96,6 +96,6 @@ public class Test3_09UsuariosEnEsperaPorAlquiler {
            Retorno rAgain = s.usuariosEnEspera("E1");
            assertEquals(c1 + "|" + c2, rAgain.getValorString());
        }
-    
-    
-}
+
+    }
+

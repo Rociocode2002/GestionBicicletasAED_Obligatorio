@@ -1,22 +1,26 @@
 
+
 package sistemaAutogestion;
 
 import java.lang.reflect.Field;
+
+
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class Test3_10UsuariosConMayorCantidadDeAlquileres {
     
-    
-      private Retorno retorno;
+
+    private Retorno retorno;
+
     private final IObligatorio s = new Sistema();
 
     @Before
     public void setUp() {
         s.crearSistemaDeGestion();
     }
-    
+
     @Test
     public void ok_SinUsuarios_RetornaVacio() {
         Retorno r = s.usuarioMayor();
@@ -80,5 +84,5 @@ public class Test3_10UsuariosConMayorCantidadDeAlquileres {
         assertEquals(Retorno.Resultado.OK, r.getResultado());
         assertEquals(c2.compareTo(c3) < 0 ? c2 : c3, r.getValorString());
     }
-    
 }
+

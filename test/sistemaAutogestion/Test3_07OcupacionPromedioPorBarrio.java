@@ -7,7 +7,9 @@ import static org.junit.Assert.*;
 
 public class Test3_07OcupacionPromedioPorBarrio {
     
+
       private Retorno retorno;
+
     private final IObligatorio s = new Sistema();
 
     @Before
@@ -15,7 +17,7 @@ public class Test3_07OcupacionPromedioPorBarrio {
         s.crearSistemaDeGestion();
     }
     
-    
+
     @Test
     public void sinEstaciones_retornaVacio() {
         Retorno r = s.ocupacionPromedioXBarrio();
@@ -135,5 +137,4 @@ public class Test3_07OcupacionPromedioPorBarrio {
         assertEquals(Retorno.Resultado.OK, r.getResultado());
         assertEquals("A#67|B#33", r.getValorString()); // orden alfabético por barrio
     }
-    
 }

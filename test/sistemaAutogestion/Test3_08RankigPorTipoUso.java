@@ -6,9 +6,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class Test3_08RankigPorTipoUso {
-    
-    
-    
       private Retorno retorno;
     private final IObligatorio s = new Sistema();
 
@@ -17,7 +14,7 @@ public class Test3_08RankigPorTipoUso {
         s.crearSistemaDeGestion();
     }
     
-     @Test
+    @Test
     public void sinAlquileres_todosCero_enOrdenAlfabetico() {
         // Sin historial => 0-0-0. Empate => alfabético ELECTRICA|MOUNTAIN|URBANA
         assertEquals(Retorno.Resultado.OK, s.registrarEstacion("E1", "Centro", 10).getResultado());
@@ -123,5 +120,10 @@ public class Test3_08RankigPorTipoUso {
         assertEquals(Retorno.Resultado.OK, r.getResultado());
         assertEquals("ELECTRICA#2|MOUNTAIN#0|URBANA#0", r.getValorString());
     }
+    
+    
+
+
+    
     
 }
