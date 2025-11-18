@@ -35,7 +35,7 @@ public class Sistema implements IObligatorio {
     @Override
     public Retorno crearSistemaDeGestion() {
 
-         
+            
             usuarios = new ListaSE<Usuario>(); 
             estaciones = new ListaSE<Estacion>(); 
             bicicletas = new ListaSE<Bicicleta>();
@@ -44,6 +44,7 @@ public class Sistema implements IObligatorio {
             ColaAlquiler = new Cola<Alquiler>();
             ColaDevolucion = new Cola<Usuario>();
             bicicletasAncladas = new ListaSE<Bicicleta>();
+            alquileres = new ListaSE<Alquiler>();
             return Retorno.ok();
         
     }
@@ -344,6 +345,7 @@ public Retorno asignarBicicletaAEstacion(String codigo, String nombreEstacion) {
     return Retorno.ok();
 }
 
+
     //2.9. Alquilar bicicleta:
     @Override
     public Retorno alquilarBicicleta(String cedula, String nombreEstacion) {
@@ -364,9 +366,9 @@ public Retorno asignarBicicletaAEstacion(String codigo, String nombreEstacion) {
 
         // Buscar bicicleta disponible
         Bicicleta biciDisponible = null;
-        ListaSE<Bicicleta> bicicletas = estacion.getBicicletas();
-        for (int i = 0; i < bicicletas.Longitud() && biciDisponible == null; i++) {
-            Bicicleta b = bicicletas.Obtener(i);
+        ListaSE<Bicicleta> bicisEstac = estacion.getBicicletas();
+        for (int i = 0; i < bicisEstac.Longitud() && biciDisponible == null; i++) {
+            Bicicleta b = bicisEstac.Obtener(i);
             if (b.getEstado() == Estado_Bicicleta.DISPONIBLE) {
                 biciDisponible = b;
             }

@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package dominio;
 import java.util.Date;
 
-/**
- *
- * @author rocio
- */
-public class Alquiler {
+public class Alquiler implements Comparable <Alquiler>{
     private String codigoBicicleta;
     private String cedulaUsuario;
     private String nombreEstacionOrigen;
@@ -47,6 +40,11 @@ public class Alquiler {
 
     public void setFechaAlquiler(Date fechaAlquiler) {
         this.fechaAlquiler = fechaAlquiler;
+    }
+
+    @Override
+    public int compareTo(Alquiler o) {
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
     
 }
