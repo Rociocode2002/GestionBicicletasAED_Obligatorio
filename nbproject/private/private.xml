@@ -8,9 +8,22 @@
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_04RegistrarBicicleta.java</file>
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/src/dominio/Estacion.java</file>
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/src/tads/NodoSE.java</file>
-            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test3_05ListarBicisEstacion.java</file>
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test3_04InformacionMapa.java</file>
             <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test3_06EstacionesConDisponibilidadMayor.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_07EliminarEstacion.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_06RepararBicicleta.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_05PonerBicicletaMantenimiento.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_09AlquilarBicicleta.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_10DevolverBicicleta.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test2_11DeshacerUltimosRetiros.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test3_01ObtenerUsuario.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test3_02ListarUsuarios.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test3_03ListarBicisEnDeposito.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test3_05ListarBicisEstacion.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test3_07OcupacionPromedioPorBarrio.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test3_08RankigPorTipoUso.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test3_09UsuariosEnEsperaPorAlquiler.java</file>
+            <file>file:/C:/Users/rocio/OneDrive/Desktop/Facultad/Algoritmos/AED%20obligatorio/GestionBicicletasAED_Obligatorio/test/sistemaAutogestion/Test3_10UsuariosConMayorCantidadDeAlquileres.java</file>
         </group>
     </open-files>
 </project-private>
