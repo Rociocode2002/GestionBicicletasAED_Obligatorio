@@ -8,10 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author rocio
- */
+
 public class Test3_06EstacionesConDisponibilidadMayor {
     
      private Retorno retorno;
