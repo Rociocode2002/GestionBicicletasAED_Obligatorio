@@ -19,7 +19,7 @@ public class Test2_09AlquilarBicicleta {
     }
     
     @Test
-    public void alquilarBicicletaOk_BicicletaDisponible() { // no funca
+    public void alquilarBicicletaOk_BicicletaDisponible() { 
         // Configuración inicial
         s.registrarUsuario("12345678", "Juan");
         s.registrarEstacion("EstacionCentro", "Centro", 3);

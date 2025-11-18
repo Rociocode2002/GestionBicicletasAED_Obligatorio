@@ -1,3 +1,4 @@
+
 package sistemaAutogestion;
 
 import org.junit.Before;
@@ -119,5 +120,10 @@ public class Test3_08RankigPorTipoUso {
         assertEquals(Retorno.Resultado.OK, r.getResultado());
         assertEquals("ELECTRICA#2|MOUNTAIN#0|URBANA#0", r.getValorString());
     }
+    
+    
+
+
+    
     
 }
