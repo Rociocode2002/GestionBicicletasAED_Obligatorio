@@ -344,11 +344,6 @@ public Retorno asignarBicicletaAEstacion(String codigo, String nombreEstacion) {
     return Retorno.ok();
 }
 
-
-
-
-
-    // !!!! ver si sirve usar metodos auxiliares para buscar usuario por ci y bici por codigo??
     //2.9. Alquilar bicicleta:
     @Override
     public Retorno alquilarBicicleta(String cedula, String nombreEstacion) {

@@ -61,12 +61,14 @@ public class Estacion implements Comparable <Estacion>{
 
    
       public Estacion(String Nombre, String Barrio, int Capacidad) {
-        this.Nombre = Nombre;
-        this.Barrio = Barrio;
-        this.Capacidad = Capacidad;
-        this.bicicletasAncladas = new ListaSE<Bicicleta>();
-     
-    }
+    this.Nombre = Nombre;
+    this.Barrio = Barrio;
+    this.Capacidad = Capacidad;
+    this.bicicletasAncladas = new ListaSE<Bicicleta>();
+    this.ColaEspera = new Cola<>();
+    this.ColaAlquiler = new Cola<>();
+    this.ColaDevolucion = new Cola<>();
+}
 
 
     public String getNombre() {
