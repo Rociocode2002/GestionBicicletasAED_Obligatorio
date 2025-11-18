@@ -1,19 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package sistemaAutogestion;
 
-/** */
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
-/**
- *
- * @author rocio
- */
+
 
   
 public class Test2_09AlquilarBicicleta {
@@ -26,7 +19,7 @@ public class Test2_09AlquilarBicicleta {
     }
     
     @Test
-    public void alquilarBicicletaOk_BicicletaDisponible() { // no funca
+    public void alquilarBicicletaOk_BicicletaDisponible() { 
         // Configuración inicial
         s.registrarUsuario("12345678", "Juan");
         s.registrarEstacion("EstacionCentro", "Centro", 3);

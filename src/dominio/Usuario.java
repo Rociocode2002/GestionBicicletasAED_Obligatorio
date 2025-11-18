@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package dominio;
 
-/**
- *
- * @author rocio
- */
+
 public class Usuario implements Comparable <Usuario>{
 
     
@@ -70,7 +64,7 @@ public class Usuario implements Comparable <Usuario>{
 
     @Override
     public int hashCode() {
-        return Nombre.toLowerCase().hashCode();
+        return Cedula.toLowerCase().hashCode();
     }
     
     @Override
