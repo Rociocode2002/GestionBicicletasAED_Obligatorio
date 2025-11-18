@@ -86,6 +86,7 @@ public class Test2_10DevolverBicicleta {
     @Test
     public void devolverBicicletaError03_estacionInexistente() {
         s.registrarUsuario("12345678", "Juan");
+        s.registrarEstacion("Estacion01", "Centro", 5); // ← FALTA EN TU TEST
         s.registrarBicicleta("BICI01", "URBANA");
         s.asignarBicicletaAEstacion("BICI01", "Estacion01");
         s.alquilarBicicleta("12345678", "Estacion01");
@@ -93,5 +94,6 @@ public class Test2_10DevolverBicicleta {
         retorno = s.devolverBicicleta("12345678", "EstacionInexistente");
         assertEquals(Retorno.Resultado.ERROR_3, retorno.getResultado());
     }
+
     
 }

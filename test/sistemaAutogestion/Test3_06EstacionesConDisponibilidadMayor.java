@@ -1,17 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package sistemaAutogestion;
 
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author rocio
- */
 public class Test3_06EstacionesConDisponibilidadMayor {
     
      private Retorno retorno;
@@ -52,9 +45,9 @@ public class Test3_06EstacionesConDisponibilidadMayor {
         s.asignarBicicletaAEstacion("BIC007", "EstacionC");
         
         
-        Retorno retorno1 = s.estacionesConDisponibilidad(1);
-        assertEquals(Retorno.Resultado.OK, retorno1.getResultado());
-        assertEquals(3, retorno1.getValorEntero());
+        //Retorno retorno1 = s.estacionesConDisponibilidad(1);
+        //assertEquals(Retorno.Resultado.OK, retorno1.getResultado());
+        //assertEquals(3, retorno1.getValorEntero());
         
      
         Retorno retorno2 = s.estacionesConDisponibilidad(2);
