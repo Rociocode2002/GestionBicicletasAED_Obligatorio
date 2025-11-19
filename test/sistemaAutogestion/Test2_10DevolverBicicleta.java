@@ -23,7 +23,7 @@ public class Test2_10DevolverBicicleta {
         s.alquilarBicicleta("12345678", "Estacion01");
 
         // Ejecutar método a testear
-        retorno = s.devolverBicicleta("12345678", "Centro");
+        retorno = s.devolverBicicleta("12345678", "Estacion01");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
 
         //assertTrue(retorno.getValorString().toUpperCase().contains("BICICLETA DEVUELTA"));

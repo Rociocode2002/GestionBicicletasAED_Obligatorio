@@ -86,6 +86,84 @@ public class Test3_05ListarBicisEstacion {
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         assertEquals("", retorno.getValorString());
     }
+    
+
+
+  
+   
+   
+    @Test
+    public void ok_EstacionSinBicis_RetornaVacio() {
+        s.registrarEstacion("E1", "Centro", 5);
+        Retorno r = s.listarBicicletasDeEstacion("E1");
+        assertEquals(Retorno.Resultado.OK, r.getResultado());
+        assertEquals("", r.getValorString());
+    }
+
+ 
+    @Test
+    public void ok_UnaBici_UnicoCodigo() {
+        s.registrarEstacion("E1", "Centro", 3);
+        s.registrarBicicleta("A00002", "URBANA");
+        s.asignarBicicletaAEstacion("A00002", "E1");
+
+        Retorno r = s.listarBicicletasDeEstacion("E1");
+        assertEquals(Retorno.Resultado.OK, r.getResultado());
+        assertEquals("A00002", r.getValorString());
+    }
+
+
+    @Test
+    public void ok_VariasBicis_OrdenadasPorCodigo() {
+        s.registrarEstacion("E1", "Centro", 6);
+
+        // Registrar en depósito
+        s.registrarBicicleta("UYT123", "URBANA");
+        s.registrarBicicleta("AER345", "URBANA");
+        s.registrarBicicleta("UTR112", "MOUNTAIN");
+        s.registrarBicicleta("B00001", "ELECTRICA");
+
+        // Asignar en orden desordenado
+        s.asignarBicicletaAEstacion("UYT123", "E1");
+        s.asignarBicicletaAEstacion("AER345", "E1");
+        s.asignarBicicletaAEstacion("UTR112", "E1");
+        s.asignarBicicletaAEstacion("B00001", "E1");
+
+        Retorno r = s.listarBicicletasDeEstacion("E1");
+        assertEquals(Retorno.Resultado.OK, r.getResultado());
+        // Esperado lexicográficamente: AER345 | B00001 | UTR112 | UYT123
+        assertEquals("AER345|B00001|UTR112|UYT123", r.getValorString());
+    }
+
+    // OK: el nombre con espacios a los lados se normaliza (trim)
+    @Test
+    public void ok_TrimEnNombreDeEstacion() {
+        s.registrarEstacion("E1", "Centro", 1);
+        s.registrarBicicleta("ABC999", "URBANA");
+        s.asignarBicicletaAEstacion("ABC999", "E1");
+
+        Retorno r = s.listarBicicletasDeEstacion("  E1  ");
+        assertEquals(Retorno.Resultado.OK, r.getResultado());
+        assertEquals("ABC999", r.getValorString());
+    }
+
+   
+    @Test
+    public void ok_CapacidadLlena_ListadoCompleto() {
+        s.registrarEstacion("E1", "Centro", 5);
+        String[] cods = {"Z00005","A00001","M00003","B00002","K00004"}; 
+
+        for (String c : cods) s.registrarBicicleta(c, "URBANA");
+        for (String c : cods) s.asignarBicicletaAEstacion(c, "E1");
+
+        Retorno r = s.listarBicicletasDeEstacion("E1");
+        assertEquals(Retorno.Resultado.OK, r.getResultado());
+        assertEquals("A00001|B00002|K00004|M00003|Z00005", r.getValorString());
+        // Validar separadores: no termina ni empieza con '|'
+        assertFalse(r.getValorString().startsWith("|"));
+        assertFalse(r.getValorString().endsWith("|"));
+    }
+
 
       
     

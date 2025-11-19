@@ -116,7 +116,7 @@ public void EliminarEstacionError2_EstacionNoExiste() {
     
 }
 
-@Test// todavia no funciona 
+ @Test
 public void EliminarEstacionError3_ConUsuariosEnEspera() {
     // Registrar estación
     retorno = s.registrarEstacion("EstacionConEspera", "Centro", 5);
@@ -124,16 +124,16 @@ public void EliminarEstacionError3_ConUsuariosEnEspera() {
     
   
     s.registrarUsuario("12345678", "Usuario1");
-    s.alquilarBicicleta("12345678", "EstacionConEspera"); // Esto debería ponerlo en espera si no hay bicis
+    s.alquilarBicicleta("12345678", "EstacionConEspera"); 
     
-    // Intentar eliminar estación con usuarios en espera
+ 
     retorno = s.eliminarEstacion("EstacionConEspera");
     assertEquals(Retorno.Resultado.ERROR_3, retorno.getResultado());
 }
 
 
 @Test
-public void EliminarEstacionError3_ConBicicletasAncladas() { // todavia no funciona
+public void EliminarEstacionError3_ConBicicletasAncladas() { 
     // Registrar estación
     retorno = s.registrarEstacion("EstacionConBicis", "Centro", 5);
     assertEquals(Retorno.Resultado.OK, retorno.getResultado());
@@ -141,6 +141,8 @@ public void EliminarEstacionError3_ConBicicletasAncladas() { // todavia no funci
     
      s.registrarBicicleta("BICI01", "MOUNTAIN");
      s.registrarBicicleta("BICI02", "MOUNTAIN");
+     
+     s.asignarBicicletaAEstacion("BICI01", "EstacionConBicis");
     
     // Intentar eliminar estación con bicicletas
     retorno = s.eliminarEstacion("EstacionConBicis");
@@ -148,7 +150,7 @@ public void EliminarEstacionError3_ConBicicletasAncladas() { // todavia no funci
 }
 
 @Test
-public void EliminarEstacionError3_ConUsuariosYBicicletas() { // todavia no funciona
+public void EliminarEstacionError3_ConUsuariosYBicicletas() { 
     
     retorno = s.registrarEstacion("EstacionCompleta", "Centro", 5);
     assertEquals(Retorno.Resultado.OK, retorno.getResultado());

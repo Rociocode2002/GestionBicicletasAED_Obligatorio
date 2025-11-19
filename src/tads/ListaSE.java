@@ -186,8 +186,20 @@ public void borrarElemento(T dato) {
         aBorrar.setSiguiente(null);
         longitud--;
     }
-   
 }
+    
+    public void set(int pos, T dato) {
+    if (pos < 0 || pos >= Longitud()) throw new PosFueraDeRangoException();
+    NodoSE<T> actual = cabeza;
+    int i = 0;
+    while (i < pos) {
+        actual = actual.getSiguiente();
+        i++;
+    }
+    actual.setDato(dato);
+}
+   
+
     
       
     

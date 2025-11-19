@@ -54,7 +54,7 @@ public class Test2_09AlquilarBicicleta {
     @Test
     public void alquilarBicicletaError_NombreEstacionVacia() {
         s.registrarUsuario("12345678", "Juan");
-        Retorno retorno = s.alquilarBicicleta("12345678", "");
+        Retorno retorno = s.alquilarBicicleta("12345678", "   ");
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
     }
 

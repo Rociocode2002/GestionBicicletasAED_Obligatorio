@@ -168,9 +168,7 @@ public Retorno marcarEnMantenimiento(String codigo, String motivo) {
         }
     }
 
-    // --------------------------------------------------------
-    // 2) Buscar en todas las estaciones
-    // --------------------------------------------------------
+ 
     if (bicicletaEncontrada == null) {
         for (int i = 0; i < estaciones.Longitud(); i++) {
             Estacion est = estaciones.Obtener(i);
@@ -188,9 +186,7 @@ public Retorno marcarEnMantenimiento(String codigo, String motivo) {
         }
     }
 
-    // --------------------------------------------------------
-    // 3) Buscar en el depósito
-    // --------------------------------------------------------
+  
     if (bicicletaEncontrada == null) {
         for (int i = 0; i < listaDeposito.Longitud(); i++) {
             Bicicleta b = listaDeposito.Obtener(i);
@@ -211,18 +207,14 @@ public Retorno marcarEnMantenimiento(String codigo, String motivo) {
         return Retorno.error4();
     }
 
-    // --------------------------------------------------------
-    // Si está en una estación, removerla
-    // --------------------------------------------------------
+
     if (bicicletaEncontrada.getEstacionActual() != null) {
         Estacion est = bicicletaEncontrada.getEstacionActual();
         est.getBicicletas().borrarElemento(bicicletaEncontrada);
         bicicletaEncontrada.setEstacionActual(null);
     }
 
-    // --------------------------------------------------------
-    // Marcar estado y enviar a depósito
-    // --------------------------------------------------------
+
     bicicletaEncontrada.setEstado(Estado_Bicicleta.MANTENIMIENTO);
 
     // Evitar duplicación si ya estaba en depósito
@@ -394,7 +386,7 @@ public Retorno asignarBicicletaAEstacion(String codigo, String nombreEstacion) {
     @Override
     public Retorno alquilarBicicleta(String cedula, String nombreEstacion) {
 
-        if (cedula == null || cedula.isEmpty() || nombreEstacion == null || nombreEstacion.isEmpty()) {
+        if (cedula == null || cedula.trim().isEmpty() || nombreEstacion == null || nombreEstacion.trim().isEmpty()) {
             return Retorno.error1(); // Parámetros inválidos
         }
 
@@ -687,13 +679,18 @@ private String listarBicisRecursivo(int indice, String acumulador) {
     @Override
     public Retorno listarBicicletasDeEstacion(String nombreEstacion) {
         
-        Estacion estacionEncontrada = null;
+       Estacion estacionEncontrada = null;
+       
+       
+      
         
-     
+     if(estaciones.Vacia()){
+         return Retorno.ok();
+     }
       
       for(int i = 0; i < estaciones.Longitud(); i++) {
             Estacion estacionActual = estaciones.Obtener(i);
-            if(estacionActual.getNombre().equals(nombreEstacion)) {
+            if(estacionActual.getNombre().equals(nombreEstacion.trim())) {
                 estacionEncontrada = estacionActual;
                 
             }
@@ -711,6 +708,8 @@ private String listarBicisRecursivo(int indice, String acumulador) {
         }
       
         return Retorno.ok(resultado);
+     
+    
     }
     
     
@@ -752,37 +751,98 @@ private String listarBicisRecursivo(int indice, String acumulador) {
     
     
     //3.7 Ocupación promedio por barrio
-    
-    @Override
-    public Retorno ocupacionPromedioXBarrio() {
-
-        // 1) Obtener barrios únicos
-        ListaSE<String> barrios = obtenerBarriosUnicos();
-
-        // 2) Ordenar los barrios con Bubble Sort
-        bubbleSortListaSE(barrios);
-
-        // 3) Construir salida
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < barrios.Longitud(); i++) {
-            String barrio = barrios.Obtener(i);
-
-            int capacidad = capacidadTotalBarrio(barrio);
-            int ancladas = bicisAncladasBarrio(barrio);
-
-            int porcentaje = (capacidad > 0)
-                    ? Math.round((ancladas * 100f) / capacidad)
-                    : 0;
-
-            sb.append(barrio).append("#").append(porcentaje);
-
-            if (i < barrios.Longitud() - 1) sb.append("|");
-        }
-
-        return Retorno.ok(sb.toString());
+      //3.7 Ocupación promedio por barrio
+   @Override
+public Retorno ocupacionPromedioXBarrio() {
+ 
+    // 1) Obtener barrios únicos
+    ListaSE<String> barrios = obtenerBarriosUnicos();
+ 
+    // 2) Ordenar barrios alfabéticamente usando Bubble Sort sobre nodos
+    bubbleSortListaSE(barrios);
+ 
+    // 3) Construir resultado
+    StringBuilder sb = new StringBuilder();
+ 
+    for (int i = 0; i < barrios.Longitud(); i++) {
+        String barrio = barrios.Obtener(i);
+ 
+        int capacidad = capacidadTotalBarrio(barrio);
+        int ancladas = bicisAncladasBarrio(barrio);
+ 
+        int porcentaje = (capacidad > 0)
+                ? Math.round((ancladas * 100f) / capacidad)
+                : 0;
+ 
+        sb.append(barrio).append("#").append(porcentaje);
+ 
+        if (i < barrios.Longitud() - 1) sb.append("|");
     }
-
+ 
+    return Retorno.ok(sb.toString());
+}
+  
+ 
+// Bubble Sort para ListaSE<String> usando intercambio de datos
+private void bubbleSortListaSE(ListaSE<String> lista) {
+    int n = lista.Longitud();
+    if (n < 2) return;
+ 
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            String a = lista.Obtener(j);
+            String b = lista.Obtener(j + 1);
+ 
+            if (a.compareToIgnoreCase(b) > 0) {
+                // Intercambiar valores directamente
+                lista.set(j, b);
+                lista.set(j + 1, a);
+            }
+        }
+    }
+}
+ 
+ 
+// Devuelve lista de barrios únicos
+private ListaSE<String> obtenerBarriosUnicos() {
+    ListaSE<String> lista = new ListaSE<>();
+    for (int i = 0; i < estaciones.Longitud(); i++) {
+        String barrio = estaciones.Obtener(i).getBarrio();
+        if (!lista.existeElemento(barrio)) {
+            lista.Adicionar(barrio);
+        }
+    }
+    return lista;
+}
+ 
+// Suma la capacidad total de un barrio
+private int capacidadTotalBarrio(String barrio) {
+    int total = 0;
+    for (int i = 0; i < estaciones.Longitud(); i++) {
+        Estacion e = estaciones.Obtener(i);
+        if (e.getBarrio().equalsIgnoreCase(barrio)) {
+            total += e.getCapacidad();
+        }
+    }
+    return total;
+}
+ 
+// Cuenta bicis ancladas en un barrio (ignora MANTENIMIENTO)
+private int bicisAncladasBarrio(String barrio) {
+    int total = 0;
+    for (int i = 0; i < estaciones.Longitud(); i++) {
+        Estacion e = estaciones.Obtener(i);
+        if (e.getBarrio().equalsIgnoreCase(barrio)) {
+            for (int j = 0; j < e.getBicicletas().Longitud(); j++) {
+                Bicicleta b = e.getBicicletas().Obtener(j);
+                if (b.getEstado() != Estado_Bicicleta.MANTENIMIENTO) {
+                    total++;
+                }
+            }
+        }
+    }
+    return total;
+}
     
     //3.8 Ranking por tipo de uso:
     @Override
@@ -850,7 +910,7 @@ private String listarBicisRecursivo(int indice, String acumulador) {
         
         for(int i = 0; i < estaciones.Longitud(); i++) {
             Estacion estacionActual = estaciones.Obtener(i);
-            if(estacionActual.getNombre().equals(nombreEstacion)) {
+            if(estacionActual.getNombre().equals(nombreEstacion.trim())) {
                 estacionEncontrada = estacionActual;
                 
             }
@@ -882,54 +942,37 @@ private String listarBicisRecursivo(int indice, String acumulador) {
     }
 
    //3.10 Usuario con mayor cantidad de alquileres:
-    @Override
-    public Retorno usuarioMayor() {
-        // Dos listas paralelas: una para cédulas y otra para los contadores
-        ListaSE<String> cedulas = new ListaSE<>();
-        ListaSE<Integer> conteos = new ListaSE<>();
+    
+public Retorno usuarioMayor() {
 
-        // --- Contar los alquileres por usuario ---
-        for (int i = 0; i < alquileres.Longitud(); i++) {
-            Alquiler a = alquileres.Obtener(i);
-            String ci = a.getCedulaUsuario();
+    if (usuarios.Vacia()) return Retorno.ok(""); 
+ 
+    String cedulaMayor = usuarios.Obtener(0).getCedula();
 
-            boolean encontrado = false;
-            for (int j = 0; j < cedulas.Longitud() && !encontrado; j++) {
-                if (cedulas.Obtener(j).equalsIgnoreCase(ci)) {
-                    // Actualizar contador
-                    int nuevoValor = conteos.Obtener(j) + 1;
-                    conteos.Eliminar(j);          // Eliminar viejo
-                    conteos.Insertar(nuevoValor, j); // Insertar nuevo en misma posición
-                    encontrado = true;
-                }
-            }
+    int max = usuarios.Obtener(0).getCntAlquileres();  
+ 
+    for (int i = 1; i < usuarios.Longitud(); i++) {
 
-            // Si no estaba, agregarlo
-            if (!encontrado) {
-                cedulas.Adicionar(ci);
-                conteos.Adicionar(1);
-            }
+        Usuario u = usuarios.Obtener(i);
+
+        int cant = u.getCntAlquileres();  
+
+        String ced = u.getCedula();
+ 
+        if (cant > max || (cant == max && ced.compareToIgnoreCase(cedulaMayor) < 0)) {
+
+            max = cant;
+
+            cedulaMayor = ced;
+
         }
 
-        // --- Buscar el usuario con mayor cantidad ---
-        String cedulaMayor = cedulas.Obtener(0);
-        int max = conteos.Obtener(0);
-
-        for (int i = 1; i < cedulas.Longitud(); i++) {
-            String ci = cedulas.Obtener(i);
-            int cantidad = conteos.Obtener(i);
-
-            if (cantidad > max) {
-                max = cantidad;
-                cedulaMayor = ci;
-            } else if (cantidad == max && ci.compareToIgnoreCase(cedulaMayor) < 0) {
-                // Desempate: cédula más pequeña alfabéticamente
-                cedulaMayor = ci;
-            }
-        }
-
-        return Retorno.ok(cedulaMayor);
     }
+ 
+    return Retorno.ok(cedulaMayor);
+
+}
+ 
 
 
     //metodos auxiliares usados en la resolución:
@@ -978,69 +1021,10 @@ private String listarBicisRecursivo(int indice, String acumulador) {
         alquileres.Adicionar(nuevo);
     }
     
-     private ListaSE<String> obtenerBarriosUnicos() {
-        ListaSE<String> lista = new ListaSE<>();
-
-        for (int i = 0; i < estaciones.Longitud(); i++) {
-            String barrio = estaciones.Obtener(i).getBarrio();
-            if (!lista.existeElemento(barrio)) {
-                lista.Adicionar(barrio);
-            }
-        }
-
-        return lista;
-    }
      
-    private int capacidadTotalBarrio(String barrio) {
-        int total = 0;
-
-        for (int i = 0; i < estaciones.Longitud(); i++) {
-            Estacion e = estaciones.Obtener(i);
-            if (e.getBarrio().equalsIgnoreCase(barrio)) {
-                total += e.getCapacidad();
-            }
-        }
-
-        return total;
-    }
-    private int bicisAncladasBarrio(String barrio) {
-        int total = 0;
-
-        for (int i = 0; i < estaciones.Longitud(); i++) {
-            Estacion e = estaciones.Obtener(i);
-
-            if (e.getBarrio().equalsIgnoreCase(barrio)) {
-                for (int j = 0; j < e.getBicicletas().Longitud(); j++) {
-                    Bicicleta b = e.getBicicletas().Obtener(j);
-                    if (b.getEstado() != Estado_Bicicleta.MANTENIMIENTO) {
-                        total++;
-                    }
-                }
-            }
-        }
-
-        return total;
-    }
-    private void bubbleSortListaSE(ListaSE<String> lista) {
-        int n = lista.Longitud();
-
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-
-                String a = lista.Obtener(j);
-                String b = lista.Obtener(j + 1);
-
-                if (a.compareToIgnoreCase(b) > 0) {
-                    // Swap usando Eliminar + Insertar
-                    lista.Eliminar(j);
-                    lista.Insertar(a, j + 1);
-                }
-            }
-        }
-    }
-
-
-
 
 
 }
+
+
+
