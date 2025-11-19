@@ -72,6 +72,31 @@ public class Test3_03ListarBicisEnDeposito {
         assertFalse("No debe terminar con '|'", sdep.endsWith("|"));
         assertTrue("Debe tener separador entre elementos", sdep.contains("|"));
     }
+    
+     @Test
+    public void listarBicisEnDeposito_Ok_OrdenIngresoYEstados() {
+        s.registrarBicicleta("A00001", "URBANA");   
+        s.registrarBicicleta("A00002", "ELECTRICA"); 
+        s.registrarBicicleta("A00003", "MOUNTAIN");  
+
+        // Marcar una en mantenimiento (sigue en depósito)
+        s.marcarEnMantenimiento("A00002", "batería");
+
+        retorno = s.listarBicisEnDeposito();
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+        assertEquals("A00001#URBANA#Disponible|A00002#ELECTRICA#Mantenimiento|A00003#MOUNTAIN#Disponible",
+                retorno.getValorString());
+    }
+
+    @Test
+    public void listarBicisEnDeposito_Ok_SinBicis() {
+        IObligatorio s2 = new Sistema();
+        s2.crearSistemaDeGestion();
+        Retorno r = s2.listarBicisEnDeposito();
+        assertEquals(Retorno.Resultado.OK, r.getResultado());
+        assertTrue(r.getValorString() == null || r.getValorString().isEmpty());
+    }
+
   
    
 }

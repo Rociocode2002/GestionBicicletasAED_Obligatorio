@@ -55,7 +55,7 @@ public class Test3_07OcupacionPromedioPorBarrio {
     }
 
     @Test
-    public void variosBarrios_ordenAlfabetico_yRedondeo() {
+    public void variosBarrios_ordenAlfabetico_yRedondeo() { 
         // Pocitos (cap 10, ancladas 7) = 70
         assertEquals(Retorno.Resultado.OK, s.registrarEstacion("P1", "Pocitos", 6).getResultado());
         assertEquals(Retorno.Resultado.OK, s.registrarEstacion("P2", "Pocitos", 4).getResultado());
@@ -93,6 +93,8 @@ public class Test3_07OcupacionPromedioPorBarrio {
 
         Retorno r = s.ocupacionPromedioXBarrio();
         assertEquals(Retorno.Resultado.OK, r.getResultado());
+        
+        
         // Orden alfabético por barrio: Aguada | Cordón | Pocitos
         assertEquals("Aguada#40|Cordón#67|Pocitos#70", r.getValorString());
     }
@@ -137,4 +139,12 @@ public class Test3_07OcupacionPromedioPorBarrio {
         assertEquals(Retorno.Resultado.OK, r.getResultado());
         assertEquals("A#67|B#33", r.getValorString()); // orden alfabético por barrio
     }
+    
+    
+    
+   
+
+    
+    
+    
 }

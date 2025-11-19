@@ -62,17 +62,17 @@ public class Test3_10UsuariosConMayorCantidadDeAlquileres {
             fUsuarios.setAccessible(true);
             Object lista = fUsuarios.get(sys); // ListaSE<Usuario>
 
-            int len = (int) lista.getClass().getMethod("longitud").invoke(lista);
+            int len = (int) lista.getClass().getMethod("Longitud").invoke(lista);
             for (int i = 0; i < len; i++) {
-                Object u = lista.getClass().getMethod("obtener", int.class).invoke(lista, i); // Usuario
+                Object u = lista.getClass().getMethod("Obtener", int.class).invoke(lista, i); // Usuario
                 String ced = (String) u.getClass().getMethod("getCedula").invoke(u);
 
                 if (ced.equals(c1)) {
-                    u.getClass().getMethod("setCantAlquileres", int.class).invoke(u, 3);
+                    u.getClass().getMethod("setCntAlquileres", int.class).invoke(u, 3);
                 } else if (ced.equals(c2)) {
-                    u.getClass().getMethod("setCantAlquileres", int.class).invoke(u, 5);
+                    u.getClass().getMethod("setCntAlquileres", int.class).invoke(u, 5);
                 } else if (ced.equals(c3)) {
-                    u.getClass().getMethod("setCantAlquileres", int.class).invoke(u, 5);
+                    u.getClass().getMethod("setCntAlquileres", int.class).invoke(u, 5);
                 }
             }
         } catch (Exception e) {
@@ -84,5 +84,48 @@ public class Test3_10UsuariosConMayorCantidadDeAlquileres {
         assertEquals(Retorno.Resultado.OK, r.getResultado());
         assertEquals(c2.compareTo(c3) < 0 ? c2 : c3, r.getValorString());
     }
+        @Test
+    public void ok_TodosSinAlquileres_EligeCedulaMenor() {
+        String c1 = "01234567"; // menor alfabéticamente
+        String c2 = "12345678";
+        String c3 = "22345678";
+
+        assertEquals(Retorno.Resultado.OK, s.registrarUsuario(c2, "Usuario B").getResultado());
+        assertEquals(Retorno.Resultado.OK, s.registrarUsuario(c3, "Usuario C").getResultado());
+        assertEquals(Retorno.Resultado.OK, s.registrarUsuario(c1, "Usuario A").getResultado());
+
+        Retorno r = s.usuarioMayor();
+        assertEquals(Retorno.Resultado.OK, r.getResultado());
+        assertEquals(c1, r.getValorString());
+    }
+    
+     @Test
+    public void ok_UsuarioConMasAlquileres_RetornaEseUsuario() {
+        // Registrar usuarios
+        assertEquals(Retorno.Resultado.OK, s.registrarUsuario("11111111", "Usuario 1").getResultado());
+        assertEquals(Retorno.Resultado.OK, s.registrarUsuario("22222222", "Usuario 2").getResultado());
+        
+        // Registrar estación y bicicletas (6 dígitos)
+        assertEquals(Retorno.Resultado.OK, s.registrarEstacion("E1", "Centro", 10).getResultado());
+        assertEquals(Retorno.Resultado.OK, s.registrarBicicleta("B00001", "URBANA").getResultado());
+        assertEquals(Retorno.Resultado.OK, s.asignarBicicletaAEstacion("B00001", "E1").getResultado());
+
+        // Usuario 2 hace 2 alquileres
+        assertEquals(Retorno.Resultado.OK, s.alquilarBicicleta("22222222", "B00001").getResultado());
+        assertEquals(Retorno.Resultado.OK, s.devolverBicicleta("B00001", "E1").getResultado());
+        assertEquals(Retorno.Resultado.OK, s.alquilarBicicleta("22222222", "B00001").getResultado());
+        assertEquals(Retorno.Resultado.OK, s.devolverBicicleta("B00001", "E1").getResultado());
+
+        // Usuario 1 hace 1 alquiler
+        assertEquals(Retorno.Resultado.OK, s.alquilarBicicleta("11111111", "B00001").getResultado());
+        assertEquals(Retorno.Resultado.OK, s.devolverBicicleta("B00001", "E1").getResultado());
+
+        Retorno r = s.usuarioMayor();
+        assertEquals(Retorno.Resultado.OK, r.getResultado());
+        assertEquals("22222222", r.getValorString());
+    }
+    
+    
+    
 }
 

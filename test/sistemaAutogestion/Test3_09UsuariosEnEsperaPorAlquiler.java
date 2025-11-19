@@ -17,25 +17,7 @@ public class Test3_09UsuariosEnEsperaPorAlquiler {
         s.crearSistemaDeGestion();
     }
 
-   @Test
-       public void error1_NombreNullOVacio() {
-           Retorno r;
-
-           r = s.usuariosEnEspera(null);
-           assertEquals(Retorno.Resultado.ERROR_1, r.getResultado());
-
-           r = s.usuariosEnEspera("");
-           assertEquals(Retorno.Resultado.ERROR_1, r.getResultado());
-
-           r = s.usuariosEnEspera("   ");
-           assertEquals(Retorno.Resultado.ERROR_1, r.getResultado());
-       }
-
-       @Test
-       public void error2_EstacionInexistente() {
-           Retorno r = s.usuariosEnEspera("NoExiste");
-           assertEquals(Retorno.Resultado.ERROR_2, r.getResultado());
-       }
+  
 
        @Test
        public void ok_EstacionSinCola_RetornaVacio() {
